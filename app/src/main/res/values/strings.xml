@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">AndroidErgasia</string>
     <string name="item_title" />
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textViewForDescription">A little description for the place </string>
+    <string name="test">The Rusty Spoon is a cozy restaurant that serves delicious meals made from fresh, locally sourced ingredients</string>
+
 </resources>

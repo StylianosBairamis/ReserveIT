@@ -1,9 +1,13 @@
 package com.example.androidergasia;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +25,6 @@ public class MainActivity extends AppCompatActivity
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,8 +40,10 @@ public class MainActivity extends AppCompatActivity
         DBhandler db = new DBhandler(this,null,null,1);
 
 //Set my Adapter for the RecyclerView
-        adapter = new RecyclerAdapter(db);
+        adapter = new RecyclerAdapter(db,this);
+
         recyclerView1.setAdapter(adapter);
+
 
 //        Resources res = getResources();
 //        int resourceId = R.drawable.first;
@@ -52,13 +57,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-
-    public void test(Bitmap myBitmap) throws IOException
+    public void test(View view)
     {
-//        FileOutputStream outputStream = openFileOutput("my_image.jpg", Context.MODE_PRIVATE);
-//        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-//        outputStream.close();
+        Intent intent = new Intent(this,ActivityForFragment.class);
+        startActivity(intent);
     }
 
     public void addPlace(View view)
@@ -82,7 +84,6 @@ public class MainActivity extends AppCompatActivity
 
         place = new Place(0,"The Fork & Knife","polu kalo","Restaurant");
         db.addPlace(place);
-
     }
 
 }

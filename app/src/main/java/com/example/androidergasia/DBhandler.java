@@ -29,6 +29,7 @@ public class DBhandler extends SQLiteOpenHelper
     public static final String COLUMN_NAME = "placeName";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_RATING = "rating";
+    public static final String COLUMN_CHAIRS_AVAILABLE = "num_of_chairs";
     public static final String COLUMN_IMAGE ="image"; //Εδω αποθηκέυω path της αντίστοιχης εικόνας!
 
     //Για το Table που κρατάει τις Κρατήσεις.
@@ -51,6 +52,7 @@ public class DBhandler extends SQLiteOpenHelper
                 COLUMN_TYPE_OF_PLACE + " TEXT,"+
                 COLUMN_DESCRIPTION  + " TEXT NOT NULL," +
                 COLUMN_RATING + " REAL DEFAULT '0.0'," +
+                //COLUMN_CHAIRS_AVAILABLE + " INTEGER," +
                 COLUMN_IMAGE+ " TEXT," +
                 "CHECK(type_of_place IN ('Restaurant', 'Bar', 'Cafe'))" + ")";
                 //" UNIQUE(placeName)" + ")"; // Τύπος για το IMAGE
