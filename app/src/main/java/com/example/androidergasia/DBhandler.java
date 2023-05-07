@@ -25,7 +25,6 @@ public class DBhandler extends SQLiteOpenHelper
     public static final String DATABASE_NAME = "myAPP.db";
     public static final String DATABASE_TABLE_PLACES = "places";
     public static final String COLUMN_ID = "_id";
-
     public static final String COLUMN_TYPE_OF_PLACE = "type_of_place";
     public static final String COLUMN_NAME = "placeName";
     public static final String COLUMN_DESCRIPTION = "description";

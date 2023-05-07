@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,15 +30,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         TextView itemName;
         TextView itemDescription;
         TextView typeOfPlace;
-        TextView rating;
+
+        RatingBar ratingBar;
+
         public ViewHolder(View itemView)
         {
             super(itemView);
             itemImage = itemView.findViewById(R.id.imageView);
-            itemName = itemView.findViewById(R.id.textView);
-            itemDescription = itemView.findViewById(R.id.textView2);
-            typeOfPlace = itemView.findViewById(R.id.textView3);
-            rating = itemView.findViewById(R.id.textView4);
+            itemName = itemView.findViewById(R.id.nameOfPlace);
+           // itemDescription = itemView.findViewById(R.id.descriptionOfPlace);
+            typeOfPlace = itemView.findViewById(R.id.typeOfPlace);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
         }
     }
 
@@ -59,11 +62,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.itemName.setText(cursor.getString(0));
         holder.typeOfPlace.setText(cursor.getString(1));
-        holder.itemDescription.setText(cursor.getString(2));
-        holder.rating.setText(cursor.getDouble(3) + "");
+      //  holder.itemDescription.setText(cursor.getString(2));
+        holder.ratingBar.setRating((float) cursor.getDouble(3));
 
         holder.itemImage.setImageBitmap(DBhandler.readImageFromInternalStorage(cursor.getString(4)));
-
 
     }
 
