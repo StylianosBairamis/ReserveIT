@@ -12,7 +12,7 @@ public class ActivityForFragment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_for_fragment);
+        setContentView(R.layout.activitiy_for_fragment);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
