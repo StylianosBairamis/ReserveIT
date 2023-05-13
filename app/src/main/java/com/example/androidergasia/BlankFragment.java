@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ public class BlankFragment extends Fragment
 {
     Button submit;
     Button time;
+
+    Button showLocation;
     TextView timePicked;
     EditText numOfPersons;
 
@@ -85,6 +88,19 @@ public class BlankFragment extends Fragment
             public boolean onTouch(View v, MotionEvent event) {
                 numOfPersons.setHint("");
                 return false;
+            }
+        });
+
+        showLocation = view.findViewById(R.id.locationShow);
+
+        showLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),MapsActivity.class);
+
+                intent.putExtra("Longitude",40.524204);
+                intent.putExtra("Latitude",22.976887); //Θεσσαλονίκη
+                startActivity(intent);
             }
         });
 

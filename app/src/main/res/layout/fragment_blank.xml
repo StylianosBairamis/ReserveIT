@@ -61,5 +61,14 @@
             app:layout_constraintStart_toStartOf="@+id/timePicker"
             app:layout_constraintTop_toBottomOf="@+id/timePicker" />
 
+        <Button
+            android:id="@+id/locationShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Location"
+            app:layout_constraintBottom_toBottomOf="@+id/numOfPersons"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
