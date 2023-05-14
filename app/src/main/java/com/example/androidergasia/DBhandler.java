@@ -2,14 +2,12 @@ package com.example.androidergasia;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
-import android.util.Log;
+
 
 import androidx.annotation.Nullable;
 
@@ -33,9 +31,11 @@ public class DBhandler extends SQLiteOpenHelper
     public static final String COLUMN_IMAGE ="image"; //Εδω αποθηκέυω path της αντίστοιχης εικόνας!
 
     //Για το Table που κρατάει τις Κρατήσεις.
-    public static final String DATABASE_TABLE_RESERVATIONS ="reservations";
-    public static final String COLUMN_TIMESTAMP ="timestamp";
+    public static final String DATABASE_TABLE_RESERVATIONS = "reservations";
+    public static final String COLUMN_TIMESTAMP = "timestamp";
     public static final String COLUMN_TRACK_PLACE = "id_of_place";
+
+    public static final String COLUMN_NUMBER_OF_PEOPLE = "number_of_people";
     private static Context context ;
 
     public DBhandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -52,14 +52,15 @@ public class DBhandler extends SQLiteOpenHelper
                 COLUMN_TYPE_OF_PLACE + " TEXT,"+
                 COLUMN_DESCRIPTION  + " TEXT NOT NULL," +
                 COLUMN_RATING + " REAL DEFAULT '0.0'," +
-                //COLUMN_CHAIRS_AVAILABLE + " INTEGER," +
+                COLUMN_CHAIRS_AVAILABLE + " INTEGER," +
                 COLUMN_IMAGE+ " TEXT," +
                 "CHECK(type_of_place IN ('Restaurant', 'Bar', 'Cafe'))" + ")";
-                //" UNIQUE(placeName)" + ")"; // Τύπος για το IMAGE
+                //" UNIQUE(placeName)" + ")";
 
         String CREATE_RESERVATIONS_TABLE = "CREATE TABLE " + DATABASE_TABLE_RESERVATIONS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TIMESTAMP + " TEXT NOT NULL," +
+                COLUMN_NUMBER_OF_PEOPLE + " INTEGER NOT NULL," +
                 COLUMN_TRACK_PLACE + " INTEGER," +
                 " FOREIGN KEY(id_of_place) REFERENCES places(_id)" +
                 ")";
