@@ -38,7 +38,6 @@ public class DBhandler extends SQLiteOpenHelper
     public static final String DATABASE_TABLE_RESERVATIONS = "reservations";
     public static final String COLUMN_TIMESTAMP = "timestamp";
     public static final String COLUMN_TRACK_PLACE = "id_of_place";
-
     public static final String COLUMN_NUMBER_OF_PEOPLE = "number_of_people";
     private static Context context ;
 
@@ -101,7 +100,6 @@ public class DBhandler extends SQLiteOpenHelper
         contentValues.put(COLUMN_LONGITUDE,placeToAdd.getLongitude());
         contentValues.put(COLUMN_LATITUDE, placeToAdd.getLatitude());
 
-
         contentValues.put(COLUMN_IMAGE, pathToFile + ".jpg" );//Περίεχει το Path για την εικόνα του Place
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -117,7 +115,8 @@ public class DBhandler extends SQLiteOpenHelper
     public Cursor findPlaces(String typeOfPlaceToSearch)
     {
         String query = "SELECT "+ COLUMN_NAME + "," +COLUMN_TYPE_OF_PLACE + ","+
-                COLUMN_DESCRIPTION + "," + COLUMN_RATING + "," + COLUMN_IMAGE +
+                COLUMN_DESCRIPTION + "," + COLUMN_RATING + ","+COLUMN_CHAIRS_AVAILABLE + "," + COLUMN_LONGITUDE + "," + COLUMN_LATITUDE + ","
+                + COLUMN_IMAGE +
                 " FROM " + DATABASE_TABLE_PLACES +
                 " WHERE " + COLUMN_TYPE_OF_PLACE + " = '" + typeOfPlaceToSearch + "' ";
         String[] args =  {COLUMN_NAME, COLUMN_TYPE_OF_PLACE, COLUMN_DESCRIPTION, COLUMN_RATING, COLUMN_IMAGE};//Arguments για το selection

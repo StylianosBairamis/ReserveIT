@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.os.AsyncTask;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,10 +47,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
         this.context = context;
 
-        ArrayList<Integer> listOfIndexes = makeRequest();
+//        ArrayList<Integer> listOfIndexes = makeRequest();
+//
+//        changeIndexesOfCursor(listOfIndexes);
 
-        changeIndexesOfCursor(listOfIndexes);
-
+        GetDistanceTask getDistanceTask = new GetDistanceTask();
+        getDistanceTask.execute();
     }
 
 
@@ -108,13 +111,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.itemDescription.setText(cursor.getString(2));
         holder.ratingBar.setRating(cursor.getFloat(3));
 
-        holder.itemImage.setImageBitmap(DBhandler.readImageFromInternalStorage(cursor.getString(4)));
+        //Δες τα υπόλοιπα που γυρνάει!
+
+        holder.itemImage.setImageBitmap(DBhandler.readImageFromInternalStorage(cursor.getString(7)));
 
     }
 
     @Override
     public int getItemCount() {
-        return matrixCursor.getCount();
+        return cursor.getCount();
+        //return cursor.getCount();
     }
 
     private ArrayList<Integer> makeRequest()
@@ -127,8 +133,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         for(int i = 0 ; i < cursor.getCount();i++)
         {
-            destinations += cursor.getDouble(4) + "%2C"; //%2C είναι το ',' στα URL Εδω προσθέτω longitude
-            destinations += cursor.getDouble(5); // εδώ προσθέτω latitude
+            destinations += cursor.getDouble(5) + "%2C"; //%2C είναι το ',' στα URL Εδω προσθέτω longitude
+            destinations += cursor.getDouble(6); // εδώ προσθέτω latitude
 
             if(i != cursor.getCount() - 1)//Στο τελευταίο value δεν βάζω τον ειδικό χαρακτήρα.
             {
@@ -140,21 +146,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
-        MediaType mediaType = MediaType.parse("text/plain");
+       // MediaType mediaType = MediaType.parse("text/plain");
 
-        RequestBody body = RequestBody.create(mediaType, "");
+        //RequestBody body = RequestBody.create(mediaType, "");
 
-        Request request = new Request.Builder() // Ως transport driving
-                .url("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origins + "&destinations=" + destinations + "+&key=AIzaSyDViPBrxguWqfZgEWpmuTpwRtvvXnG0DZ0")
-                .method("GET", body)
-                .build();
+//        Request request = new Request.Builder() // Ως transport driving
+//                .url("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origins + "&destinations=" + destinations + "+&key=AIzaSyDViPBrxguWqfZgEWpmuTpwRtvvXnG0DZ0")
+//                .method("GET", body)
+//                .build();
+        System.out.println("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origins + "&destinations=" + destinations + "+&key=AIzaSyDViPBrxguWqfZgEWpmuTpwRtvvXnG0DZ0");
         try
         {
+            Request request = new Request.Builder() // Ως transport driving
+                    .url("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origins + "&destinations=" + destinations + "+&key=AIzaSyCvY1g7IJ3XtbDXGhZvHRFQz4zKjQkgdJ4")
+                    .method("GET",null)
+                    .build();
             Response response = client.newCall(request).execute();
             return parseRequest(response);
 
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -165,31 +176,41 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     {
         try
         {
-            JSONObject jsonObject = new JSONObject(response.body().string());
+                JSONObject jsonObject = new JSONObject(response.body().string());
 
-            JSONArray jsonArray = jsonObject.getJSONArray("rows");
+                JSONArray jsonArray = jsonObject.getJSONArray("rows");
 
-            ArrayList<Pair<Double, Double>> listOfPairs = new ArrayList<>();
+                ArrayList<Pair<Double, Double>> listOfPairs = new ArrayList<>();
 
-            ArrayList<Integer> listOfIndexes = new ArrayList<>();
+                ArrayList<Integer> listOfIndexes = new ArrayList<>();
 
-            Pair<Double, Double> tempPair = null;
+                Pair<Double, Double> tempPair = null;
 
-            for (int i=0; i < jsonArray.length(); i++)
-            {
-                JSONObject oneObject = jsonArray.getJSONObject(i);
+                JSONObject row = jsonArray.getJSONObject(0);
 
-                JSONObject distanceObject = oneObject.getJSONObject("distance"); //Παίρνω τις αντίστοιχες τιμές
-                String distanceText = distanceObject.getString("text");
+                JSONArray elements = row.getJSONArray("elements");
 
-                JSONObject durationObject = oneObject.getJSONObject("duration");
-                String durationText = distanceObject.getString("text");
+                for(int i = 0 ;i < elements.length();i++)
+                {
+                    JSONObject elementObject = elements.getJSONObject(i);
 
-                tempPair = new Pair<>(Double.parseDouble(distanceText),Double.parseDouble(durationText)); // Δημιουργώ pair, αφού πρώτα κάνω parse to string σε double
+                    JSONObject distance = elementObject.getJSONObject("distance");
 
-                listOfPairs.add(tempPair);
-                listOfIndexes.add(i);
-            }
+                    JSONObject duration = elementObject.getJSONObject("duration");
+
+                    String distanceText = distance.getString("text");
+
+                    String durationText = duration.getString("text");
+
+                    String firstValue = distanceText.split(" ")[0]; // Παίρνω την αριθμιτική τιμή.
+
+                    String secondValue = durationText.split(" ")[0];
+
+                    tempPair = new Pair<>(Double.valueOf(firstValue), Double.valueOf(secondValue)); // Δημιουργώ pair, αφού πρώτα κάνω parse to string σε double
+
+                    listOfPairs.add(tempPair);
+                    listOfIndexes.add(i);
+                }
 
             Collections.sort(listOfIndexes, new Comparator<Integer>() { // Κάνω sort την λίστα με τα ιndexes, η σύγκριση είναι με βάση το distance
                 @Override
@@ -228,5 +249,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             matrixCursor.addRow(row);
         }
     }
+    public class GetDistanceTask extends AsyncTask<Void, Void, Void>
+    {
+        private ArrayList<Integer> listOfIndexes = null;
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            listOfIndexes = makeRequest();
 
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused)
+        {
+            super.onPostExecute(unused);
+            changeIndexesOfCursor(listOfIndexes);
+            notifyDataSetChanged();
+        }
+    }
 }
