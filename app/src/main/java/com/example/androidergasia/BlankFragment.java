@@ -31,10 +31,11 @@ public class BlankFragment extends Fragment
 {
     Button submit;
     Button time;
-
     Button showLocation;
     TextView timePicked;
     EditText numOfPersons;
+
+    static String nameOfPlace;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,11 +96,12 @@ public class BlankFragment extends Fragment
 
         showLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+
                 Intent intent = new Intent(getContext(),MapsActivity.class);
 
-                intent.putExtra("Longitude",40.524204);
-                intent.putExtra("Latitude",22.976887); //Θεσσαλονίκη
+                intent.putExtra("name",nameOfPlace);
                 startActivity(intent);
             }
         });
@@ -163,5 +165,9 @@ public class BlankFragment extends Fragment
         },currentTime.get(Calendar.HOUR_OF_DAY),currentTime.get(Calendar.MINUTE), DateFormat.is24HourFormat(getActivity()));
 
         timePickerDialog.show();
+    }
+
+    public void setNameOfPlace(String nameOfPlace) {
+        this.nameOfPlace = nameOfPlace;
     }
 }

@@ -24,19 +24,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
 {
-    DBhandler DBhandler = null;
-    static Cursor cursor = null;
-
-    MatrixCursor matrixCursor = null;
+    private DBhandler DBhandler = null;
+    private static Cursor cursor = null;
+    private static MatrixCursor matrixCursor = null;
     private static Context context = null;
     private static double currentLongitude = 40.633052; // Συντεταγμένες απο Ημιώροφο βιολογίας
     private static double currentLatitude = 22.957192;
@@ -47,9 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
         this.context = context;
 
-//        ArrayList<Integer> listOfIndexes = makeRequest();
-//
-//        changeIndexesOfCursor(listOfIndexes);
+        MapsActivity.setDBHandler(DBhandler);
 
         GetDistanceTask getDistanceTask = new GetDistanceTask();
         getDistanceTask.execute();
@@ -74,14 +70,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view)
+                {
                     int position = getAdapterPosition();
 
-                    cursor.moveToFirst();//Παω τον Cursor
+                    matrixCursor.moveToFirst();
 
-                    cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.
+                    matrixCursor.move(position);
 
                     Intent intent = new Intent(context, ActivityForFragment.class);
+
+                    intent.putExtra("name", matrixCursor.getString(0));//Στέλνω το name
 
                     context.startActivity(intent);
                 }
@@ -103,8 +102,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         cursor.moveToFirst();//Παω τον Cursor
 
         cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.
-
-        System.out.println();
 
         holder.itemName.setText(cursor.getString(0));
         holder.typeOfPlace.setText(cursor.getString(1));
@@ -146,15 +143,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
-       // MediaType mediaType = MediaType.parse("text/plain");
-
-        //RequestBody body = RequestBody.create(mediaType, "");
-
-//        Request request = new Request.Builder() // Ως transport driving
-//                .url("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origins + "&destinations=" + destinations + "+&key=AIzaSyDViPBrxguWqfZgEWpmuTpwRtvvXnG0DZ0")
-//                .method("GET", body)
-//                .build();
-        System.out.println("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origins + "&destinations=" + destinations + "+&key=AIzaSyDViPBrxguWqfZgEWpmuTpwRtvvXnG0DZ0");
         try
         {
             Request request = new Request.Builder() // Ως transport driving

@@ -13,11 +13,16 @@ public class ActivityForFragment extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_for_fragment);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         BlankFragment blankFragment =  new BlankFragment();
+
+        Bundle bundle = getIntent().getExtras();
+
+        blankFragment.setNameOfPlace(bundle.getString("name")); // Παιρνάω το name στο blankFragment
 
         fragmentTransaction.add(R.id.fragmentContainerView,blankFragment);
         fragmentTransaction.commit();

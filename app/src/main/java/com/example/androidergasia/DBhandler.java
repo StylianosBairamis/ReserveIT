@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Pair;
 
 
 import androidx.annotation.Nullable;
@@ -119,7 +120,6 @@ public class DBhandler extends SQLiteOpenHelper
                 + COLUMN_IMAGE +
                 " FROM " + DATABASE_TABLE_PLACES +
                 " WHERE " + COLUMN_TYPE_OF_PLACE + " = '" + typeOfPlaceToSearch + "' ";
-        String[] args =  {COLUMN_NAME, COLUMN_TYPE_OF_PLACE, COLUMN_DESCRIPTION, COLUMN_RATING, COLUMN_IMAGE};//Arguments για το selection
 
         SQLiteDatabase db = getReadableDatabase();
 
@@ -187,6 +187,23 @@ public class DBhandler extends SQLiteOpenHelper
             e.printStackTrace();
         }
         return bitmap;
+    }
+
+    public Pair<Float,Float> getCoordinates(String nameForSearch)
+    {
+        String query = "SELECT " + COLUMN_LONGITUDE + "," + COLUMN_LATITUDE +
+            " FROM " + DATABASE_TABLE_PLACES +
+            " WHERE " + COLUMN_NAME + " = '" + nameForSearch + "' ";
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        cursor.moveToFirst();
+
+        Pair<Float, Float> tempPair = new Pair<>(cursor.getFloat(0),cursor.getFloat(1));
+
+        return tempPair;
     }
 
 }
