@@ -123,6 +123,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         origins = currentLongitude + "%2C" + currentLatitude;
 
+        cursor.moveToFirst();
+
         for(int i = 0 ; i < cursor.getCount();i++)
         {
             destinations += cursor.getDouble(4) + "%2C"; //%2C είναι το ',' στα URL Εδω προσθέτω longitude
@@ -132,6 +134,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             {
                 destinations += "%7C"; // εδω προσθέτω ειδικό χαρακτήρα που συμβολίζει οτι έχω πολλά destination values
             }
+            cursor.moveToNext();
         }
 
 
@@ -142,7 +145,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         RequestBody body = RequestBody.create(mediaType, "");
 
         Request request = new Request.Builder() // Ως transport driving
-                .url("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origins + "&destinations=" + destinations + "+&key=YOUR_API_KEY")
+                .url("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origins + "&destinations=" + destinations + "+&key=AIzaSyDViPBrxguWqfZgEWpmuTpwRtvvXnG0DZ0")
                 .method("GET", body)
                 .build();
         try

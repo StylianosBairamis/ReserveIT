@@ -30,6 +30,10 @@ public class DBhandler extends SQLiteOpenHelper
     public static final String COLUMN_CHAIRS_AVAILABLE = "num_of_chairs";
     public static final String COLUMN_IMAGE ="image"; //Εδω αποθηκέυω path της αντίστοιχης εικόνας!
 
+    public static final String COLUMN_LONGITUDE = "longitude";
+
+    public static final String COLUMN_LATITUDE = "latitude";
+
     //Για το Table που κρατάει τις Κρατήσεις.
     public static final String DATABASE_TABLE_RESERVATIONS = "reservations";
     public static final String COLUMN_TIMESTAMP = "timestamp";
@@ -53,6 +57,8 @@ public class DBhandler extends SQLiteOpenHelper
                 COLUMN_DESCRIPTION  + " TEXT NOT NULL," +
                 COLUMN_RATING + " REAL DEFAULT '0.0'," +
                 COLUMN_CHAIRS_AVAILABLE + " INTEGER," +
+                COLUMN_LONGITUDE + " FLOAT NOT NULL," +
+                COLUMN_LATITUDE + " FLOAT NOT NULL," +
                 COLUMN_IMAGE+ " TEXT," +
                 "CHECK(type_of_place IN ('Restaurant', 'Bar', 'Cafe'))" + ")";
                 //" UNIQUE(placeName)" + ")";
@@ -90,6 +96,11 @@ public class DBhandler extends SQLiteOpenHelper
         contentValues.put(COLUMN_TYPE_OF_PLACE,placeToAdd.getTypeOfPlace());
         contentValues.put(COLUMN_DESCRIPTION,placeToAdd.getDescription());
         contentValues.put(COLUMN_RATING,placeToAdd.getRating());
+
+        contentValues.put(COLUMN_CHAIRS_AVAILABLE, placeToAdd.getNumberOfChairs());
+        contentValues.put(COLUMN_LONGITUDE,placeToAdd.getLongitude());
+        contentValues.put(COLUMN_LATITUDE, placeToAdd.getLatitude());
+
 
         contentValues.put(COLUMN_IMAGE, pathToFile + ".jpg" );//Περίεχει το Path για την εικόνα του Place
 
