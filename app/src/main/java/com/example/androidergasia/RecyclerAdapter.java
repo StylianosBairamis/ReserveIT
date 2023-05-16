@@ -36,8 +36,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private static Cursor cursor = null;
     private static MatrixCursor matrixCursor = null;
     private static Context context = null;
-    private static double currentLongitude = 40.633052; // Συντεταγμένες απο Ημιώροφο βιολογίας
-    private static double currentLatitude = 22.957192;
+
+    private static double currentLatitude = 40.633052; // Συντεταγμένες απο Ημιώροφο βιολογίας
+    private static double currentLongitude = 22.957192;
 
     public RecyclerAdapter(DBhandler DBhandler,Context context,String typeOfPlaceToSearch)
     {
@@ -50,7 +51,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         GetDistanceTask getDistanceTask = new GetDistanceTask();
         getDistanceTask.execute();
     }
-
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView itemImage;
@@ -74,13 +74,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 {
                     int position = getAdapterPosition();
 
-                    matrixCursor.moveToFirst();
+                    cursor.moveToFirst();
 
-                    matrixCursor.move(position);
+                    cursor.move(position);
 
                     Intent intent = new Intent(context, ActivityForFragment.class);
 
-                    intent.putExtra("name", matrixCursor.getString(0));//Στέλνω το name
+                    intent.putExtra("name", cursor.getString(0));//Στέλνω το name
 
                     context.startActivity(intent);
                 }
@@ -110,7 +110,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         //Δες τα υπόλοιπα που γυρνάει!
 
-        holder.itemImage.setImageBitmap(DBhandler.readImageFromInternalStorage(cursor.getString(7)));
+       // holder.itemImage.setImageBitmap(DBhandler.readImageFromInternalStorage(cursor.getString(7)));
 
     }
 
@@ -124,14 +124,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     {
         String destinations = "", origins = "";
 
-        origins = currentLongitude + "%2C" + currentLatitude;
+        origins = currentLatitude + "%2C" + currentLongitude;
 
         cursor.moveToFirst();
 
         for(int i = 0 ; i < cursor.getCount();i++)
         {
-            destinations += cursor.getDouble(5) + "%2C"; //%2C είναι το ',' στα URL Εδω προσθέτω longitude
-            destinations += cursor.getDouble(6); // εδώ προσθέτω latitude
+            destinations += cursor.getDouble(5) + "%2C"; //%2C είναι το ',' στα URL Εδω προσθέτω latitude
+            destinations += cursor.getDouble(6); // εδώ προσθέτω longitude
 
             if(i != cursor.getCount() - 1)//Στο τελευταίο value δεν βάζω τον ειδικό χαρακτήρα.
             {
@@ -236,24 +236,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             matrixCursor.addRow(row);
         }
-    }
-    public class GetDistanceTask extends AsyncTask<Void, Void, Void>
-    {
-        private ArrayList<Integer> listOfIndexes = null;
-        @Override
-        protected Void doInBackground(Void... voids)
-        {
-            listOfIndexes = makeRequest();
 
-            return null;
+        //cursor.close();
+
+        cursor = matrixCursor;
+
+    }
+    public class GetDistanceTask extends AsyncTask<Void, Void, ArrayList<Integer>>
+    {
+        @Override
+        protected ArrayList<Integer> doInBackground(Void... voids)
+        {
+            ArrayList<Integer> listOfIndexes = makeRequest();
+
+            return listOfIndexes;
         }
 
         @Override
-        protected void onPostExecute(Void unused)
+        protected void onPostExecute(ArrayList<Integer> listOfIndexes)
         {
-            super.onPostExecute(unused);
+            super.onPostExecute(listOfIndexes);
             changeIndexesOfCursor(listOfIndexes);
             notifyDataSetChanged();
         }
+
     }
 }

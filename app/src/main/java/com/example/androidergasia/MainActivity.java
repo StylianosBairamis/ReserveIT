@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
         List<String> typeOfPlace = new ArrayList<>();
         typeOfPlace.addAll(types);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, typeOfPlace);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, typeOfPlace);// Δες το context
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 

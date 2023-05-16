@@ -39,7 +39,7 @@ public class Place
 //    }
 
 
-    public Place(String name, String description, double rating, int numberOfChairs, double longitude, double latitude, String typeOfPlace) {
+    public Place(String name, String description, double rating, int numberOfChairs, double latitude, double longitude, String typeOfPlace) {
         this.name = name;
         this.description = description;
         this.rating = rating;

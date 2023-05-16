@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -57,8 +56,8 @@ public class DBhandler extends SQLiteOpenHelper
                 COLUMN_DESCRIPTION  + " TEXT NOT NULL," +
                 COLUMN_RATING + " REAL DEFAULT '0.0'," +
                 COLUMN_CHAIRS_AVAILABLE + " INTEGER," +
-                COLUMN_LONGITUDE + " FLOAT NOT NULL," +
                 COLUMN_LATITUDE + " FLOAT NOT NULL," +
+                COLUMN_LONGITUDE + " FLOAT NOT NULL," +
                 COLUMN_IMAGE+ " TEXT," +
                 "CHECK(type_of_place IN ('Restaurant', 'Bar', 'Cafe'))" + ")";
                 //" UNIQUE(placeName)" + ")";
@@ -98,8 +97,8 @@ public class DBhandler extends SQLiteOpenHelper
         contentValues.put(COLUMN_RATING,placeToAdd.getRating());
 
         contentValues.put(COLUMN_CHAIRS_AVAILABLE, placeToAdd.getNumberOfChairs());
-        contentValues.put(COLUMN_LONGITUDE,placeToAdd.getLongitude());
         contentValues.put(COLUMN_LATITUDE, placeToAdd.getLatitude());
+        contentValues.put(COLUMN_LONGITUDE,placeToAdd.getLongitude());
 
         contentValues.put(COLUMN_IMAGE, pathToFile + ".jpg" );//Περίεχει το Path για την εικόνα του Place
 
@@ -116,7 +115,7 @@ public class DBhandler extends SQLiteOpenHelper
     public Cursor findPlaces(String typeOfPlaceToSearch)
     {
         String query = "SELECT "+ COLUMN_NAME + "," +COLUMN_TYPE_OF_PLACE + ","+
-                COLUMN_DESCRIPTION + "," + COLUMN_RATING + ","+COLUMN_CHAIRS_AVAILABLE + "," + COLUMN_LONGITUDE + "," + COLUMN_LATITUDE + ","
+                COLUMN_DESCRIPTION + "," + COLUMN_RATING + ","+COLUMN_CHAIRS_AVAILABLE + "," + COLUMN_LATITUDE + "," + COLUMN_LONGITUDE + ","
                 + COLUMN_IMAGE +
                 " FROM " + DATABASE_TABLE_PLACES +
                 " WHERE " + COLUMN_TYPE_OF_PLACE + " = '" + typeOfPlaceToSearch + "' ";
@@ -191,7 +190,7 @@ public class DBhandler extends SQLiteOpenHelper
 
     public Pair<Float,Float> getCoordinates(String nameForSearch)
     {
-        String query = "SELECT " + COLUMN_LONGITUDE + "," + COLUMN_LATITUDE +
+        String query = "SELECT " + COLUMN_LATITUDE + "," + COLUMN_LONGITUDE +
             " FROM " + DATABASE_TABLE_PLACES +
             " WHERE " + COLUMN_NAME + " = '" + nameForSearch + "' ";
 
