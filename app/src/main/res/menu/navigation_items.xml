@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:title="Home"
+            android:icon="@mipmap/home"
+            android:id="@+id/home" />
+        <item android:title="Close"
+            android:icon="@mipmap/close"
+            android:id="@+id/close"/>
+        <item android:title="Gallery"
+            android:icon="@mipmap/gallery"
+            android:id="@+id/gallery"/>
+    </group>
+</menu>
