@@ -39,6 +39,7 @@
             android:name=".MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -48,10 +49,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
+            android:parentActivityName=".RecyclerViewActivity"
             android:name=".ActivityForFragment"
             android:exported="false" />
+
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".RecyclerViewActivity"
             android:exported="true" />
     </application>

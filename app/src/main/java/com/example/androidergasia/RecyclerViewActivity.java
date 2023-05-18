@@ -31,7 +31,7 @@ public class RecyclerViewActivity extends BaseActivity
 
         Bundle bundle = getIntent().getExtras();
 
-        String searchType = bundle.getString("search");
+        String searchType = bundle.getString("search"); // Τι τύπος μαγαζιου παίρνω απο το main-activity
 
         adapter = new RecyclerAdapter(db,this, searchType);
 
@@ -40,5 +40,14 @@ public class RecyclerViewActivity extends BaseActivity
         Toolbar toolbar = findViewById(R.id.mytoolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button
+
+
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return super.onSupportNavigateUp();
     }
 }

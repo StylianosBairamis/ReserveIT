@@ -6,15 +6,15 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:title="Profile"
+        <item android:title="@string/profile"
             android:icon="@mipmap/person"
             android:id="@+id/person"/>
 
-        <item android:title="Close"
+        <item android:title="@string/favorites"
             android:icon="@mipmap/favorites"
             android:id="@+id/favorite"/>
 
-        <item android:title="Reservations"
+        <item android:title="@string/reservations"
             android:icon="@mipmap/reservation"
             android:id="@+id/reservation"/>
     </group>

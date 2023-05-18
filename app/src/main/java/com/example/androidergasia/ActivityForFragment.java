@@ -1,13 +1,13 @@
 package com.example.androidergasia;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.widget.Toolbar;
 
-public class ActivityForFragment extends AppCompatActivity {
+public class ActivityForFragment extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,14 @@ public class ActivityForFragment extends AppCompatActivity {
 
         fragmentTransaction.add(R.id.fragmentContainerView, blankFragment);
         fragmentTransaction.commit();
+
+        Toolbar toolbar = findViewById(R.id.mytoolbar);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button
+
+
 
     }
 }

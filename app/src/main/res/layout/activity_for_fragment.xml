@@ -7,6 +7,11 @@
     tools:context=".ActivityForFragment"
     android:theme="@style/ToolbarTheme">
 
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="com.example.androidergasia.BlankFragment"

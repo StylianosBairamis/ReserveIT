@@ -6,5 +6,8 @@
     <string name="textViewForDescription">A little description for the place </string>
     <string name="test">The Rusty Spoon is a cozy restaurant that serves delicious meals made from fresh, locally sourced ingredients</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="profile">Profile</string>
+    <string name="favorites">Favorites</string>
+    <string name="reservations">Reservations</string>
 
 </resources>
