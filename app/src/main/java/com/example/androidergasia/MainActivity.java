@@ -1,13 +1,7 @@
 package com.example.androidergasia;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,9 +12,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
 {
     private DrawerLayout drawerLayout;
     private Spinner spinner;
@@ -50,7 +44,7 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.mytoolbar);
 
-        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        toolbar.setNavigationIcon(R.mipmap.burger_menu);
 
         setSupportActionBar(toolbar);
 
@@ -61,6 +55,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        NavigationView navigationView = findViewById(R.id.navView);
+
+        navigationView.setItemIconTintList(null);
 
         spinner = findViewById(R.id.spinner);
 
@@ -91,12 +88,6 @@ public class MainActivity extends AppCompatActivity
 
         button = findViewById(R.id.button);
        // button.setOnClickListener(this::addPlace);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.option_menu,menu);
-        return true;
     }
 
     public void addPlace(View view)
@@ -139,24 +130,25 @@ public class MainActivity extends AppCompatActivity
 
         //Bar places
 
-        place = new Place("Brews & Bites","A trendy bar offering a wide variety of craft beers and delicious bites.",3.0, 100, 40.6403,22.9444,"Cafe");
+        place = new Place("Brews & Bites","A trendy bar offering a wide variety of craft beers and delicious bites.",3.0, 100, 40.6403,22.9444,"Bar");
         db.addPlace(place);
 
-        place = new Place("The Jazz Lounge","An intimate bar known for its live jazz performances and handcrafted cocktails.",3.0,100,40.6328,22.9446,"Cafe");
+        place = new Place("The Jazz Lounge","An intimate bar known for its live jazz performances and handcrafted cocktails.",3.0,100,40.6328,22.9446,"Bar");
         db.addPlace(place);
 
-        place = new Place("Mediterranean Nights"," A rooftop bar with panoramic views, serving Mediterranean-inspired cocktails and tapas",5.0,100,40.6358,22.9417,"Cafe");
+        place = new Place("Mediterranean Nights"," A rooftop bar with panoramic views, serving Mediterranean-inspired cocktails and tapas",5.0,100,40.6358,22.9417,"Bar");
         db.addPlace(place);
 
-        place = new Place("The Whisky Den","A cozy bar specializing in an extensive selection of whiskies and offering a laid-back ambiance.",2.5,100,40.6261,22.9492,"Cafe");
+        place = new Place("The Whisky Den","A cozy bar specializing in an extensive selection of whiskies and offering a laid-back ambiance.",2.5,100,40.6261,22.9492,"Bar");
         db.addPlace(place);
 
-        place = new Place("The Vineyard Terrace","A wine bar featuring a wide range of local and international wines, accompanied by a charming outdoor terrace.",4.0,100,40.6289,22.9467,"Cafe");
+        place = new Place("The Vineyard Terrace","A wine bar featuring a wide range of local and international wines, accompanied by a charming outdoor terrace.",4.0,100,40.6289,22.9467,"Bar");
         db.addPlace(place);
 
     }
 
-    private void importDatabaseFromAssets() {
+    private void importDatabaseFromAssets()
+    {
         try {
 
             String myPath = DB_PATH + DB_NAME;
@@ -183,5 +175,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 }
+
+//TODO add navigation_drawer header
 
 

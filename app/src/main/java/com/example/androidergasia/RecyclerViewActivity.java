@@ -1,16 +1,14 @@
 package com.example.androidergasia;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.database.MatrixCursor;
 import android.os.Bundle;
-import android.view.Menu;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
-public class RecyclerViewActivity extends MainActivity
+
+public class RecyclerViewActivity extends BaseActivity
 {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -35,14 +33,12 @@ public class RecyclerViewActivity extends MainActivity
 
         String searchType = bundle.getString("search");
 
-        adapter = new RecyclerAdapter(db,this,searchType);
+        adapter = new RecyclerAdapter(db,this, searchType);
 
         recyclerView1.setAdapter(adapter);
-    }
 
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.option_menu,menu);
-        return true;
-    }
+        Toolbar toolbar = findViewById(R.id.mytoolbar);
+        setSupportActionBar(toolbar);
 
+    }
 }

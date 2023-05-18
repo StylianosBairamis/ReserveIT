@@ -4,6 +4,5 @@
 
     <item android:title="Settings"
         app:showAsAction="never"/>
-    <item android:title="Item"
-        app:showAsAction="never"/>
+    
 </menu>
