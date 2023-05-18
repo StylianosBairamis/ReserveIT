@@ -120,7 +120,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         try
         {
             String pathToFile = cursor.getString(7);
-            System.out.println(pathToFile+"!!!!!!!!!!!!!!!!!");
 
             InputStream ims = context.getAssets().open("images" + pathToFile);
 

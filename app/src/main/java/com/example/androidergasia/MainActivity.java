@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         button = findViewById(R.id.button);
-        button.setOnClickListener(this::addPlace);
+       // button.setOnClickListener(this::addPlace);
     }
 
     @Override
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
         place = new Place("The Fork & Knife","An elegant restaurant offering gourmet creations and a refined dining experience",0.0,100,40.604812, 22.977449,"Restaurant");
         db.addPlace(place);
 
-        //coffee places
+        //Cafe places
 
         place = new Place("Bean Buzz","Trendy coffee spot with a wide variety of coffee blends. Cozy and modern ambiance",0.0, 100,40.6401,22.9444,"Cafe");
         db.addPlace(place);
@@ -135,6 +135,23 @@ public class MainActivity extends AppCompatActivity
         db.addPlace(place);
 
         place = new Place("Espresso Lane","Charming café specializing in high-quality espresso-based beverages. Cozy seating.",0.0,100,40.6286,22.9497,"Cafe");
+        db.addPlace(place);
+
+        //Bar places
+
+        place = new Place("Brews & Bites","A trendy bar offering a wide variety of craft beers and delicious bites.",3.0, 100, 40.6403,22.9444,"Cafe");
+        db.addPlace(place);
+
+        place = new Place("The Jazz Lounge","An intimate bar known for its live jazz performances and handcrafted cocktails.",3.0,100,40.6328,22.9446,"Cafe");
+        db.addPlace(place);
+
+        place = new Place("Mediterranean Nights"," A rooftop bar with panoramic views, serving Mediterranean-inspired cocktails and tapas",5.0,100,40.6358,22.9417,"Cafe");
+        db.addPlace(place);
+
+        place = new Place("The Whisky Den","A cozy bar specializing in an extensive selection of whiskies and offering a laid-back ambiance.",2.5,100,40.6261,22.9492,"Cafe");
+        db.addPlace(place);
+
+        place = new Place("The Vineyard Terrace","A wine bar featuring a wide range of local and international wines, accompanied by a charming outdoor terrace.",4.0,100,40.6289,22.9467,"Cafe");
         db.addPlace(place);
 
     }

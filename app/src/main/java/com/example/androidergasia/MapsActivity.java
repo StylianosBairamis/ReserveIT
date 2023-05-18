@@ -166,10 +166,7 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
             super.onPostExecute(points);
 
             PolylineOptions polylineOptions = new PolylineOptions().addAll(points);
-            for(int i = 0 ; i < points.size();i++)
-            {
-                System.out.println(points.get(i).latitude + " "  + points.get(i).longitude);
-            }
+
             mMap.addPolyline(polylineOptions);
         }
     }
