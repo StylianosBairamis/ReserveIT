@@ -31,7 +31,6 @@ public class DBhandler extends SQLiteOpenHelper
     public static final String COLUMN_IMAGE ="image"; //Εδω αποθηκέυω path της αντίστοιχης εικόνας!
 
     public static final String COLUMN_LONGITUDE = "longitude";
-
     public static final String COLUMN_LATITUDE = "latitude";
 
     //Για το Table που κρατάει τις Κρατήσεις.
@@ -49,29 +48,29 @@ public class DBhandler extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        String CREATE_PLACE_TABLE = "CREATE TABLE " + DATABASE_TABLE_PLACES + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_NAME + " TEXT NOT NULL," +
-                COLUMN_TYPE_OF_PLACE + " TEXT,"+
-                COLUMN_DESCRIPTION  + " TEXT NOT NULL," +
-                COLUMN_RATING + " REAL DEFAULT '0.0'," +
-                COLUMN_CHAIRS_AVAILABLE + " INTEGER," +
-                COLUMN_LATITUDE + " FLOAT NOT NULL," +
-                COLUMN_LONGITUDE + " FLOAT NOT NULL," +
-                COLUMN_IMAGE+ " TEXT," +
-                "CHECK(type_of_place IN ('Restaurant', 'Bar', 'Cafe'))" + ")";
-                //" UNIQUE(placeName)" + ")";
-
-        String CREATE_RESERVATIONS_TABLE = "CREATE TABLE " + DATABASE_TABLE_RESERVATIONS + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_TIMESTAMP + " TEXT NOT NULL," +
-                COLUMN_NUMBER_OF_PEOPLE + " INTEGER NOT NULL," +
-                COLUMN_TRACK_PLACE + " INTEGER," +
-                " FOREIGN KEY(id_of_place) REFERENCES places(_id)" +
-                ")";
-
-        db.execSQL(CREATE_PLACE_TABLE);
-        db.execSQL(CREATE_RESERVATIONS_TABLE);
+//        String CREATE_PLACE_TABLE = "CREATE TABLE " + DATABASE_TABLE_PLACES + "("
+//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+//                + COLUMN_NAME + " TEXT NOT NULL," +
+//                COLUMN_TYPE_OF_PLACE + " TEXT,"+
+//                COLUMN_DESCRIPTION  + " TEXT NOT NULL," +
+//                COLUMN_RATING + " REAL DEFAULT '0.0'," +
+//                COLUMN_CHAIRS_AVAILABLE + " INTEGER," +
+//                COLUMN_LATITUDE + " FLOAT NOT NULL," +
+//                COLUMN_LONGITUDE + " FLOAT NOT NULL," +
+//                COLUMN_IMAGE+ " TEXT," +
+//                "CHECK(type_of_place IN ('Restaurant', 'Bar', 'Cafe'))" + ")";
+//                //" UNIQUE(placeName)" + ")";
+//
+//        String CREATE_RESERVATIONS_TABLE = "CREATE TABLE " + DATABASE_TABLE_RESERVATIONS + "("
+//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                COLUMN_TIMESTAMP + " TEXT NOT NULL," +
+//                COLUMN_NUMBER_OF_PEOPLE + " INTEGER NOT NULL," +
+//                COLUMN_TRACK_PLACE + " INTEGER," +
+//                " FOREIGN KEY(id_of_place) REFERENCES places(_id)" +
+//                ")";
+//
+//        db.execSQL(CREATE_PLACE_TABLE);
+//        db.execSQL(CREATE_RESERVATIONS_TABLE);
     }
 
     @Override
@@ -89,7 +88,6 @@ public class DBhandler extends SQLiteOpenHelper
     public void addPlace(Place placeToAdd)
     {
         ContentValues contentValues = new ContentValues();//KEY-VALUE ΔΟΜΗ
-        String pathToFile = freeFromSpaces(placeToAdd.getName()); //Αφαίρεση κενών.
 
         contentValues.put(COLUMN_NAME, placeToAdd.getName());
         contentValues.put(COLUMN_TYPE_OF_PLACE,placeToAdd.getTypeOfPlace());
@@ -100,7 +98,9 @@ public class DBhandler extends SQLiteOpenHelper
         contentValues.put(COLUMN_LATITUDE, placeToAdd.getLatitude());
         contentValues.put(COLUMN_LONGITUDE,placeToAdd.getLongitude());
 
-        contentValues.put(COLUMN_IMAGE, pathToFile + ".jpg" );//Περίεχει το Path για την εικόνα του Place
+        String pathToFile = "/"+placeToAdd.getTypeOfPlace() + "/" + freeFromSpaces(placeToAdd.getName()) + ".jpg";
+
+        contentValues.put(COLUMN_IMAGE, pathToFile);//Περίεχει το Path για την εικόνα του Place
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.insert(DATABASE_TABLE_PLACES,null, contentValues);
@@ -122,7 +122,9 @@ public class DBhandler extends SQLiteOpenHelper
 
         SQLiteDatabase db = getReadableDatabase();
 
-        return db.rawQuery(query, null);
+        Cursor cursorForReturn = db.rawQuery(query, null);
+
+        return cursorForReturn;
     }
 
     /**

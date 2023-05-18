@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="ToolbarTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
 
         <item name="android:textColorPrimary">
             @android:color/holo_blue_light

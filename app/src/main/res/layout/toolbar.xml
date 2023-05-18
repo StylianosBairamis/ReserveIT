@@ -6,11 +6,15 @@
     android:id="@+id/mytoolbar"
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
-    android:theme="@style/ToolbarTheme"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
-    app:title="Drawer"
-    app:navigationIcon="@mipmap/ic_launcher">
+    app:title="Drawer">
 
 </androidx.appcompat.widget.Toolbar>
+
+<!--    android:theme="@style/ToolbarTheme"-->
+<!--    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+
+<!--μαυρο background-->
