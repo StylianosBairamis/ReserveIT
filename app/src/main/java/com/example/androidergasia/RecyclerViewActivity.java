@@ -27,8 +27,6 @@ public class RecyclerViewActivity extends BaseActivity
 
         DBhandler db = new DBhandler(this,null,null,1);
 
-        MapsActivity.setDBHandler(db);
-
         Bundle bundle = getIntent().getExtras();
 
         String searchType = bundle.getString("search"); // Τι τύπος μαγαζιου παίρνω απο το main-activity

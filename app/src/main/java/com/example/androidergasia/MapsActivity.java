@@ -39,8 +39,6 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
 
     private Pair<Float ,Float> coordinates = null;
 
-    private static DBhandler DBhandler = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +70,7 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
 
         String nameOfPlace = bundle.getString("name");
 
-        coordinates = DBhandler.getCoordinates(nameOfPlace);
+        coordinates = Controller.getDBhandler().getCoordinates(nameOfPlace);
 
         LatLng coordinatesOfPlace = new LatLng(coordinates.first, coordinates.second);
 
@@ -82,23 +80,13 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
         LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);
 
         mMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
 
-
-//        mMap.addPolyline(new PolylineOptions()
-//                .clickable(true)
-//                .add(currentLocation, coordinatesOfPlace));  Λειτουργεί αλλα κάνει γραμμη.
 
         MyTask myTask = new MyTask(coordinatesOfPlace,currentLocation);
         myTask.execute();
 
     }
-
-    public static void setDBHandler(DBhandler DBhandlerForSet)
-    {
-        DBhandler = DBhandlerForSet;
-    }
-
 
     private class MyTask extends AsyncTask<Void,Void, ArrayList<LatLng>>
     {

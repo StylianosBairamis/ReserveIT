@@ -49,8 +49,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
         this.context = context;
 
-        MapsActivity.setDBHandler(DBhandler);
-
         GetDistanceTask getDistanceTask = new GetDistanceTask();
         getDistanceTask.execute();
     }
