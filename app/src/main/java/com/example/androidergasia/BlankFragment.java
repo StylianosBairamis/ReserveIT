@@ -1,13 +1,11 @@
 package com.example.androidergasia;
 
 import android.annotation.SuppressLint;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -21,10 +19,10 @@ import android.text.format.DateFormat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -40,6 +38,7 @@ public class BlankFragment extends Fragment
     TextView numOfPersons;
     ImageButton imageButton;
     static String nameOfPlace;
+
     private boolean selected = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,10 +108,11 @@ public class BlankFragment extends Fragment
             @Override
             public void afterTextChanged(Editable editable)
             {
-               // boolean toEnable = numOfPersons.getText() != "0" && ; TODO
-                //submit.setEnabled(timePicked.length() > 0); // Αν έχει επιλεχθεί ώρα, έχει μπεί τιμή στο editText
+                submit.setEnabled(timePicked.length() > 0); // Αν έχει επιλεχθεί ώρα, έχει μπεί τιμή στο editText
             }
         });
+
+
 
         showLocation = view.findViewById(R.id.locationShow);
 
@@ -142,6 +142,10 @@ public class BlankFragment extends Fragment
         }
 
         imageButton.setOnClickListener(this::addToFavorite);
+
+
+
+
 
         return view;
     }
@@ -201,6 +205,10 @@ public class BlankFragment extends Fragment
         },currentTime.get(Calendar.HOUR_OF_DAY),currentTime.get(Calendar.MINUTE), DateFormat.is24HourFormat(getActivity()));
 
         timePickerDialog.show();
+    }
+
+    public void setNameOfPlace(String nameOfPlace) {
+        this.nameOfPlace = nameOfPlace;
     }
 
     public void addToFavorite(View view)

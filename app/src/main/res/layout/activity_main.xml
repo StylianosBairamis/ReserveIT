@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#2A2C39">
+        android:background="@color/white">
 
         <include layout="@layout/toolbar" />
 
@@ -32,8 +32,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="120dp"
                     android:layout_weight="1"
-                    android:text="Select a type"
-                    android:textColor="@color/white"
+                    android:text="@string/select_a_type"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
                     android:layout_width="162dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="332dp"
-                    android:backgroundTint="#018D65"
+                    android:backgroundTint="#979797"
                     android:text="Button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mytoolbar"
-    android:background="?attr/colorPrimary"
+    android:background="@color/white"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
-    app:title="Drawer">
+    app:title="Menu">
 
 </androidx.appcompat.widget.Toolbar>
 
