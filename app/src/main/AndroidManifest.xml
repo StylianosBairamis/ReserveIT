@@ -59,6 +59,11 @@
             android:parentActivityName=".MainActivity"
             android:name=".RecyclerViewActivity"
             android:exported="true" />
+
+        <activity
+            android:parentActivityName=".MainActivity"
+            android:name=".FavoritesActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

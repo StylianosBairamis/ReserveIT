@@ -2,43 +2,35 @@ package com.example.androidergasia;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends BaseActivity
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     private DrawerLayout drawerLayout;
     private Spinner spinner;
     private Button button;
 
-//    private String DB_PATH = "/data/data/com.example.androidergasia/databases/";
-//
-//    private String DB_NAME = "myAPP.db";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-       // importDatabaseFromAssets();
 
         drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -58,6 +50,8 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = findViewById(R.id.navView);
 
         navigationView.setItemIconTintList(null);
+
+        navigationView.setNavigationItemSelectedListener(this);
 
         spinner = findViewById(R.id.spinner);
 
@@ -149,6 +143,25 @@ public class MainActivity extends BaseActivity
         db.addPlace(place);
 
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    {
+
+        System.out.println("Hello!");
+
+        int id = item.getItemId();
+
+        if(id == R.id.favorite)
+        {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
+        }
+        DrawerLayout drawer = findViewById(R.id.drawerLayout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true ;
+    }
+
 
 //    private void importDatabaseFromAssets()
 //    {

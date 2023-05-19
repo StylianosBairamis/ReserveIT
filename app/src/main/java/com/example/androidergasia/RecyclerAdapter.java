@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Pair;
@@ -27,7 +26,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -43,14 +41,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private static double currentLatitude = 40.633052; // Συντεταγμένες απο Ημιώροφο βιολογίας
     private static double currentLongitude = 22.957192;
 
-    public RecyclerAdapter(DBhandler DBhandler,Context context,String typeOfPlaceToSearch)
+    public RecyclerAdapter(Context context, String typeOfPlaceToSearch, Boolean forSearch)
     {
-        this.DBhandler = DBhandler;
-        cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
+        //this.DBhandler = DBhandler;
+
+        this.DBhandler = Controller.getDBhandler();
+
+        //cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
+
         this.context = context;
 
-        GetDistanceTask getDistanceTask = new GetDistanceTask();
-        getDistanceTask.execute();
+        if(forSearch)
+        {
+            cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
+
+            GetDistanceTask getDistanceTask = new GetDistanceTask();
+            getDistanceTask.execute();
+        }
+        else
+        {
+            cursor = this.DBhandler.getFavoritePlaces();
+        }
+
+//        GetDistanceTask getDistanceTask = new GetDistanceTask();
+//        getDistanceTask.execute();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

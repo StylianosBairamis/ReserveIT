@@ -25,13 +25,13 @@ public class RecyclerViewActivity extends BaseActivity
 
         recyclerView1.setLayoutManager(linearLayoutManager);
 
-        DBhandler db = new DBhandler(this,null,null,1);
+        //DBhandler db = new DBhandler(this,null,null,1);
 
         Bundle bundle = getIntent().getExtras();
 
         String searchType = bundle.getString("search"); // Τι τύπος μαγαζιου παίρνω απο το main-activity
 
-        adapter = new RecyclerAdapter(db,this, searchType);
+        adapter = new RecyclerAdapter(this, searchType, true);
 
         recyclerView1.setAdapter(adapter);
 
@@ -39,8 +39,6 @@ public class RecyclerViewActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button
-
-
 
     }
 

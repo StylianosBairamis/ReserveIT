@@ -139,13 +139,13 @@ public class DBhandler extends SQLiteOpenHelper
     {
         if(oldVersion < NEW_VERSION)
         {
-            String CREATE_FAVORITE_TABLE = " CREATE TABLE " + DATABASE_TABLE_FAVORITE + "("
+            String CREATE_FAVORITE_TABLE = " CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE_FAVORITE + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_FAVOURITE_PLACE_ID + " INTEGER NOT NULL, " +
                     " FOREIGN KEY(" + COLUMN_FAVOURITE_PLACE_ID + ") REFERENCES places(_id)" +
                     ")";
 
-            String CREATE_RESERVATIONS_TABLE = "CREATE TABLE " + DATABASE_TABLE_RESERVATIONS + "("
+            String CREATE_RESERVATIONS_TABLE = "CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE_RESERVATIONS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TIMESTAMP + " TEXT NOT NULL," +
                 COLUMN_NUMBER_OF_PEOPLE + " INTEGER NOT NULL," +
@@ -269,7 +269,7 @@ public class DBhandler extends SQLiteOpenHelper
         db.close();
     }
 
-    public void removePlaceToFavorite(String nameForDelete)
+    public void removePlaceFromFavorite(String nameForDelete)
     {
         SQLiteDatabase db = getReadableDatabase();
 
@@ -293,6 +293,19 @@ public class DBhandler extends SQLiteOpenHelper
 
         db.close();
 
+    }
+
+    public Cursor getFavoritePlaces()
+    {
+        String query ="SELECT "+ COLUMN_NAME + "," +COLUMN_TYPE_OF_PLACE + ","+
+        COLUMN_DESCRIPTION + "," + COLUMN_RATING + ","+COLUMN_CHAIRS_AVAILABLE + "," + COLUMN_LATITUDE + "," + COLUMN_LONGITUDE + ","
+                + COLUMN_IMAGE +
+                " FROM " + DATABASE_TABLE_PLACES + " INNER JOIN " + DATABASE_TABLE_FAVORITE +
+                " ON "+ DATABASE_TABLE_PLACES+"._id" + "=" + DATABASE_TABLE_FAVORITE + ".id_of_place";
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        return db.rawQuery(query,null);
     }
 
 }

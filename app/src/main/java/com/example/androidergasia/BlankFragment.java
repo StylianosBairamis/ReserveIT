@@ -114,9 +114,6 @@ public class BlankFragment extends Fragment
         imageButton.setOnClickListener(this::addToFavorite);
 
 
-
-
-
         return view;
     }
 
@@ -192,7 +189,7 @@ public class BlankFragment extends Fragment
         else
         {
             imageButton.setImageResource(R.mipmap.favorite_empty);
-            Controller.getDBhandler().removePlaceToFavorite(nameOfPlace);
+            Controller.getDBhandler().removePlaceFromFavorite(nameOfPlace);
        }
 
     }
