@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#2A2C39">
 
         <include layout="@layout/toolbar" />
 
@@ -29,33 +30,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="120dp"
                     android:layout_weight="1"
                     android:text="Select a type"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/button"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/button"
                     android:layout_width="162dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="234dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="109dp"
+                    android:layout_marginBottom="332dp"
+                    android:backgroundTint="#018D65"
                     android:text="Button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Spinner
                     android:id="@+id/spinner"
-                    android:layout_width="0dp"
+                    android:layout_width="191dp"
                     android:layout_height="wrap_content"
-                    android:contentDescription="selection place type"
+                    android:layout_marginTop="204dp"
+                    android:layout_marginEnd="108dp"
+                    android:background="@drawable/spinner_bg"
+                    android:contentDescription="@string/selection_place_type"
                     android:minHeight="48dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView"
-                    app:layout_constraintStart_toEndOf="@+id/textView" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
