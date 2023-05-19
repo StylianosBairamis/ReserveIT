@@ -33,7 +33,7 @@ import okhttp3.Response;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
 {
-    private DBhandler DBhandler = null;
+    private DBhandler DBhandler;
     private static Cursor cursor = null;
     private static MatrixCursor matrixCursor = null;
     private static Context context = null;
@@ -272,10 +272,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             matrixCursor.addRow(row);
         }
 
-        //cursor.close();
-
         cursor = matrixCursor;
-
     }
     public class GetDistanceTask extends AsyncTask<Void, Void, ArrayList<Integer>>
     {

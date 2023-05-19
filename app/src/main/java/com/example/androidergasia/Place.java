@@ -2,7 +2,6 @@ package com.example.androidergasia;
 
 public class Place
 {
-    private int _id;
     private String name;
     private String description;
     private double rating;
@@ -31,14 +30,6 @@ public class Place
 
     private String typeOfPlace;
 
-//    public Place(int _id, String name,String description,String typeOfPlace) {
-//        this._id = _id;
-//        this.name = name;
-//        this.description = description;
-//        this.typeOfPlace = typeOfPlace;
-//    }
-
-
     public Place(String name, String description, double rating, int numberOfChairs, double latitude, double longitude, String typeOfPlace) {
         this.name = name;
         this.description = description;
@@ -61,15 +52,8 @@ public class Place
         this.name = name;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }
