@@ -7,10 +7,12 @@
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/ToolbarTheme"
+    android:backgroundTint="#2A2C39"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
-    app:title="Drawer"
+    app:title="Menu"
+    app:titleTextColor="@color/white"
     app:navigationIcon="@mipmap/ic_launcher">
 
 </androidx.appcompat.widget.Toolbar>

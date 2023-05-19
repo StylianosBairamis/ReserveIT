@@ -42,27 +42,40 @@ public class BlankFragment extends Fragment
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
 
-        submit = view.findViewById(R.id.submit);
+        submit = view.findViewById(R.id.button);
 
         submit.setOnClickListener(this::submit);
 
         submit.setEnabled(false);
 
-        time = view.findViewById(R.id.timePicker);
+        TextView numOfPersons = view.findViewById(R.id.numOfPersons);
 
-        time.setOnClickListener(this::pickTime);
+        Button incrementButton = view.findViewById(R.id.increment);
+        Button decrementButton = view.findViewById(R.id.decrement);
 
-        timePicked = view.findViewById(R.id.timeShow);
+        incrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int num = Integer.parseInt(numOfPersons.getText().toString());
+                numOfPersons.setText(String.valueOf(num++));
+            }
+        });
 
-        timePicked.setEnabled(false);
+        decrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int num = Integer.parseInt(numOfPersons.getText().toString());
+                numOfPersons.setText(String.valueOf(num--));
+            }
+        });
 
-        numOfPersons = view.findViewById(R.id.numOfPersons);
 
         numOfPersons.addTextChangedListener(new TextWatcher() {
             @Override
@@ -84,13 +97,7 @@ public class BlankFragment extends Fragment
             }
         });
 
-        numOfPersons.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                numOfPersons.setHint("");
-                return false;
-            }
-        });
+
 
         showLocation = view.findViewById(R.id.locationShow);
 

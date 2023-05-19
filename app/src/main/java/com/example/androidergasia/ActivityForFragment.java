@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class ActivityForFragment extends AppCompatActivity {
 
@@ -19,6 +22,7 @@ public class ActivityForFragment extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         BlankFragment blankFragment =  new BlankFragment();
+
 
         Bundle bundle = getIntent().getExtras();
 

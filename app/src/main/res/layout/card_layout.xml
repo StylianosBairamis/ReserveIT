@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    card_view:cardBackgroundColor="#ffffff"
+
+    card_view:cardBackgroundColor="#2A2C39"
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="4dp"
     card_view:contentPadding="16dp">
@@ -33,7 +34,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="tempText"
-            android:textColor="#000000"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +48,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="tempText"
-            android:textColor="#000000"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
             card_view:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -62,6 +63,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:numStars="5"
+            android:progressBackgroundTint="@color/white"
             card_view:layout_constraintBottom_toBottomOf="@+id/typeOfPlace"
             card_view:layout_constraintStart_toEndOf="@+id/typeOfPlace" />
 
@@ -71,6 +73,7 @@
             android:layout_height="wrap_content"
             android:text="@string/test"
             android:maxLines="3"
+            android:textColor="@color/white"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/imageView"
