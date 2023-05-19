@@ -73,41 +73,69 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="40dp"
-        android:contentDescription="@string/profile"
-        android:src="@mipmap/favorite_empty"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="225dp"
+            android:layout_marginBottom="56dp"
+            android:background="@color/white"
+            android:contentDescription="@string/profile"
+            android:src="@mipmap/favorite_empty"
+            app:layout_constraintBottom_toTopOf="@+id/locationShow"
+            app:layout_constraintStart_toStartOf="@+id/textView3" />
 
-    <EditText
-        android:id="@+id/numOfPersons"
-        android:layout_width="50dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="24dp"
-        android:ems="10"
-        android:hint="e.g 2"
-        android:inputType="number"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageButton
+            android:id="@+id/decrement"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="40dp"
+            android:contentDescription="@string/book"
+            android:padding="8dp"
+            android:src="@mipmap/add"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/numOfPersons"
+            app:layout_constraintEnd_toStartOf="@+id/numOfPersons"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/number_of_people_for_the_reservation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationShow" />
+        <TextView
+            android:id="@+id/numOfPersons"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <ImageButton
+            android:id="@+id/increment"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="13dp"
+            android:contentDescription="@string/book"
+            android:padding="8dp"
+            android:src="@mipmap/remove"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/numOfPersons"
+            app:layout_constraintStart_toEndOf="@+id/numOfPersons"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/number_of_people_for_the_reservation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationShow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

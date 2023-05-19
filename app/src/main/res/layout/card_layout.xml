@@ -65,7 +65,7 @@
             android:layout_marginTop="8dp"
             android:numStars="5"
             android:progressTint="@color/black"
-            android:progressBackgroundTint="@color/white"
+            android:progressBackgroundTint="@color/black"
             card_view:layout_constraintBottom_toBottomOf="@+id/typeOfPlace"
             card_view:layout_constraintStart_toEndOf="@+id/typeOfPlace" />
 

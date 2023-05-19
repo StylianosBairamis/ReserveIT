@@ -62,32 +62,32 @@ public class BlankFragment extends Fragment
 
         numOfPersons = view.findViewById(R.id.numOfPersons);
 
-//        Button incrementButton = view.findViewById(R.id.increment);
-//
-//        Button decrementButton = view.findViewById(R.id.decrement);
+        ImageButton incrementButton = view.findViewById(R.id.increment);
 
-//        incrementButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                int num = Integer.parseInt(numOfPersons.getText().toString());
-//                num++;
-//                numOfPersons.setText(num + "");
-//            }
-//        });
-//
-//        decrementButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int num = Integer.parseInt(numOfPersons.getText().toString());
-//                if(num != 0)
-//                {
-//                    num--;
-//                    numOfPersons.setText(num +"");
-//                }
-//            }
-//        });
+        ImageButton decrementButton = view.findViewById(R.id.decrement);
 
+        incrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                int num = Integer.parseInt(numOfPersons.getText().toString());
+                num++;
+                numOfPersons.setText(num + "");
+            }
+        });
+
+
+        decrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int num = Integer.parseInt(numOfPersons.getText().toString());
+                if(num != 0)
+                {
+                    num--;
+                    numOfPersons.setText(num +"");
+                }
+            }
+        });
 
         numOfPersons.addTextChangedListener(new TextWatcher() {
             @Override
@@ -105,11 +105,9 @@ public class BlankFragment extends Fragment
             @Override
             public void afterTextChanged(Editable editable)
             {
-                submit.setEnabled(timePicked.length() > 0); // Αν έχει επιλεχθεί ώρα, έχει μπεί τιμή στο editText
+                //submit.setEnabled(timePicked.length() > 0); // Αν έχει επιλεχθεί ώρα, έχει μπεί τιμή στο editText
             }
         });
-
-
 
         showLocation = view.findViewById(R.id.locationShow);
 
