@@ -5,11 +5,16 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity
+{
+    private DBhandler DBhandler;
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+
         getMenuInflater().inflate(R.menu.options_menu, menu);
         return true;
     }
@@ -19,4 +24,6 @@ public class BaseActivity extends AppCompatActivity {
     {
         return true;
     }
+
+
 }

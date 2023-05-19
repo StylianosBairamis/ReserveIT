@@ -1,6 +1,5 @@
 package com.example.androidergasia;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +24,7 @@ public class ActivityForFragment extends BaseActivity {
         blankFragment.setNameOfPlace(bundle.getString("name")); // Παιρνάω το name στο blankFragment
 
         fragmentTransaction.add(R.id.fragmentContainerView, blankFragment);
+
         fragmentTransaction.commit();
 
         Toolbar toolbar = findViewById(R.id.mytoolbar);
@@ -32,8 +32,6 @@ public class ActivityForFragment extends BaseActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button
-
-
 
     }
 }

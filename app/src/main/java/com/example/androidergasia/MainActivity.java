@@ -29,16 +29,16 @@ public class MainActivity extends BaseActivity
     private Spinner spinner;
     private Button button;
 
-    private String DB_PATH = "/data/data/com.example.androidergasia/databases/";
-
-    private String DB_NAME = "myAPP.db";
+//    private String DB_PATH = "/data/data/com.example.androidergasia/databases/";
+//
+//    private String DB_NAME = "myAPP.db";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        importDatabaseFromAssets();
+       // importDatabaseFromAssets();
 
         drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -88,6 +88,9 @@ public class MainActivity extends BaseActivity
 
         button = findViewById(R.id.button);
        // button.setOnClickListener(this::addPlace);
+
+        DBhandler db = new DBhandler(this,null,null,2);
+
     }
 
     public void addPlace(View view)
@@ -147,33 +150,33 @@ public class MainActivity extends BaseActivity
 
     }
 
-    private void importDatabaseFromAssets()
-    {
-        try {
-
-            String myPath = DB_PATH + DB_NAME;
-            File file = new File(myPath);
-            if(file.exists())
-            {
-                return;
-            }
-            InputStream inputStream = getAssets().open("myAPP.db");
-            File outputFile = getDatabasePath("myAPP.db");
-            OutputStream outputStream = new FileOutputStream(outputFile);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
-            }
-            outputStream.flush();
-            outputStream.close();
-            inputStream.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+//    private void importDatabaseFromAssets()
+//    {
+//        try {
+//
+//            String myPath = DB_PATH + DB_NAME;
+//            File file = new File(myPath);
+//            if(file.exists())
+//            {
+//                return;
+//            }
+//            InputStream inputStream = getAssets().open("myAPP.db");
+//            File outputFile = getDatabasePath("myAPP.db");
+//            OutputStream outputStream = new FileOutputStream(outputFile);
+//            byte[] buffer = new byte[1024];
+//            int length;
+//            while ((length = inputStream.read(buffer)) > 0) {
+//                outputStream.write(buffer, 0, length);
+//            }
+//            outputStream.flush();
+//            outputStream.close();
+//            inputStream.close();
+//        }
+//        catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
 //TODO add navigation_drawer header
