@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity
 
         spinner = findViewById(R.id.spinner);
 
-        ArrayList<String> types = new ArrayList(Arrays.asList("","Restaurant", "Bar", "Cafe"));
+        ArrayList<String> types = new ArrayList(Arrays.asList("Select","Restaurant", "Bar", "Cafe"));
 
         List<String> typeOfPlace = new ArrayList<>();
         typeOfPlace.addAll(types);
@@ -178,6 +178,8 @@ public class MainActivity extends BaseActivity
 //        }
 //    }
 }
+
+
 
 //TODO add navigation_drawer header
 

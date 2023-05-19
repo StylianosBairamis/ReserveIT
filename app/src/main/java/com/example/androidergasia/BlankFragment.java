@@ -58,27 +58,7 @@ public class BlankFragment extends Fragment
 
         submit.setEnabled(false);
 
-        TextView numOfPersons = view.findViewById(R.id.numOfPersons);
-
-        Button incrementButton = view.findViewById(R.id.increment);
-        Button decrementButton = view.findViewById(R.id.decrement);
-
-        incrementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int num = Integer.parseInt(numOfPersons.getText().toString());
-                numOfPersons.setText(String.valueOf(num++));
-            }
-        });
-
-        decrementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int num = Integer.parseInt(numOfPersons.getText().toString());
-                numOfPersons.setText(String.valueOf(num--));
-            }
-        });
-
+        EditText numOfPersons = view.findViewById(R.id.numOfPersons);
 
         numOfPersons.addTextChangedListener(new TextWatcher() {
             @Override

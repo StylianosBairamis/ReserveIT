@@ -22,7 +22,6 @@ public class ActivityForFragment extends BaseActivity {
 
         BlankFragment blankFragment = new BlankFragment();
 
-
         Bundle bundle = getIntent().getExtras();
 
         blankFragment.setNameOfPlace(bundle.getString("name")); // Παιρνάω το name στο blankFragment
