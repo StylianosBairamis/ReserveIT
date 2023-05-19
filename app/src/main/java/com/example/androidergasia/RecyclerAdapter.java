@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,8 +48,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.DBhandler = DBhandler;
         cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
         this.context = context;
-
-        MapsActivity.setDBHandler(DBhandler);
 
         GetDistanceTask getDistanceTask = new GetDistanceTask();
         getDistanceTask.execute();
@@ -103,14 +104,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.
 
-        holder.itemName.setText(cursor.getString(0));
-        holder.typeOfPlace.setText(cursor.getString(1));
+        String name = cursor.getString(0);
+        String type = cursor.getString(1);
+
+        holder.itemName.setText(name);
+        holder.typeOfPlace.setText(type);
         holder.itemDescription.setText(cursor.getString(2));
         holder.ratingBar.setRating(cursor.getFloat(3));
 
         //Δες τα υπόλοιπα που γυρνάει!
 
-       // holder.itemImage.setImageBitmap(DBhandler.readImageFromInternalStorage(cursor.getString(7)));
+        //holder.itemImage.setImageBitmap(DBhandler.readImageFromInternalStorage(cursor.getString(7)));\
+        try
+        {
+            String pathToFile = cursor.getString(7);
+
+            InputStream ims = context.getAssets().open("images" + pathToFile);
+
+            Drawable d = Drawable.createFromStream(ims, null);
+
+            holder.itemImage.setImageDrawable(d);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
@@ -228,11 +246,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             Object[] row = new Object[cursor.getColumnCount()];
 
-            row[0] = cursor.getString(0);
-            row[1] = cursor.getString(1);
-            row[2] = cursor.getString(2);
-            row[3] = cursor.getFloat(3);
-            row[4] = cursor.getString(4);
+            row[0] = cursor.getString(0); //name
+            row[1] = cursor.getString(1); //type
+            row[2] = cursor.getString(2); //description
+            row[3] = cursor.getFloat(3); //rating
+            row[4] = cursor.getString(4); //chairs
+            row[5] = cursor.getDouble(5); //latitude
+            row[6] = cursor.getDouble(5); //longitude
+            row[7] = cursor.getString(7); //pathToImage
 
             matrixCursor.addRow(row);
         }

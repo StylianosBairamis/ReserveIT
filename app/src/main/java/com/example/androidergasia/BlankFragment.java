@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -34,8 +35,10 @@ public class BlankFragment extends Fragment
     Button showLocation;
     TextView timePicked;
     EditText numOfPersons;
-
+    ImageButton imageButton;
     static String nameOfPlace;
+
+    private boolean selected = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,10 +111,16 @@ public class BlankFragment extends Fragment
 
                 Intent intent = new Intent(getContext(),MapsActivity.class);
 
-                intent.putExtra("name",nameOfPlace);
+                intent.putExtra("name", nameOfPlace);
                 startActivity(intent);
             }
         });
+
+        imageButton = view.findViewById(R.id.imageButton);
+
+        imageButton.setOnClickListener(this::addToFavorite);
+
+
 
 
 
@@ -140,6 +149,7 @@ public class BlankFragment extends Fragment
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 alertDialog.setTitle("Success");
                 alertDialog.setMessage("Your reservation has been made!");
+                //na mpei kodikas reservations
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -176,5 +186,22 @@ public class BlankFragment extends Fragment
 
     public void setNameOfPlace(String nameOfPlace) {
         this.nameOfPlace = nameOfPlace;
+    }
+
+    public void addToFavorite(View view)
+    {
+        selected = !selected;
+
+        if(selected)
+        {
+            imageButton.setImageResource(R.mipmap.favorite_filled);
+            Controller.getDBhandler().addPlaceToFavorite(nameOfPlace);
+        }
+        else
+        {
+            imageButton.setImageResource(R.mipmap.favorite_empty);
+            Controller.getDBhandler().removePlaceToFavorite(nameOfPlace);
+       }
+
     }
 }

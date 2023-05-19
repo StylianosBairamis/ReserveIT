@@ -5,14 +5,17 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:title="Home"
-            android:icon="@mipmap/home"
-            android:id="@+id/home" />
-        <item android:title="Close"
-            android:icon="@mipmap/close"
-            android:id="@+id/close"/>
-        <item android:title="Gallery"
-            android:icon="@mipmap/gallery"
-            android:id="@+id/gallery"/>
+
+        <item android:title="@string/profile"
+            android:icon="@mipmap/person"
+            android:id="@+id/person"/>
+
+        <item android:title="@string/favorites"
+            android:icon="@mipmap/favorites"
+            android:id="@+id/favorite"/>
+
+        <item android:title="@string/reservations"
+            android:icon="@mipmap/reservation"
+            android:id="@+id/reservation"/>
     </group>
 </menu>

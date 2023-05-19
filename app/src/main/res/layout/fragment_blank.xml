@@ -64,7 +64,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="72dp"
             android:background="@drawable/text_border_whitespace"
             android:text="@string/place_name"
             android:textColor="@color/white"
@@ -110,6 +110,16 @@
             app:layout_constraintEnd_toStartOf="@+id/increment"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toEndOf="@+id/decrement" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:contentDescription="@string/profile"
+            android:src="@mipmap/favorite_empty"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -1,13 +1,14 @@
 package com.example.androidergasia;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.database.MatrixCursor;
 import android.os.Bundle;
+import androidx.appcompat.widget.Toolbar;
 
-public class RecyclerViewActivity extends AppCompatActivity
+
+public class RecyclerViewActivity extends BaseActivity
 {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -26,16 +27,25 @@ public class RecyclerViewActivity extends AppCompatActivity
 
         DBhandler db = new DBhandler(this,null,null,1);
 
-        MapsActivity.setDBHandler(db);
-
         Bundle bundle = getIntent().getExtras();
 
-        String searchType = bundle.getString("search");
+        String searchType = bundle.getString("search"); // Τι τύπος μαγαζιου παίρνω απο το main-activity
 
-        adapter = new RecyclerAdapter(db,this,searchType);
+        adapter = new RecyclerAdapter(db,this, searchType);
 
         recyclerView1.setAdapter(adapter);
 
+        Toolbar toolbar = findViewById(R.id.mytoolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button
+
+
+
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        return super.onSupportNavigateUp();
+    }
 }
