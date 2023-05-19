@@ -133,11 +133,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         {
             String pathToFile = cursor.getString(7);
 
-            InputStream ims = context.getAssets().open("images" + pathToFile);
+            InputStream inputStream = context.getAssets().open("images" + pathToFile);
 
-            Drawable d = Drawable.createFromStream(ims, null);
+            Drawable drawable = Drawable.createFromStream(inputStream, null);
 
-            holder.itemImage.setImageDrawable(d);
+            holder.itemImage.setImageDrawable(drawable);
         }
         catch (IOException e)
         {

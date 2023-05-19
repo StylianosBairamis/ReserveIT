@@ -308,4 +308,29 @@ public class DBhandler extends SQLiteOpenHelper
         return db.rawQuery(query,null);
     }
 
+    public int isInFavoriteTable (String nameOfPlace)
+    {
+        DBhandler handler = Controller.getDBhandler();
+
+        SQLiteDatabase db = handler.getReadableDatabase();
+
+        String query = "SELECT " + "_id" +
+                " FROM " + "places " +
+                " WHERE " + "placeName" + " = '" + nameOfPlace + "' ";
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        cursor.moveToFirst();
+
+        int id = cursor.getInt(0);
+
+        query = "SELECT " + " * " +
+                " FROM " + " favorite " +
+                " WHERE " + "id_of_place = " + id ;
+
+        cursor = db.rawQuery(query, null);
+
+        return cursor.getCount();
+    }
+
 }

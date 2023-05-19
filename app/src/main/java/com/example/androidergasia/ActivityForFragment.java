@@ -4,10 +4,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 public class ActivityForFragment extends BaseActivity {
 
@@ -20,12 +17,11 @@ public class ActivityForFragment extends BaseActivity {
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        BlankFragment blankFragment = new BlankFragment();
-
-
         Bundle bundle = getIntent().getExtras();
 
-        blankFragment.setNameOfPlace(bundle.getString("name")); // Παιρνάω το name στο blankFragment
+        String nameOfPlace = bundle.getString("name"); // Παιρνάω το name στο blankFragment
+
+        BlankFragment blankFragment = new BlankFragment(nameOfPlace);
 
         fragmentTransaction.add(R.id.fragmentContainerView, blankFragment);
 

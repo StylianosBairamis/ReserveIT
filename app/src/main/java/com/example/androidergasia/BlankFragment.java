@@ -1,11 +1,13 @@
 package com.example.androidergasia;
 
 import android.annotation.SuppressLint;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -19,10 +21,10 @@ import android.text.format.DateFormat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -31,25 +33,29 @@ import android.widget.TimePicker;
 public class BlankFragment extends Fragment
 {
     Button submit;
-    Button time;
+
+    CalendarView calendarView;
     Button showLocation;
     TextView timePicked;
-    EditText numOfPersons;
+    TextView numOfPersons;
     ImageButton imageButton;
     static String nameOfPlace;
-
     private boolean selected = false;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public BlankFragment() {}
+    public BlankFragment(String nameOfPlace)
+    {
+        this.nameOfPlace = nameOfPlace;
     }
 
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
 
         submit = view.findViewById(R.id.button);
@@ -58,16 +64,19 @@ public class BlankFragment extends Fragment
 
         submit.setEnabled(false);
 
-        TextView numOfPersons = view.findViewById(R.id.numOfPersons);
+        numOfPersons = view.findViewById(R.id.numOfPersons);
 
         Button incrementButton = view.findViewById(R.id.increment);
+
         Button decrementButton = view.findViewById(R.id.decrement);
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 int num = Integer.parseInt(numOfPersons.getText().toString());
-                numOfPersons.setText(String.valueOf(num++));
+                num++;
+                numOfPersons.setText(num + "");
             }
         });
 
@@ -75,7 +84,11 @@ public class BlankFragment extends Fragment
             @Override
             public void onClick(View view) {
                 int num = Integer.parseInt(numOfPersons.getText().toString());
-                numOfPersons.setText(String.valueOf(num--));
+                if(num != 0)
+                {
+                    num--;
+                    numOfPersons.setText(num +"");
+                }
             }
         });
 
@@ -96,11 +109,10 @@ public class BlankFragment extends Fragment
             @Override
             public void afterTextChanged(Editable editable)
             {
-                submit.setEnabled(timePicked.length() > 0); // Αν έχει επιλεχθεί ώρα, έχει μπεί τιμή στο editText
+               // boolean toEnable = numOfPersons.getText() != "0" && ; TODO
+                //submit.setEnabled(timePicked.length() > 0); // Αν έχει επιλεχθεί ώρα, έχει μπεί τιμή στο editText
             }
         });
-
-
 
         showLocation = view.findViewById(R.id.locationShow);
 
@@ -118,8 +130,18 @@ public class BlankFragment extends Fragment
 
         imageButton = view.findViewById(R.id.imageButton);
 
-        imageButton.setOnClickListener(this::addToFavorite);
+        int value = Controller.getDBhandler().isInFavoriteTable(nameOfPlace);
 
+        if(value == 0 )
+        {
+            imageButton.setImageResource(R.mipmap.favorite_empty);
+        }
+        else
+        {
+            imageButton.setImageResource(R.mipmap.favorite_filled);
+        }
+
+        imageButton.setOnClickListener(this::addToFavorite);
 
         return view;
     }
@@ -181,15 +203,31 @@ public class BlankFragment extends Fragment
         timePickerDialog.show();
     }
 
-    public void setNameOfPlace(String nameOfPlace) {
-        this.nameOfPlace = nameOfPlace;
-    }
-
     public void addToFavorite(View view)
     {
-        selected = !selected;
+//        DBhandler handler = Controller.getDBhandler();
+//
+//        SQLiteDatabase db = handler.getReadableDatabase();
+//
+//        String query = "SELECT " + "_id" +
+//                " FROM " + "places " +
+//                " WHERE " + "placeName" + " = '" + nameOfPlace + "' ";
+//
+//        Cursor cursor = db.rawQuery(query,null);
+//
+//        cursor.moveToFirst();
+//
+//        int id = cursor.getInt(0);
+//
+//        query = "SELECT " + " * " +
+//                " FROM " + " favorite " +
+//                " WHERE " + "id_of_place = " + id ;
+//
+//        cursor = db.rawQuery(query, null);
 
-        if(selected)
+        int value = Controller.getDBhandler().isInFavoriteTable(nameOfPlace);
+
+        if(value == 0)
         {
             imageButton.setImageResource(R.mipmap.favorite_filled);
             Controller.getDBhandler().addPlaceToFavorite(nameOfPlace);
@@ -198,7 +236,9 @@ public class BlankFragment extends Fragment
         {
             imageButton.setImageResource(R.mipmap.favorite_empty);
             Controller.getDBhandler().removePlaceFromFavorite(nameOfPlace);
+            //Controller.notifyRecyclerAdapter();
        }
-
     }
+
+
 }

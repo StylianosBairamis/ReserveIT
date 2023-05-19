@@ -12,12 +12,13 @@ public class FavoritesActivity extends BaseActivity
 {
 
     RecyclerView recyclerView;
+
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
 
     @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.favorite_activity);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_View1);
@@ -27,6 +28,8 @@ public class FavoritesActivity extends BaseActivity
         recyclerView.setLayoutManager(linearLayoutManager);
 
         adapter = new RecyclerAdapter(this, "", false);
+
+        Controller.setRecyclerAdapter(adapter);
 
         recyclerView.setAdapter(adapter);
 

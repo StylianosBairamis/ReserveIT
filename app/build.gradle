@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.example.androidergasia"
         minSdk 24
-        targetSdk 33
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -45,7 +45,7 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.0' // για http request
 
-    implementation 'com.google.maps:google-maps-services:0.18.0' //για το google Directions
+    implementation 'com.google.maps:google-maps-services:2.2.0' //για το google Directions
 
     implementation 'com.google.maps.android:android-maps-utils:3.4.0'// PolyUtil?
 
