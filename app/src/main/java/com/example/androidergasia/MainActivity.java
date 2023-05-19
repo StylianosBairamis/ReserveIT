@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         spinner = findViewById(R.id.spinner);
 
-        ArrayList<String> types = new ArrayList(Arrays.asList("Select","Restaurant", "Bar", "Cafe"));
+        ArrayList<String> types = new ArrayList(Arrays.asList("","Restaurant", "Bar", "Cafe"));
 
         List<String> typeOfPlace = new ArrayList<>();
         typeOfPlace.addAll(types);
@@ -157,6 +157,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             Intent intent = new Intent(this, FavoritesActivity.class);
             startActivity(intent);
         }
+
         DrawerLayout drawer = findViewById(R.id.drawerLayout);
         drawer.closeDrawer(GravityCompat.START);
         return true ;

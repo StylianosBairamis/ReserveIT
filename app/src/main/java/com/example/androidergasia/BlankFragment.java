@@ -9,20 +9,17 @@ import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -65,31 +62,31 @@ public class BlankFragment extends Fragment
 
         numOfPersons = view.findViewById(R.id.numOfPersons);
 
-        Button incrementButton = view.findViewById(R.id.increment);
+//        Button incrementButton = view.findViewById(R.id.increment);
+//
+//        Button decrementButton = view.findViewById(R.id.decrement);
 
-        Button decrementButton = view.findViewById(R.id.decrement);
-
-        incrementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                int num = Integer.parseInt(numOfPersons.getText().toString());
-                num++;
-                numOfPersons.setText(num + "");
-            }
-        });
-
-        decrementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int num = Integer.parseInt(numOfPersons.getText().toString());
-                if(num != 0)
-                {
-                    num--;
-                    numOfPersons.setText(num +"");
-                }
-            }
-        });
+//        incrementButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view)
+//            {
+//                int num = Integer.parseInt(numOfPersons.getText().toString());
+//                num++;
+//                numOfPersons.setText(num + "");
+//            }
+//        });
+//
+//        decrementButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int num = Integer.parseInt(numOfPersons.getText().toString());
+//                if(num != 0)
+//                {
+//                    num--;
+//                    numOfPersons.setText(num +"");
+//                }
+//            }
+//        });
 
 
         numOfPersons.addTextChangedListener(new TextWatcher() {

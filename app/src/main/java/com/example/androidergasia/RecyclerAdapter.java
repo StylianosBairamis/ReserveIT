@@ -37,7 +37,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private static Cursor cursor = null;
     private static MatrixCursor matrixCursor = null;
     private static Context context = null;
-
     private static double currentLatitude = 40.633052; // Συντεταγμένες απο Ημιώροφο βιολογίας
     private static double currentLongitude = 22.957192;
 
