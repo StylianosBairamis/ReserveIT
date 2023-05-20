@@ -30,6 +30,7 @@
             android:layout_marginTop="36dp"
             android:backgroundTint="#979797"
             android:text="@string/book"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
