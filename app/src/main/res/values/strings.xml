@@ -38,5 +38,7 @@
     <string name="english_el">Αγγλικά</string>
     <string name="select_a_type_el">Διαλέξτε τύπο μαγαζιού</string>
     <string name="time_of_reservation">Time of reservation</string>
+    <string name="looking_for_the_perfect_place_to_dine_drink_or_unwind_reserveit_is_here_to_simplify_your_reservation_experience_with_our_user_friendly_app_you_can_effortlessly_discover_reserve_and_explore_a_wide_range_of_bars_restaurants_and_cafes">Looking for the perfect place to dine, drink, or unwind? ReserveIT is here to simplify your reservation experience. With our user-friendly app, you can effortlessly discover, reserve, and explore a wide range of bars, restaurants, and cafes.</string>
+    <string name="about_reserveit">About ReserveIT</string>
 
 </resources>

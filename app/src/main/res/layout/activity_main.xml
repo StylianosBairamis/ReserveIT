@@ -64,6 +64,29 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="307dp"
+                    android:layout_height="104dp"
+                    android:layout_marginTop="156dp"
+                    android:text="@string/looking_for_the_perfect_place_to_dine_drink_or_unwind_reserveit_is_here_to_simplify_your_reservation_experience_with_our_user_friendly_app_you_can_effortlessly_discover_reserve_and_explore_a_wide_range_of_bars_restaurants_and_cafes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button" />
+
+                <TextView
+                    android:id="@+id/aboutReserveit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="112dp"
+                    android:text="@string/about_reserveit"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>
