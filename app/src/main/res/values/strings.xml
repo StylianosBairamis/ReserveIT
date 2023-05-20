@@ -37,5 +37,6 @@
     <string name="greek_el">Ελληνικά</string>
     <string name="english_el">Αγγλικά</string>
     <string name="select_a_type_el">Διαλέξτε τύπο μαγαζιού</string>
+    <string name="time_of_reservation">Time of reservation</string>
 
 </resources>

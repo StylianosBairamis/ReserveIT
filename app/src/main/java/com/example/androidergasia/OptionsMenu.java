@@ -24,7 +24,7 @@ public class OptionsMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.toolbar);
+        setContentView(R.layout.activity_main);
 
 
 
@@ -40,11 +40,11 @@ public class OptionsMenu extends AppCompatActivity {
         // ...
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
         return true;
-    }
+    }*/
 
     boolean isGreekSelected = false;
     @Override
@@ -103,10 +103,6 @@ public class OptionsMenu extends AppCompatActivity {
             mi4.setTitle(R.string.greek_el);
             mi5.setTitle(R.string.english_el);
             // Update other UI elements with Greek translations
-
-        } else {
-            // Set the English translations for the UI elements
-            // Update other UI elements with English translations
 
         }
     }

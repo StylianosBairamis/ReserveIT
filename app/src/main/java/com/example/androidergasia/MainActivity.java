@@ -1,13 +1,16 @@
 package com.example.androidergasia;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +42,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         toolbar.setNavigationIcon(R.mipmap.burger_menu);
 
+        TextView selectATypeEl = findViewById(R.id.textView);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String selectedLanguage = sharedPrefs.getString("language", "english"); // Assuming "english" is the default language
+        if (selectedLanguage.equals("greek")) {
+            selectATypeEl.setText(getString(R.string.select_a_type_el));
+        } else {
+            selectATypeEl.setText(getString(R.string.select_a_type));
+        }
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

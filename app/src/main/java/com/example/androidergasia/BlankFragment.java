@@ -25,18 +25,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.Date;
+
 public class BlankFragment extends Fragment
 {
     Button submit;
 
     CalendarView calendarView;
     Button showLocation;
+    Button timePickerButton;
     TextView timePicked;
     TextView numOfPersons;
     ImageButton imageButton;
     static String nameOfPlace;
 
     private boolean selected = false;
+    int selectedHour;
+    int selectedMinute;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,15 +54,15 @@ public class BlankFragment extends Fragment
     }
 
     @SuppressLint("MissingInflatedId")
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
 
         submit = view.findViewById(R.id.button);
-
+        timePickerButton = view.findViewById(R.id.timeButton);
         submit.setOnClickListener(this::submit);
-
         submit.setEnabled(false);
 
         numOfPersons = view.findViewById(R.id.numOfPersons);
@@ -86,6 +91,13 @@ public class BlankFragment extends Fragment
                     num--;
                     numOfPersons.setText(num +"");
                 }
+            }
+        });
+
+        timePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickTime(timePickerButton);
             }
         });
 
@@ -242,6 +254,5 @@ public class BlankFragment extends Fragment
             //Controller.notifyRecyclerAdapter();
        }
     }
-
 
 }
