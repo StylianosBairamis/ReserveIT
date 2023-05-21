@@ -229,6 +229,7 @@ public class BlankFragment extends Fragment
                 int randomNumber = random.nextInt(9000) + 1000;
 
                 Reservation reservation = new Reservation(randomNumber, 1, datePicked, timePicked, Integer.parseInt(numOfPersons.getText().toString()));
+                Controller.getDBhandler().addReservation(reservation);
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
