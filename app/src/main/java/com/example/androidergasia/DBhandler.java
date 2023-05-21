@@ -266,7 +266,6 @@ public class DBhandler extends SQLiteOpenHelper
 
         db.insert(DATABASE_TABLE_FAVORITE,null, contentValues);
 
-        db.close();
     }
 
     public void removePlaceFromFavorite(String nameForDelete)
@@ -290,8 +289,6 @@ public class DBhandler extends SQLiteOpenHelper
         String[] conditionArgs = {idOfPlace+""}; // Replace "123" with the value of the ID to delete
 
         db.delete(DATABASE_TABLE_FAVORITE,condition,conditionArgs);
-
-        db.close();
 
     }
 
