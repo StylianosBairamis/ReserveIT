@@ -33,7 +33,6 @@ import java.util.Locale;
 public class BlankFragment extends Fragment
 {
     private Button submit;
-
     private CalendarView calendarView;
     private Button showLocation;
     private Button pickTime;
@@ -41,10 +40,11 @@ public class BlankFragment extends Fragment
     private ImageButton incrementButton;
     private ImageButton decrementButton;
     private ImageView favorite;
+
+    private TextView nameView;
     private static String nameOfPlace;
     private String timePicked;
     private String datePicked;
-
     private boolean[] validRequest ;
 
     int selectedHour;
@@ -89,6 +89,10 @@ public class BlankFragment extends Fragment
         favorite = view.findViewById(R.id.favoriteIcon);
 
         calendarView = view.findViewById(R.id.calendarView);
+
+        nameView = view.findViewById(R.id.placeName);
+
+        nameView.setText(nameOfPlace);
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
