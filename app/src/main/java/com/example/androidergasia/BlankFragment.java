@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.text.format.DateFormat;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import android.widget.TimePicker;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 public class BlankFragment extends Fragment
 {
@@ -222,6 +225,10 @@ public class BlankFragment extends Fragment
 
                 alertDialog.setMessage(message);
                 //na mpei kodikas reservations
+                Random random = new Random();
+                int randomNumber = random.nextInt(9000) + 1000;
+
+                Reservation reservation = new Reservation(randomNumber, 1, datePicked, timePicked, Integer.parseInt(numOfPersons.getText().toString()));
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -281,16 +288,22 @@ public class BlankFragment extends Fragment
        }
     }
 
-    private void checkValidness()
-    {
-       for(int i = 0 ; i < validRequest.length; i++)
-       {
-           if(!validRequest[i])
-           {
-               submit.setEnabled(false);
-               return;
-           }
-       }
-       submit.setEnabled(true);
+    private void checkValidness() {
+        boolean allValid = true;
+
+        for (boolean isValid : validRequest) {
+            if (!isValid) {
+                allValid = false;
+                break;
+            }
+        }
+
+        submit.setEnabled(allValid);
+
+        if (allValid) {
+            submit.setBackgroundColor(Color.GREEN);
+        } else {
+            submit.setBackgroundColor(Color.rgb(227, 227, 227));
+        }
     }
 }

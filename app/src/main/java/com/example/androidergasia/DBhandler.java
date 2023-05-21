@@ -35,7 +35,10 @@ public class DBhandler extends SQLiteOpenHelper
 
     //Για το Table που κρατάει τις Κρατήσεις.
     public static final String DATABASE_TABLE_RESERVATIONS = "reservations";
-    public static final String COLUMN_TIMESTAMP = "timestamp";
+
+    public static final String COLUMN_RESERVATION_ID = "reservation_id";
+    public static final String COLUMN_DATE = "reservation_date";
+    public static final String COLUMN_RESERVATION_TIME = "reservation_time";
     public static final String COLUMN_TRACK_PLACE = "id_of_place";
     public static final String COLUMN_NUMBER_OF_PEOPLE = "number_of_people";
     private static Context context ;
@@ -147,7 +150,8 @@ public class DBhandler extends SQLiteOpenHelper
 
             String CREATE_RESERVATIONS_TABLE = "CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE_RESERVATIONS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_TIMESTAMP + " TEXT NOT NULL," +
+                COLUMN_DATE + " TEXT NOT NULL," +
+                    COLUMN_RESERVATION_TIME + " TEXT NOT NULL," +
                 COLUMN_NUMBER_OF_PEOPLE + " INTEGER NOT NULL," +
                 COLUMN_TRACK_PLACE + " INTEGER," +
                 " FOREIGN KEY(id_of_place) REFERENCES places(_id)" +
@@ -328,6 +332,20 @@ public class DBhandler extends SQLiteOpenHelper
         cursor = db.rawQuery(query, null);
 
         return cursor.getCount();
+    }
+
+    public void addReservation(Reservation reservation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_RESERVATION_ID, reservation.getId());
+        values.put(COLUMN_TRACK_PLACE, reservation.getPlaceId());
+        values.put(COLUMN_DATE, reservation.getDate());
+        values.put(COLUMN_RESERVATION_TIME, reservation.getDateTime());
+        values.put(COLUMN_NUMBER_OF_PEOPLE, reservation.getNumberOfPeople());
+        // Add more columns and their corresponding values as needed
+
+        db.insert("reservations", null, values);
+        db.close();
     }
 
 }

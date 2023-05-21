@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
-<!--    <string name="textViewForDescription">A little description for the place </string>-->
-<!--    <string name="test">The Rusty Spoon is a cozy restaurant that serves delicious meals made from fresh, locally sourced ingredients</string>-->
-<!--    <string name="title_activity_maps">MapsActivity</string>-->
-<!--    <string name="profile">Το προφίλ μου</string>-->
-<!--    <string name="favorites">Αγαπημένα</string>-->
-<!--    <string name="reservations">Κρατήσεις</string>-->
+    <string name="app_name">Μέρη</string>
+    <string name="item_title">Τίτλος αντικειμένου</string>
+    <string name="hello_blank_fragment">Γεια σας κενό αντικείμενο</string>
+    <string name="textViewForDescription">Μια μικρή περιγραφή για το μέρος</string>
+    <string name="test">Το Rusty Spoon είναι ένα άνετο εστιατόριο που προσφέρει νόστιμα γεύματα από φρέσκα, τοπικά προμηθευμένα υλικά</string>
+    <string name="title_activity_maps">Δραστηριότητα Χάρτες</string>
+    <string name="selection_place_type">Επιλογή τύπου μέρους</string>
+    <string name="book">Κράτηση</string>
+    <string name="view_place_location">Προβολή τοποθεσίας μέρους</string>
+    <string name="choose_a_date_for_your_reservation">Επιλέξτε μια ημερομηνία για την κράτησή σας</string>
+    <string name="place_name">Όνομα μέρους</string>
+    <string name="profile">Προφίλ</string>
+    <string name="favorites">Αγαπημένα</string>
+    <string name="reservations">Κρατήσεις</string>
+    <string name="number_of_people_for_the_reservation">Αριθμός ατόμων για την κράτηση</string>
+    <string name="greek">Ελληνικά</string>
+    <string name="english">Αγγλικά</string>
+    <string name="select_a_type">Διαλέξτε τύπο μαγαζιού</string>
+    <string name="time_of_reservation">Ώρα της κράτησης</string>
+    <string name="about_the_app">Ξεκλειδώστε τον κόσμο των κρατήσεων. Κάντε κράτηση στο γαστρονομικό σας ταξίδι άνετα. Απολαύστε τα καλύτερα εστιατόρια, ποτά και καφετέριες. Κάντε κράτηση για το τραπέζι σας, απολαύστε και αφεθείτε. Αναβαθμίστε τις εμπειρίες σας στο φαγητό σήμερα.</string>
+    <string name="about_text_view">Σχετικά με το ReserveIT</string>
+    <string name="Settings">Ρυθμίσεις</string>
+    <string name="choose_your_preferred_language">Διάλεξε την γλώσσα που θες</string>
 </resources>

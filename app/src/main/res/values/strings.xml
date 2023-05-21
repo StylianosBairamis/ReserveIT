@@ -18,27 +18,11 @@
     <string name="greek">Greek</string>
     <string name="english">English</string>
     <string name="select_a_type">Select a type</string>
-
-    <string name="app_name_el">Μέρη</string>
-    <string name="item_title_el">Τίτλος αντικειμένου</string>
-    <string name="hello_blank_fragment_el">Γεια σας κενό αντικείμενο</string>
-    <string name="textViewForDescription_el">Μια μικρή περιγραφή για το μέρος</string>
-    <string name="test_el">Το Rusty Spoon είναι ένα άνετο εστιατόριο που προσφέρει νόστιμα γεύματα από φρέσκα, τοπικά προμηθευμένα υλικά</string>
-    <string name="title_activity_maps_el">Δραστηριότητα Χάρτες</string>
-    <string name="selection_place_type_el">Επιλογή τύπου μέρους</string>
-    <string name="book_el">Κράτηση</string>
-    <string name="view_place_location_el">Προβολή τοποθεσίας μέρους</string>
-    <string name="choose_a_date_for_your_reservation_el">Επιλέξτε μια ημερομηνία για την κράτησή σας</string>
-    <string name="place_name_el">Όνομα μέρους</string>
-    <string name="profile_el">Προφίλ</string>
-    <string name="favorites_el">Αγαπημένα</string>
-    <string name="reservations_el">Κρατήσεις</string>
-    <string name="number_of_people_for_the_reservation_el">Αριθμός ατόμων για την κράτηση</string>
-    <string name="greek_el">Ελληνικά</string>
-    <string name="english_el">Αγγλικά</string>
-    <string name="select_a_type_el">Διαλέξτε τύπο μαγαζιού</string>
     <string name="time_of_reservation">Time of reservation</string>
     <string name="about_the_app">Unlock the world of reservations. Book your culinary journey effortlessly. Savor the finest dining, drinks, and cafes. Reserve your table, sip, and indulge. Elevate your dining experiences today.</string>
     <string name="about_text_view">About ReserveIT</string>
+    <string name="Settings">Settings</string>
+    <string name="choose_your_preferred_language">Choose your preferred language</string>
+
 
 </resources>
