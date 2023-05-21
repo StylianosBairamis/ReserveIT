@@ -42,11 +42,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public RecyclerAdapter(Context context, String typeOfPlaceToSearch, Boolean forSearch)
     {
-        //this.DBhandler = DBhandler;
 
         this.DBhandler = Controller.getDBhandler();
-
-        //cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
 
         this.context = context;
 
@@ -127,12 +124,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         //Δες τα υπόλοιπα που γυρνάει!
 
-        //holder.itemImage.setImageBitmap(DBhandler.readImageFromInternalStorage(cursor.getString(7)));\
-        try
-        {
-            String pathToFile = cursor.getString(7);
 
-            InputStream inputStream = context.getAssets().open("images" + pathToFile);
+        String pathToFile = cursor.getString(7);
+
+        try(InputStream inputStream = context.getAssets().open("images" + pathToFile))
+        {
+            //String pathToFile = cursor.getString(7);
+
+            //InputStream inputStream = context.getAssets().open("images" + pathToFile);
 
             Drawable drawable = Drawable.createFromStream(inputStream, null);
 
@@ -148,7 +147,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public int getItemCount() {
         return cursor.getCount();
-        //return cursor.getCount();
     }
 
     private ArrayList<Integer> makeRequest()
@@ -287,7 +285,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         protected void onPostExecute(ArrayList<Integer> listOfIndexes)
         {
             super.onPostExecute(listOfIndexes);
+
             changeIndexesOfCursor(listOfIndexes);
+
             notifyDataSetChanged();
         }
 
