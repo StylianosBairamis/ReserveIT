@@ -90,13 +90,12 @@
             android:id="@+id/decrement"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="40dp"
             android:contentDescription="@string/book"
             android:padding="8dp"
             android:src="@mipmap/add"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/numOfPersons"
             app:layout_constraintEnd_toStartOf="@+id/numOfPersons"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -119,12 +118,12 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="41dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="16dp"
             android:contentDescription="@string/book"
             android:padding="8dp"
             android:src="@mipmap/remove"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/numOfPersons"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
             app:layout_constraintStart_toEndOf="@+id/numOfPersons"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -142,12 +141,21 @@
             android:id="@+id/timeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time_of_reservation"
             android:backgroundTint="#979797"
+            android:text="@string/time_of_reservation"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/numOfPersons" />
+
+        <ImageView
+            android:id="@+id/favoriteIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="61dp"
+            android:src="@mipmap/favorite_empty"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/textView3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

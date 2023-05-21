@@ -28,7 +28,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     //  private Spinner spinner;
-
     private Button button;
     private ChipGroup chipGroup;
     private Toolbar toolbar;
