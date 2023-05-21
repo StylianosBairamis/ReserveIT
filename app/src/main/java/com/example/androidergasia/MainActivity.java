@@ -17,29 +17,66 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener
-{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
-    private Spinner spinner;
-    private Button button;
+    //  private Spinner spinner;
 
+    private Button button;
+    private ChipGroup chipGroup;
+    private Toolbar toolbar;
+
+    private String textOfChip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        button = findViewById(R.id.confirmSearch);
+
+        button.setEnabled(false);
+
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        Toolbar toolbar = findViewById(R.id.mytoolbar);
+        toolbar = findViewById(R.id.mytoolbar);
+
+        chipGroup = findViewById(R.id.chipGroup);
 
         toolbar.setNavigationIcon(R.mipmap.burger_menu);
+        chipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds)
+            {
+                Chip chipSelected = group.findViewById(checkedIds.get(0));
+
+                if(!button.isEnabled())
+                {
+                    button.setEnabled(true);
+                }
+
+                textOfChip = chipSelected.getText().toString();
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(view.getContext(), RecyclerViewActivity.class);
+                intent.putExtra("search", textOfChip);
+                startActivity(intent);
+            }
+        });
+
 
 //        TextView selectATypeEl = findViewById(R.id.textView);
 //        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -93,9 +130,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //        });
 
         //button = findViewById(R.id.button);
-       // button.setOnClickListener(this::addPlace);
+        // button.setOnClickListener(this::addPlace);
 
-        DBhandler db = new DBhandler(this,null,null,2);
+        DBhandler db = new DBhandler(this, null, null, 2);
 
     }
 
@@ -157,54 +194,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //    }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item)
-    {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
 
-        if(id == R.id.favorite)
-        {
+        if (id == R.id.favorite) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawerLayout);
         drawer.closeDrawer(GravityCompat.START);
-        return true ;
+        return true;
     }
 
 
-//    private void importDatabaseFromAssets()
-//    {
-//        try {
-//
-//            String myPath = DB_PATH + DB_NAME;
-//            File file = new File(myPath);
-//            if(file.exists())
-//            {
-//                return;
-//            }
-//            InputStream inputStream = getAssets().open("myAPP.db");
-//            File outputFile = getDatabasePath("myAPP.db");
-//            OutputStream outputStream = new FileOutputStream(outputFile);
-//            byte[] buffer = new byte[1024];
-//            int length;
-//            while ((length = inputStream.read(buffer)) > 0) {
-//                outputStream.write(buffer, 0, length);
-//            }
-//            outputStream.flush();
-//            outputStream.close();
-//            inputStream.close();
-//        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
 }
-
-
-
-//TODO add navigation_drawer header
 
 
