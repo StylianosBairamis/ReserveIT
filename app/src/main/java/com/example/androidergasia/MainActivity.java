@@ -1,16 +1,11 @@
 package com.example.androidergasia;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -21,13 +16,11 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
-    //  private Spinner spinner;
     private Button button;
     private ChipGroup chipGroup;
     private Toolbar toolbar;
@@ -53,14 +46,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds)
             {
-                Chip chipSelected = group.findViewById(checkedIds.get(0));
-
-                if(!button.isEnabled())
+                if(checkedIds.size() != 0)
                 {
-                    button.setEnabled(true);
-                }
+                    Chip chipSelected = group.findViewById(checkedIds.get(0));
 
-                textOfChip = chipSelected.getText().toString();
+                    if(!button.isEnabled())
+                    {
+                        button.setEnabled(true);
+                    }
+
+                    textOfChip = chipSelected.getText().toString();
+                }
             }
         });
 
@@ -98,34 +94,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setItemIconTintList(null);
 
         navigationView.setNavigationItemSelectedListener(this);
-
-//        spinner = findViewById(R.id.spinner);
-//
-//        ArrayList<String> types = new ArrayList(Arrays.asList("","Restaurant", "Bar", "Cafe"));
-//
-//        List<String> typeOfPlace = new ArrayList<>();
-//        typeOfPlace.addAll(types);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, typeOfPlace);// Δες το context
-//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-//        spinner.setAdapter(arrayAdapter);
-//
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-//            {
-//                String itemSelected = parent.getItemAtPosition(position).toString();
-//                if(!itemSelected.equals(""))
-//                {
-//                    Intent intent = new Intent(view.getContext(), RecyclerViewActivity.class);
-//                    intent.putExtra("search",itemSelected);
-//                    startActivity(intent);
-//                }
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//        });
 
         //button = findViewById(R.id.button);
         // button.setOnClickListener(this::addPlace);
