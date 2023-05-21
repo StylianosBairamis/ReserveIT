@@ -31,7 +31,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Button button;
     private ChipGroup chipGroup;
     private Toolbar toolbar;
-
     private String textOfChip;
 
     @Override
