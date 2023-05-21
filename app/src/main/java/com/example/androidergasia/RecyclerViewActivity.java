@@ -45,18 +45,6 @@ public class RecyclerViewActivity extends BaseActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-
-        if (itemId == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         return super.onSupportNavigateUp();
     }

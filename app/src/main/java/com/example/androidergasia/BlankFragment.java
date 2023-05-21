@@ -219,8 +219,7 @@ public class BlankFragment extends Fragment
         this.nameOfPlace = nameOfPlace;
     }
 
-    public void addToFavorite(View view)
-    {
+    public void addToFavorite(View view) {
 //        DBhandler handler = Controller.getDBhandler();
 //
 //        SQLiteDatabase db = handler.getReadableDatabase();
@@ -243,19 +242,14 @@ public class BlankFragment extends Fragment
 
         int value = Controller.getDBhandler().isInFavoriteTable(nameOfPlace);
 
-        if(value == 0)
-        {
+        if (value == 0) {
             imageButton.setImageResource(R.mipmap.favorite_filled);
             Controller.getDBhandler().addPlaceToFavorite(nameOfPlace);
-        }
-        else
-        {
+        } else {
             imageButton.setImageResource(R.mipmap.favorite_empty);
             Controller.getDBhandler().removePlaceFromFavorite(nameOfPlace);
             //Controller.notifyRecyclerAdapter();
-       }
+        }
+
     }
-
-
-
 }
