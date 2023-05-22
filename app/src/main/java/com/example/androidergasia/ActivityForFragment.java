@@ -3,9 +3,7 @@ package com.example.androidergasia;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 
 public class ActivityForFragment extends BaseActivity {
@@ -29,19 +27,12 @@ public class ActivityForFragment extends BaseActivity {
 
         fragmentTransaction.commit();
 
-    }
+        Toolbar toolbar = findViewById(R.id.mytoolbar);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
+        setSupportActionBar(toolbar);
 
-        if(id == R.id.action_settings){
-            Intent intent = new Intent(ActivityForFragment.this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button
 
-        return super.onOptionsItemSelected(item);
     }
 
 }

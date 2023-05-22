@@ -17,11 +17,8 @@ import android.text.TextWatcher;
 import android.text.format.DateFormat;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,9 +27,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toolbar;
-
-import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
@@ -152,29 +146,6 @@ public class BlankFragment extends Fragment
                 checkValidness();
             }
         });
-
-
-//        numOfPersons.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
-//            {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-//            {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable)
-//            {
-//                //submit.setEnabled(timePicked.length() > 0); // Αν έχει επιλεχθεί ώρα, έχει μπεί τιμή στο editText
-//            }
-//        });
-
-       // showLocation = view.findViewById(R.id.locationShow);
 
         showLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -307,9 +278,12 @@ public class BlankFragment extends Fragment
 
         submit.setEnabled(allValid);
 
-        if (allValid) {
+        if (allValid)
+        {
             submit.setBackgroundColor(Color.parseColor("#9C27B0"));
-        } else {
+        }
+        else
+        {
             submit.setBackgroundColor(Color.rgb(227, 227, 227));
         }
     }

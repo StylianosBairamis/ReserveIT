@@ -16,7 +16,6 @@ public class Reservation {
         this.dateTime = dateTime;
         this.numberOfPeople = numberOfPeople;
     }
-
     public int getId(){
         return id;
     }
@@ -41,20 +40,5 @@ public class Reservation {
         this.id = id;
     }
 
-    public void setPlaceId(int placeId){
-        this.placeId = placeId;
-    }
-
-    public void setDate(String  date){
-        this.date = date;
-    }
-
-    public void setDateTime(String dateTime){
-        this.dateTime = dateTime;
-    }
-
-    public void setNumberOfPeople(int numberOfPeople){
-        this.numberOfPeople = numberOfPeople;
-    }
 
 }
