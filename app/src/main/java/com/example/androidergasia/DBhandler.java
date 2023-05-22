@@ -270,6 +270,8 @@ public class DBhandler extends SQLiteOpenHelper
 
         db.insert(DATABASE_TABLE_FAVORITE,null, contentValues);
 
+        db.close();
+
     }
 
     public void removePlaceFromFavorite(String nameForDelete)
@@ -293,6 +295,8 @@ public class DBhandler extends SQLiteOpenHelper
         String[] conditionArgs = {idOfPlace+""}; // Replace "123" with the value of the ID to delete
 
         db.delete(DATABASE_TABLE_FAVORITE,condition,conditionArgs);
+
+        db.close();
 
     }
 
@@ -334,17 +338,17 @@ public class DBhandler extends SQLiteOpenHelper
         return cursor.getCount();
     }
 
-    public void addReservation(Reservation reservation) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void addReservation(Reservation reservation)
+    {
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_RESERVATION_ID, reservation.getId());
+
         values.put(COLUMN_TRACK_PLACE, reservation.getPlaceId());
         values.put(COLUMN_DATE, reservation.getDate());
         values.put(COLUMN_RESERVATION_TIME, reservation.getDateTime());
         values.put(COLUMN_NUMBER_OF_PEOPLE, reservation.getNumberOfPeople());
-        // Add more columns and their corresponding values as needed
 
-        db.insert("reservations", null, values);
+        db.insert(DATABASE_TABLE_RESERVATIONS, null, values);
         db.close();
     }
 
