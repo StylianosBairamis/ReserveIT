@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -96,6 +97,8 @@ public class BlankFragment extends Fragment
         nameView = view.findViewById(R.id.placeName);
 
         nameView.setText(nameOfPlace);
+
+        nameView.setPaintFlags(nameView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override

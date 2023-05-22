@@ -12,120 +12,84 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="294dp"
-            android:layout_height="168dp"
-            android:layout_marginBottom="124dp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:backgroundTint="#EAEAEA"
-            android:text="@string/book"
-            android:textColor="@color/white"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/placeName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/place_name"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/favoriteIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:contentDescription="@string/profile"
+                android:src="@mipmap/favorite_empty" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/locationShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="112dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#979797"
             android:text="@string/view_place_location"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:text="@string/choose_a_date_for_your_reservation"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/calendarView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/placeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/text_border_whitespace"
-            android:text="@string/place_name"
-            android:textColor="@color/black"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="188dp"
-            android:layout_marginBottom="32dp"
-            android:background="@color/white"
-            android:contentDescription="@string/profile"
-            android:src="@mipmap/favorite_empty"
-            app:layout_constraintBottom_toTopOf="@+id/locationShow"
-            app:layout_constraintStart_toStartOf="@+id/placeName" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <ImageButton
             android:id="@+id/decrement"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="40dp"
             android:contentDescription="@string/book"
             android:padding="8dp"
             android:src="@mipmap/add"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/numOfPersons"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <TextView
-            android:id="@+id/numOfPersons"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="115dp"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <ImageButton
             android:id="@+id/increment"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="41dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/book"
             android:padding="8dp"
             android:src="@mipmap/remove"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/textView4"
-            app:layout_constraintStart_toEndOf="@+id/numOfPersons"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/numOfPersons"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/decrement"
+            app:layout_constraintEnd_toStartOf="@+id/increment"
+            app:layout_constraintStart_toEndOf="@+id/decrement"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView4"
@@ -141,21 +105,68 @@
             android:id="@+id/timeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#979797"
             android:text="@string/time_of_reservation"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/increment"
+            app:layout_constraintStart_toStartOf="@+id/decrement"
             app:layout_constraintTop_toBottomOf="@+id/numOfPersons" />
 
-        <ImageView
-            android:id="@+id/favoriteIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="61dp"
-            android:src="@mipmap/favorite_empty"
-            app:layout_constraintBottom_toBottomOf="@+id/placeName"
-            app:layout_constraintStart_toEndOf="@+id/placeName" />
+
+
+        <LinearLayout
+            android:layout_width="318dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeButton">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/choose_a_date_for_your_reservation"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <CalendarView
+                        android:id="@+id/calendarView"
+                        android:layout_width="290dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="16dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:firstDayOfWeek="2" />
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:backgroundTint="#EAEAEA"
+                        android:text="@string/book"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

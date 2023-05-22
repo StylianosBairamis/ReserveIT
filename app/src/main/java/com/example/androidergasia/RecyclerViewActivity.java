@@ -1,6 +1,5 @@
 package com.example.androidergasia;
 
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
-
 
 public class RecyclerViewActivity extends BaseActivity
 {
@@ -38,6 +36,7 @@ public class RecyclerViewActivity extends BaseActivity
         recyclerView1.setAdapter(adapter);
 
         Toolbar toolbar = findViewById(R.id.mytoolbar);
+
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button

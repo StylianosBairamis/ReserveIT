@@ -9,7 +9,7 @@
     <string name="selection_place_type">Επιλογή τύπου μέρους</string>
     <string name="book">Κράτηση</string>
     <string name="view_place_location">Προβολή τοποθεσίας μέρους</string>
-    <string name="choose_a_date_for_your_reservation">Επιλέξτε μια ημερομηνία για την κράτησή σας</string>
+    <string name="choose_a_date_for_your_reservation">Επιλέξτε μια ημερομηνία</string>
     <string name="place_name">Όνομα μέρους</string>
     <string name="profile">Προφίλ</string>
     <string name="favorites">Αγαπημένα</string>
