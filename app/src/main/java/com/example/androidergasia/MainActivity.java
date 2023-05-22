@@ -1,6 +1,10 @@
 package com.example.androidergasia;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 
 
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -57,6 +62,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
 
                     textOfChip = chipSelected.getText().toString();
+                    switch (textOfChip) {
+                        case "Μπάρ":
+                            textOfChip = "Bar";
+                            break;
+                        case "Εστιατόριο":
+                            textOfChip = "Restaurant";
+                            break;
+                        case "Καφέ":
+                            textOfChip = "Cafe";
+                            break;
+                    }
                 }
             }
         });

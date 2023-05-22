@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:paddingStart="16dp"
-                android:text="Select a category"
+                android:text="@string/select_a_category"
                 android:textSize="18sp"
                 />
 
@@ -79,21 +79,21 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bar" />
+                    android:text="@string/bar" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipRestaurant"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Restaurant" />
+                    android:text="@string/restaurant" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipCafe"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cafe" />
+                    android:text="@string/cafe" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="SEARCH"
+                android:text="@string/search"
                />
 
         </LinearLayout>

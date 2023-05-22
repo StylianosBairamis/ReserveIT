@@ -23,6 +23,11 @@
     <string name="about_text_view">About ReserveIT</string>
     <string name="Settings">Settings</string>
     <string name="choose_your_preferred_language">Choose your preferred language</string>
+    <string name="search">SEARCH</string>
+    <string name="bar">Bar</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="cafe">Cafe</string>
+    <string name="select_a_category">Select a category</string>
 
 
 </resources>

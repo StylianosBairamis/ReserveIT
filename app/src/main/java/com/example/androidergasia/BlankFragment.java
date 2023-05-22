@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.text.format.DateFormat;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toolbar;
 
 import java.util.Date;
 import java.util.Locale;
@@ -57,6 +59,7 @@ public class BlankFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public BlankFragment() {}
@@ -305,7 +308,7 @@ public class BlankFragment extends Fragment
         submit.setEnabled(allValid);
 
         if (allValid) {
-            submit.setBackgroundColor(Color.GREEN);
+            submit.setBackgroundColor(Color.parseColor("#9C27B0"));
         } else {
             submit.setBackgroundColor(Color.rgb(227, 227, 227));
         }

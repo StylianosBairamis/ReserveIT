@@ -29,12 +29,6 @@ public class ActivityForFragment extends BaseActivity {
 
         fragmentTransaction.commit();
 
-//        Toolbar toolbar = findViewById(R.id.mytoolbar);
-//
-//        setSupportActionBar(toolbar);
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button
-
     }
 
     @Override
