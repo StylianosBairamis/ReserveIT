@@ -16,14 +16,24 @@ import java.util.ArrayList;
 
 public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservationsRecyclerAdapter.reservationsViewHolder> {
     private Context context;
-    private ArrayList resId, placeId, date, numOfPeople;
+    private Cursor cursor;
+    private DBhandler dBhandler;
 
-    public reservationsRecyclerAdapter(Context context, ArrayList resId, ArrayList placeId, ArrayList date, ArrayList numOfPeople){
+    public reservationsRecyclerAdapter(Context context, Cursor cursor){
         this.context = context;
-        this. resId = resId;
-        this.placeId = placeId;
-        this.date = date;
-        this.numOfPeople = numOfPeople;
+        this.dBhandler = Controller.getDBhandler();
+        this.cursor = cursor;
+    }
+
+    static class reservationsViewHolder extends RecyclerView.ViewHolder {
+        TextView resId, placeId, date, numOfPeople;
+        public reservationsViewHolder(View itemView) {
+            super(itemView);
+            resId = itemView.findViewById(R.id.reservationId);
+            placeId = itemView.findViewById(R.id.placeId);
+            date = itemView.findViewById(R.id.date);
+            numOfPeople = itemView.findViewById(R.id.people);
+        }
     }
 
     @NonNull
@@ -35,26 +45,20 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
 
     @Override
     public void onBindViewHolder(@NonNull reservationsViewHolder holder, int position) {
-        holder.resId.setText(String.valueOf(resId.get(position)));
-        holder.placeId.setText(String.valueOf(placeId.get(position)));
-        holder.date.setText(String.valueOf(date.get(position)));
-        holder.numOfPeople.setText(String.valueOf(numOfPeople.get(position)));
+
+         cursor.moveToFirst();//Παω τον Cursor
+
+         cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.
+
+         holder.resId.setText(cursor.getInt(0));
+         holder.placeId.setText(cursor.getInt(1));
+         holder.date.setText(cursor.getString(2));
+         holder.numOfPeople.setText(cursor.getInt(3));
     }
 
     @Override
     public int getItemCount() {
-        return resId.size();
+        return cursor.getCount();
     }
 
-    static class reservationsViewHolder extends RecyclerView.ViewHolder {
-        TextView resId, placeId, date, numOfPeople;
-        public reservationsViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            resId = itemView.findViewById(R.id.reservationId);
-            placeId = itemView.findViewById(R.id.placeId);
-            date = itemView.findViewById(R.id.date);
-            numOfPeople = itemView.findViewById(R.id.people);
-        }
-    }
 }

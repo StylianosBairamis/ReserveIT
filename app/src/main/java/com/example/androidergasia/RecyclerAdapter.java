@@ -114,6 +114,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String selectedLanguage = sharedPreferences.getString("language", "English");
+
         cursor.moveToFirst();//Παω τον Cursor
 
         cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.

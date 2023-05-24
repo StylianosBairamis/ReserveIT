@@ -20,8 +20,7 @@ import java.util.Objects;
 
 public class ReservationsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    ArrayList<String> date;
-    ArrayList<Integer> resId, placeId, numOfPeople;
+
     DBhandler dBhandler;
     reservationsRecyclerAdapter adapter;
 
@@ -32,16 +31,12 @@ public class ReservationsActivity extends AppCompatActivity {
 
         dBhandler = Controller.getDBhandler();
 
-        resId = new ArrayList<>();
-        placeId = new ArrayList<>();
-        numOfPeople = new ArrayList<>();
-        date = new ArrayList<>();
-
         recyclerView = findViewById(R.id.reservationsRecycler);
-        adapter = new reservationsRecyclerAdapter(this, resId, placeId, date, numOfPeople);
+        Cursor cursor = dBhandler.findReservations();
+        adapter = new reservationsRecyclerAdapter(this, cursor);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        displayData();
+
 
         Toolbar toolbar = findViewById(R.id.mytoolbar);
 
@@ -52,18 +47,4 @@ public class ReservationsActivity extends AppCompatActivity {
 
     }
 
-    private void displayData() {
-        Cursor cursor = dBhandler.findReservations();
-        if(cursor.getCount() == 0){
-            Toast.makeText(ReservationsActivity.this, "No reservations", Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-            while(cursor.moveToNext()){
-                resId.add(Integer.valueOf(cursor.getString(0)));
-                placeId.add(Integer.valueOf(cursor.getString(1)));
-                date.add(cursor.getString(2));
-                numOfPeople.add(Integer.valueOf(cursor.getString(3)));
-            }
-        }
-    }
 }
