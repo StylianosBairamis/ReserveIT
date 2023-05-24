@@ -352,4 +352,10 @@ public class DBhandler extends SQLiteOpenHelper
         db.close();
     }
 
+    public Cursor findReservations() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM reservations";
+        return db.rawQuery(query, null);
+    }
+
 }

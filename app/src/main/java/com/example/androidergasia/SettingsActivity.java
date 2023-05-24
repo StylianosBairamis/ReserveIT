@@ -1,5 +1,6 @@
 package com.example.androidergasia;
 
+//ολα τα απαραιτητα imports
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -19,7 +20,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
-
+    //αρχικές δηλώσεις
     private RadioButton radioEnglish;
     private RadioButton radioGreek;
     private String language;
@@ -54,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
     }
-
+    //αλλάζει γλώσσα και το γράφει στον editor για να αλλάξει παντού
     private void changeLanguage(String language) {
         if (Objects.equals(language, "English")) {
             setLocale("en");
@@ -69,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         restartApp();
     }
-
+    //αλλάζει την γλώσσα της εφαρμογής
     private void setLocale(String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
@@ -77,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
         configuration.setLocale(locale);
         getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
     }
-
+    //κάνει restart την εφαρμογή με την επιλεγμένη γλώσσσα.
     private void restartApp() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

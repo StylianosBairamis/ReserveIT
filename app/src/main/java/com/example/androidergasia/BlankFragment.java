@@ -27,6 +27,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
@@ -45,6 +47,7 @@ public class BlankFragment extends Fragment
     private static String nameOfPlace;
     private String timePicked;
     private String datePicked;
+
     private boolean[] validRequest ;
 
     int selectedHour;
@@ -74,6 +77,8 @@ public class BlankFragment extends Fragment
         submit = view.findViewById(R.id.button);
 
         pickTime = view.findViewById(R.id.timeButton);
+
+
 
         submit.setOnClickListener(this::submit);
 

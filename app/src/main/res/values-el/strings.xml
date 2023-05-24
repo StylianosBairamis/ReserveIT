@@ -28,4 +28,9 @@
     <string name="restaurant">Εστιατόριο</string>
     <string name="cafe">Καφέ</string>
     <string name="select_a_category">Επιλέξτε μια κατηγορία</string>
+    <string name="reservationsTitle">Κρατήσεις</string>
+    <string name="your_reservation_id">Κωδικός κράτησης:</string>
+    <string name="your_reservation_date">Ημ/νια κράτησης:</string>
+    <string name="number_of_people">Αριθμός ατόμων κράτησης:</string>
+    <string name="reservation_place_id">Κωδικός μαγαζιού:</string>
 </resources>

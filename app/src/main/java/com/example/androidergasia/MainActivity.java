@@ -186,6 +186,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             startActivity(intent);
         }
 
+        if (id == R.id.reservation){
+            Intent intent = new Intent(MainActivity.this, ReservationsActivity.class);
+            startActivity(intent);
+        }
+
         DrawerLayout drawer = findViewById(R.id.drawerLayout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -199,6 +204,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
             return true;
+        }
+
+        if(id == R.id.reservation){
+            Intent intent = new Intent(MainActivity.this, ReservationsActivity.class);
         }
 
         return super.onOptionsItemSelected(item);
