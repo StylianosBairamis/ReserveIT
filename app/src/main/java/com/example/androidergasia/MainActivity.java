@@ -62,6 +62,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
 
                     textOfChip = chipSelected.getText().toString();
+
                     switch (textOfChip) {
                         case "Μπάρ":
                             textOfChip = "Bar";

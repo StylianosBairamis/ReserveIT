@@ -8,9 +8,8 @@ public class Controller
 
     private static RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
 
-    public Controller(DBhandler  handler)
-    {
-        DBhandler = handler;
+    private Controller() throws Exception {
+        throw  new Exception("Utilities class!");
     }
 
     public static DBhandler getDBhandler()
@@ -21,6 +20,11 @@ public class Controller
     public static void setRecyclerAdapter(RecyclerView.Adapter<RecyclerAdapter.ViewHolder> recyclerAdapterForSet)
     {
        adapter = recyclerAdapterForSet;
+    }
+
+    public static void init(DBhandler handler)
+    {
+        DBhandler = handler;
     }
 
     public static void notifyRecyclerAdapter()

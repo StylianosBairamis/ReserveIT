@@ -12,12 +12,11 @@ import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.format.DateFormat;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +27,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
+
+
+
 
 public class BlankFragment extends Fragment
 {
@@ -42,7 +44,6 @@ public class BlankFragment extends Fragment
     private ImageButton incrementButton;
     private ImageButton decrementButton;
     private ImageView favorite;
-
     private TextView nameView;
     private static String nameOfPlace;
     private String timePicked;
@@ -77,8 +78,6 @@ public class BlankFragment extends Fragment
         submit = view.findViewById(R.id.button);
 
         pickTime = view.findViewById(R.id.timeButton);
-
-
 
         submit.setOnClickListener(this::submit);
 
@@ -141,13 +140,23 @@ public class BlankFragment extends Fragment
             {
                 Calendar selectedDate = Calendar.getInstance();
 
-                selectedDate.set(year, month, dayOfMonth);
+                Calendar currentDate = Calendar.getInstance();
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy", Locale.getDefault());
+                int currentYear = currentDate.get(Calendar.YEAR);
+                int currentMonth = currentDate.get(Calendar.MONTH);
+                int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
+
+                currentDate.set(currentYear,currentMonth,currentDay); // Τρέχουσα ημερομηνια.
+
+                selectedDate.set(year, month, dayOfMonth); // Ημερομηνια που επιλέχθηκε.
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
                 datePicked = dateFormat.format(selectedDate.getTime());
 
-                validRequest[1] = true; // έχει επιλέψει ημερομηνία.
+                //'Ελεγχος για το αν η ημερομηνια που επιλέχθηκε είναι πριν απο την τρέχουσα
+                // δεν έχει επιλέξει εγκυρη ημερομηνια
+                validRequest[1] = !selectedDate.before(currentDate); // έχει επιλέξει εγκυρη ημερομηνία.
                 checkValidness();
             }
         });
@@ -156,10 +165,10 @@ public class BlankFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-
                 Intent intent = new Intent(getContext(),MapsActivity.class);
 
                 intent.putExtra("name", nameOfPlace);
+
                 startActivity(intent);
             }
         });
@@ -206,16 +215,17 @@ public class BlankFragment extends Fragment
                         +timePicked;
 
                 alertDialog.setMessage(message);
-                //na mpei kodikas reservations
-                Random random = new Random();
-                int randomNumber = random.nextInt(9000) + 1000;
 
-                Reservation reservation = new Reservation(randomNumber, 1, datePicked, timePicked, Integer.parseInt(numOfPersons.getText().toString()));
+                int placeID = Controller.getDBhandler().getPlaceID(nameOfPlace);
+
+                Reservation reservation = new Reservation(placeID, datePicked, timePicked, Integer.parseInt(numOfPersons.getText().toString()));
+
                 Controller.getDBhandler().addReservation(reservation);
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+                        getActivity().finish();
                     }
                 });
 
@@ -231,18 +241,50 @@ public class BlankFragment extends Fragment
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
             {
-                Calendar time = Calendar.getInstance();
 
-                time.set(Calendar.HOUR_OF_DAY, selectedHour);
-                time.set(Calendar.MINUTE, selectedMinute);
+                String pattern = "HH:mm";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat(
-                        "hh:mm a");
+                String timeSelected = selectedHour + ":" + selectedMinute;
 
-                timePicked = (format.format(time.getTime()));
 
-                validRequest[2] = true; //έχι επιλέξει ώρα.
+                Calendar selectedTime = Calendar.getInstance();
+//
+//                Calendar currentTime = Calendar.getInstance();
+//
+                selectedTime.set(Calendar.HOUR_OF_DAY, selectedHour);
+                selectedTime.set(Calendar.MINUTE, selectedMinute);
+
+                int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
+                int currentMinute = currentTime.get(Calendar.MINUTE);
+
+                String currentTime = currentHour + ":" + currentMinute;
+
+                try
+                {
+                    Date timeSel = simpleDateFormat.parse(timeSelected);
+                    Date timeCur = simpleDateFormat.parse(currentTime);
+
+                    validRequest[2] = !timeSel.before(timeCur); // έχει επιλέξει εγκυρη ωρα.
+                }
+                catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
+
+//                currentTime.set(Calendar.HOUR_OF_DAY, currentHour);
+//                currentTime.set(Calendar.MINUTE, currentMinute);
+//
+                @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+
+                timePicked = (format.format(selectedTime.getTime()));
+
+                //'Ελεγχος για το αν η ωρα που επιλέχθηκε είναι πριν απο την τρέχουσα
+//                validRequest[2] = !selectedTime.before(currentTime); // έχει επιλέξει εγκυρη ωρα.
+
                 checkValidness();
+
             }
         }
         ,currentTime.get(Calendar.HOUR_OF_DAY),currentTime.get(Calendar.MINUTE), DateFormat.is24HourFormat(getActivity()));

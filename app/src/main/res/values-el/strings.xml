@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Places</string>
+    <string name="app_name">ReserveIT</string>
     <string name="item_title"/>
     <string name="hello_blank_fragment">Hallo BlankFragment</string>
     <string name="textViewForDescription">Μια μικρή περιγραφή για το μέρος</string>

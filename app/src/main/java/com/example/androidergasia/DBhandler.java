@@ -36,8 +36,7 @@ public class DBhandler extends SQLiteOpenHelper
     //Για το Table που κρατάει τις Κρατήσεις.
     public static final String DATABASE_TABLE_RESERVATIONS = "reservations";
 
-    public static final String COLUMN_RESERVATION_ID = "reservation_id";
-    public static final String COLUMN_DATE = "reservation_date";
+    public static final String COLUMN_RESERVATION_DATE = "reservation_date";
     public static final String COLUMN_RESERVATION_TIME = "reservation_time";
     public static final String COLUMN_TRACK_PLACE = "id_of_place";
     public static final String COLUMN_NUMBER_OF_PEOPLE = "number_of_people";
@@ -47,16 +46,16 @@ public class DBhandler extends SQLiteOpenHelper
     private static final String COLUMN_FAVOURITE_PLACE_ID="id_of_place";
     private static final String DATABASE_TABLE_FAVORITE = "favorite";
 
-    private String DB_PATH = "/data/data/com.example.androidergasia/databases/";
+    private final String DB_PATH = "/data/data/com.example.androidergasia/databases/";
 
-    private String DB_NAME = "myAPP.db";
+    private final String DB_NAME = "myAPP.db";
 
 
     public DBhandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, 2);
         this.context = context;
         copyTable();
-        Controller controller = new Controller(this);
+        Controller.init(this);
         NEW_VERSION = 2 ;
     }
 
@@ -150,7 +149,7 @@ public class DBhandler extends SQLiteOpenHelper
 
             String CREATE_RESERVATIONS_TABLE = "CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE_RESERVATIONS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_DATE + " TEXT NOT NULL," +
+                    COLUMN_RESERVATION_DATE + " TEXT NOT NULL," +
                     COLUMN_RESERVATION_TIME + " TEXT NOT NULL," +
                 COLUMN_NUMBER_OF_PEOPLE + " INTEGER NOT NULL," +
                 COLUMN_TRACK_PLACE + " INTEGER," +
@@ -170,27 +169,27 @@ public class DBhandler extends SQLiteOpenHelper
      * @param placeToAdd
      */
 
-    public void addPlace(Place placeToAdd)
-    {
-        ContentValues contentValues = new ContentValues();//KEY-VALUE ΔΟΜΗ
-
-        contentValues.put(COLUMN_NAME, placeToAdd.getName());
-        contentValues.put(COLUMN_TYPE_OF_PLACE,placeToAdd.getTypeOfPlace());
-        contentValues.put(COLUMN_DESCRIPTION,placeToAdd.getDescription());
-        contentValues.put(COLUMN_RATING,placeToAdd.getRating());
-
-        contentValues.put(COLUMN_CHAIRS_AVAILABLE, placeToAdd.getNumberOfChairs());
-        contentValues.put(COLUMN_LATITUDE, placeToAdd.getLatitude());
-        contentValues.put(COLUMN_LONGITUDE,placeToAdd.getLongitude());
-
-        String pathToFile = "/"+placeToAdd.getTypeOfPlace() + "/" + freeFromSpaces(placeToAdd.getName()) + ".jpg";
-
-        contentValues.put(COLUMN_IMAGE, pathToFile);//Περίεχει το Path για την εικόνα του Place
-
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.insert(DATABASE_TABLE_PLACES,null, contentValues);
-        sqLiteDatabase.close();
-    }
+//    public void addPlace(Place placeToAdd)
+//    {
+//        ContentValues contentValues = new ContentValues();//KEY-VALUE ΔΟΜΗ
+//
+//        contentValues.put(COLUMN_NAME, placeToAdd.getName());
+//        contentValues.put(COLUMN_TYPE_OF_PLACE,placeToAdd.getTypeOfPlace());
+//        contentValues.put(COLUMN_DESCRIPTION,placeToAdd.getDescription());
+//        contentValues.put(COLUMN_RATING,placeToAdd.getRating());
+//
+//        contentValues.put(COLUMN_CHAIRS_AVAILABLE, placeToAdd.getNumberOfChairs());
+//        contentValues.put(COLUMN_LATITUDE, placeToAdd.getLatitude());
+//        contentValues.put(COLUMN_LONGITUDE,placeToAdd.getLongitude());
+//
+//        String pathToFile = "/"+placeToAdd.getTypeOfPlace() + "/" + freeFromSpaces(placeToAdd.getName()) + ".jpg";
+//
+//        contentValues.put(COLUMN_IMAGE, pathToFile);//Περίεχει το Path για την εικόνα του Place
+//
+//        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+//        sqLiteDatabase.insert(DATABASE_TABLE_PLACES,null, contentValues);
+//        sqLiteDatabase.close();
+//    }
 
     /**
      * Query που επιστρέφει places με βάση το type_of_place
@@ -229,7 +228,7 @@ public class DBhandler extends SQLiteOpenHelper
         String spaceFree = "";
         for(int i = 0 ;i < arrayOfWords.length;i++)
         {
-            spaceFree+=arrayOfWords[i];
+            spaceFree += arrayOfWords[i];
         }
         return spaceFree.toLowerCase();
     }
@@ -247,6 +246,8 @@ public class DBhandler extends SQLiteOpenHelper
         cursor.moveToFirst();
 
         Pair<Float, Float> tempPair = new Pair<>(cursor.getFloat(0),cursor.getFloat(1));
+
+        cursor.close();
 
         return tempPair;
     }
@@ -271,6 +272,8 @@ public class DBhandler extends SQLiteOpenHelper
         db.insert(DATABASE_TABLE_FAVORITE,null, contentValues);
 
         db.close();
+
+        cursor.close();
 
     }
 
@@ -298,6 +301,8 @@ public class DBhandler extends SQLiteOpenHelper
 
         db.close();
 
+        cursor.close();
+
     }
 
     public Cursor getFavoritePlaces()
@@ -315,9 +320,8 @@ public class DBhandler extends SQLiteOpenHelper
 
     public int isInFavoriteTable (String nameOfPlace)
     {
-        DBhandler handler = Controller.getDBhandler();
 
-        SQLiteDatabase db = handler.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
 
         String query = "SELECT " + "_id" +
                 " FROM " + "places " +
@@ -335,7 +339,11 @@ public class DBhandler extends SQLiteOpenHelper
 
         cursor = db.rawQuery(query, null);
 
-        return cursor.getCount();
+        int toReturnCount = cursor.getCount();
+
+        cursor.close();
+
+        return toReturnCount;
     }
 
     public void addReservation(Reservation reservation)
@@ -344,7 +352,7 @@ public class DBhandler extends SQLiteOpenHelper
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_TRACK_PLACE, reservation.getPlaceId());
-        values.put(COLUMN_DATE, reservation.getDate());
+        values.put(COLUMN_RESERVATION_DATE, reservation.getDate());
         values.put(COLUMN_RESERVATION_TIME, reservation.getDateTime());
         values.put(COLUMN_NUMBER_OF_PEOPLE, reservation.getNumberOfPeople());
 
@@ -352,10 +360,34 @@ public class DBhandler extends SQLiteOpenHelper
         db.close();
     }
 
-    public Cursor findReservations() {
+    public Cursor findReservations()
+    {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM reservations";
+
+        String query ="SELECT "+ "places."+COLUMN_NAME + "," +"reservations." + COLUMN_RESERVATION_TIME  + "," +
+                "reservations." + COLUMN_RESERVATION_DATE + "," + "reservations." + COLUMN_NUMBER_OF_PEOPLE +
+                " FROM " + DATABASE_TABLE_PLACES + " INNER JOIN " + DATABASE_TABLE_RESERVATIONS +
+                " ON "+ DATABASE_TABLE_PLACES+"._id" + "=" + DATABASE_TABLE_RESERVATIONS + ".id_of_place";
+
         return db.rawQuery(query, null);
+    }
+
+    public int getPlaceID(String nameForSearch)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT " + COLUMN_ID +
+                " FROM " + DATABASE_TABLE_PLACES +
+                " WHERE " + COLUMN_NAME + " = '" + nameForSearch + "' ";
+
+        Cursor cursor = db.rawQuery(query,null);
+
+
+        cursor.moveToFirst();
+        int toReturn = cursor.getInt(0);
+        cursor.close();
+        db.close();
+        return toReturn;
     }
 
 }

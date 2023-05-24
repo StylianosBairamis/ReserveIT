@@ -2,37 +2,60 @@ package com.example.androidergasia;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 
 public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservationsRecyclerAdapter.reservationsViewHolder> {
     private Context context;
-    private Cursor cursor;
     private DBhandler dBhandler;
+    private Cursor cursor;
 
-    public reservationsRecyclerAdapter(Context context, Cursor cursor){
+    public reservationsRecyclerAdapter(Context context)
+    {
         this.context = context;
         this.dBhandler = Controller.getDBhandler();
-        this.cursor = cursor;
+
+        cursor = dBhandler.findReservations();
     }
 
     static class reservationsViewHolder extends RecyclerView.ViewHolder {
-        TextView resId, placeId, date, numOfPeople;
-        public reservationsViewHolder(View itemView) {
+        TextView nameOfPlace;
+
+        TextView valueOfPlace;
+
+        TextView timeOfReservation;
+
+        TextView valueOfTime;
+
+        TextView dateOfReservation;
+
+        TextView valueOfDate;
+
+        TextView numOfPeople;
+
+        TextView valueOfPeople;
+
+        public reservationsViewHolder(View itemView)
+        {
             super(itemView);
-            resId = itemView.findViewById(R.id.reservationId);
-            placeId = itemView.findViewById(R.id.placeId);
-            date = itemView.findViewById(R.id.date);
-            numOfPeople = itemView.findViewById(R.id.people);
+
+            nameOfPlace = itemView.findViewById(R.id.place);
+            valueOfPlace = itemView.findViewById(R.id.valueOfPlace);
+
+            timeOfReservation = itemView.findViewById(R.id.time);
+            valueOfTime = itemView.findViewById(R.id.valueOfTime);
+
+            dateOfReservation = itemView.findViewById(R.id.date);
+            valueOfDate = itemView.findViewById(R.id.valueOfDate);
+
+            numOfPeople = itemView.findViewById(R.id.numberOfPeople);
+            valueOfPeople= itemView.findViewById(R.id.valueOfPeople);
         }
     }
 
@@ -50,10 +73,10 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
 
          cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.
 
-         holder.resId.setText(cursor.getInt(0));
-         holder.placeId.setText(cursor.getInt(1));
-         holder.date.setText(cursor.getString(2));
-         holder.numOfPeople.setText(cursor.getInt(3));
+         holder.valueOfPlace.setText(cursor.getString(0));
+         holder.valueOfTime.setText(cursor.getString(1));
+         holder.valueOfDate.setText(cursor.getString(2));
+         holder.valueOfPeople.setText(cursor.getInt(3)+"");
     }
 
     @Override
