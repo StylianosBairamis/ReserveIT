@@ -29,11 +29,12 @@ public class FavoritesActivity extends BaseActivity
 
         adapter = new RecyclerAdapter(this, "", false);
 
-        Controller.setRecyclerAdapter(adapter);
+       // Controller.setRecyclerAdapter(adapter);
 
         recyclerView.setAdapter(adapter);
 
         Toolbar toolbar = findViewById(R.id.mytoolbar);
+
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // up Button

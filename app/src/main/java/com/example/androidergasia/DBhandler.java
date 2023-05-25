@@ -299,6 +299,8 @@ public class DBhandler extends SQLiteOpenHelper
 
         db.delete(DATABASE_TABLE_FAVORITE,condition,conditionArgs);
 
+        Controller.getAdapter().removeItem(nameForDelete);
+
         db.close();
 
         cursor.close();
@@ -360,12 +362,26 @@ public class DBhandler extends SQLiteOpenHelper
         db.close();
     }
 
+    public  void removeReservation(int idToDelete)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String condition = COLUMN_ID + " = " + "?";
+
+        String[] conditionArgs = {idToDelete+""}; // Replace "123" with the value of the ID to delete
+
+        db.delete(DATABASE_TABLE_RESERVATIONS, condition, conditionArgs) ;
+    }
+
+
+
     public Cursor findReservations()
     {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query ="SELECT "+ "places."+COLUMN_NAME + "," +"reservations." + COLUMN_RESERVATION_TIME  + "," +
-                "reservations." + COLUMN_RESERVATION_DATE + "," + "reservations." + COLUMN_NUMBER_OF_PEOPLE +
+                "reservations." + COLUMN_RESERVATION_DATE + "," + "reservations." + COLUMN_NUMBER_OF_PEOPLE
+                + "," + "reservations." + COLUMN_ID +
                 " FROM " + DATABASE_TABLE_PLACES + " INNER JOIN " + DATABASE_TABLE_RESERVATIONS +
                 " ON "+ DATABASE_TABLE_PLACES+"._id" + "=" + DATABASE_TABLE_RESERVATIONS + ".id_of_place";
 

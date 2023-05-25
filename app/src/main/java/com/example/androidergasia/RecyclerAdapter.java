@@ -60,6 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         {
             cursor = this.DBhandler.getFavoritePlaces();
         }
+        Controller.setRecyclerAdapter(this);
 
 //        GetDistanceTask getDistanceTask = new GetDistanceTask();
 //        getDistanceTask.execute();
@@ -99,7 +100,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 }
             });
         }
-
     }
 
     @NonNull
@@ -113,6 +113,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
         String selectedLanguage = sharedPreferences.getString("language", "English");
 
         cursor.moveToFirst();//Παω τον Cursor
@@ -129,14 +130,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         //Δες τα υπόλοιπα που γυρνάει!
 
-
         String pathToFile = cursor.getString(7);
 
         try(InputStream inputStream = context.getAssets().open("images" + pathToFile))
         {
-            //String pathToFile = cursor.getString(7);
-
-            //InputStream inputStream = context.getAssets().open("images" + pathToFile);
 
             Drawable drawable = Drawable.createFromStream(inputStream, null);
 
@@ -275,6 +272,47 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
 
         cursor = matrixCursor;
+    }
+
+    public void removeItem(String nameForDelete)
+    {
+        matrixCursor = new MatrixCursor(cursor.getColumnNames());
+
+        int indexForDelete = -999;
+
+        for(int i = 0 ;i < cursor.getCount();i++)
+        {
+            cursor.moveToFirst();
+
+            cursor.move(i);
+
+            Object[] row = new Object[cursor.getColumnCount()];
+
+            String name = cursor.getString(0);
+
+            if(!name.equals(nameForDelete))
+            {
+                row[0] = name; //name
+                row[1] = cursor.getString(1); //type
+                row[2] = cursor.getString(2); //description
+                row[3] = cursor.getFloat(3); //rating
+                row[4] = cursor.getString(4); //chairs
+                row[5] = cursor.getDouble(5); //latitude
+                row[6] = cursor.getDouble(5); //longitude
+                row[7] = cursor.getString(7); //pathToImage
+
+                matrixCursor.addRow(row);
+
+            }
+            else
+            {
+                indexForDelete = i;
+            }
+        }
+        notifyItemRemoved(indexForDelete);
+
+        cursor = matrixCursor;
+
     }
     public class GetDistanceTask extends AsyncTask<Void, Void, ArrayList<Integer>>
     {
