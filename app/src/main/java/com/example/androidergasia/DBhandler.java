@@ -373,8 +373,6 @@ public class DBhandler extends SQLiteOpenHelper
         db.delete(DATABASE_TABLE_RESERVATIONS, condition, conditionArgs) ;
     }
 
-
-
     public Cursor findReservations()
     {
         SQLiteDatabase db = this.getReadableDatabase();
