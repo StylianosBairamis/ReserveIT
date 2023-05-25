@@ -35,4 +35,5 @@
     <string name="reservation_place_id">Reservation place id:</string>
     <string name="my_reservations">My reservations</string>
     <string name="favoriteTextView">FavoritePlaces</string>
+    <string name="general">General</string>
 </resources>

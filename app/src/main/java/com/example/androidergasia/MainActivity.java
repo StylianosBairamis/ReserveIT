@@ -200,16 +200,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
+//
+//        if(id == R.id.action_settings){
+////            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+//            startActivity(intent);
+//            return true;
+//        }
 
-        if(id == R.id.action_settings){
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        if(id == R.id.reservation){
-            Intent intent = new Intent(MainActivity.this, ReservationsActivity.class);
-        }
+//        if(id == R.id.reservation){
+//            Intent intent = new Intent(MainActivity.this, ReservationsActivity.class);
+//        }
 
         return super.onOptionsItemSelected(item);
     }

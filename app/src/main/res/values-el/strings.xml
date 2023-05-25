@@ -35,4 +35,5 @@
     <string name="reservation_place_id">Κωδικός μαγαζιού:</string>
     <string name="my_reservations">Οι κρατήσεις μου</string>
     <string name="favoriteTextView">Αγαπημένα Καταστήματα</string>
+    <string name="general">Γενικά</string>
 </resources>
