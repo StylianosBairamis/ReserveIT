@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -48,8 +49,9 @@ public class BlankFragment extends Fragment
     private static String nameOfPlace;
     private String timePicked;
     private String datePicked;
-
     private boolean[] validRequest ;
+
+    private  boolean isSameDate = false;
 
     int selectedHour;
     int selectedMinute;
@@ -83,6 +85,8 @@ public class BlankFragment extends Fragment
 
         submit.setEnabled(false);
 
+        pickTime.setEnabled(false); //περιμένω πρώτα να βάλει ημερομηνια.
+
         numOfPersons = view.findViewById(R.id.numOfPersons);
 
         incrementButton = view.findViewById(R.id.increment);
@@ -94,6 +98,8 @@ public class BlankFragment extends Fragment
         favorite = view.findViewById(R.id.favoriteIcon);
 
         calendarView = view.findViewById(R.id.calendarView);
+
+        calendarView.setDate(System.currentTimeMillis(), false, true);
 
         nameView = view.findViewById(R.id.placeName);
 
@@ -154,9 +160,22 @@ public class BlankFragment extends Fragment
 
                 datePicked = dateFormat.format(selectedDate.getTime());
 
+               String dateCurrent = dateFormat.format(currentDate.getTime());
+
                 //'Ελεγχος για το αν η ημερομηνια που επιλέχθηκε είναι πριν απο την τρέχουσα
                 // δεν έχει επιλέξει εγκυρη ημερομηνια
                 validRequest[1] = !selectedDate.before(currentDate); // έχει επιλέξει εγκυρη ημερομηνία.
+
+                Toast toast = new Toast(getActivity());
+
+                toast.setText(datePicked);
+
+                toast.show();
+
+                pickTime.setEnabled(validRequest[1]); // αν μπορώ να διαλέξω ώρα
+
+                isSameDate  =  dateCurrent.equals(datePicked);
+
                 checkValidness();
             }
         });
@@ -237,54 +256,49 @@ public class BlankFragment extends Fragment
     private void pickTime(View view)
     {
         Calendar currentTime = Calendar.getInstance();
+
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
             {
-
-                String pattern = "HH:mm";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-                String timeSelected = selectedHour + ":" + selectedMinute;
-
-
                 Calendar selectedTime = Calendar.getInstance();
-//
-//                Calendar currentTime = Calendar.getInstance();
-//
+
+                if(!isSameDate)
+                {
+                    selectedTime.set(Calendar.HOUR_OF_DAY, selectedHour);
+                    selectedTime.set(Calendar.MINUTE, selectedMinute);
+
+                    @SuppressLint("SimpleDateFormat")
+                    SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+
+                    timePicked = (format.format(selectedTime.getTime()));
+
+                    validRequest[2] = true;
+
+                    checkValidness();
+
+                    return;
+                }
+
                 selectedTime.set(Calendar.HOUR_OF_DAY, selectedHour);
                 selectedTime.set(Calendar.MINUTE, selectedMinute);
 
                 int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
                 int currentMinute = currentTime.get(Calendar.MINUTE);
 
-                String currentTime = currentHour + ":" + currentMinute;
+                currentTime.set(Calendar.HOUR_OF_DAY,currentHour);
+                currentTime.set(Calendar.MINUTE,currentMinute);
 
-                try
-                {
-                    Date timeSel = simpleDateFormat.parse(timeSelected);
-                    Date timeCur = simpleDateFormat.parse(currentTime);
+                int result = selectedTime.compareTo(currentTime);
 
-                    validRequest[2] = !timeSel.before(timeCur); // έχει επιλέξει εγκυρη ωρα.
-                }
-                catch (ParseException e)
-                {
-                    e.printStackTrace();
-                }
+                validRequest[2] = result >= 0 ;
 
-//                currentTime.set(Calendar.HOUR_OF_DAY, currentHour);
-//                currentTime.set(Calendar.MINUTE, currentMinute);
-//
                 @SuppressLint("SimpleDateFormat")
                 SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
 
                 timePicked = (format.format(selectedTime.getTime()));
 
-                //'Ελεγχος για το αν η ωρα που επιλέχθηκε είναι πριν απο την τρέχουσα
-//                validRequest[2] = !selectedTime.before(currentTime); // έχει επιλέξει εγκυρη ωρα.
-
                 checkValidness();
-
             }
         }
         ,currentTime.get(Calendar.HOUR_OF_DAY),currentTime.get(Calendar.MINUTE), DateFormat.is24HourFormat(getActivity()));

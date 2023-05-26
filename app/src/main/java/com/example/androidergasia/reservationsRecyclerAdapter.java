@@ -27,10 +27,10 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
     public reservationsRecyclerAdapter(Context context)
     {
         this.context = context;
+
         this.dBhandler = Controller.getDBhandler();
 
         cursor = dBhandler.findReservations();
-
     }
 
     //View holder οπου εντοπιζει ολα τα στοιχεια του view για να μπορεσουμε να τους αλλαξουμε τιμες
@@ -71,8 +71,6 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
             valueOfPeople= itemView.findViewById(R.id.valueOfPeople);
 
             removeReservation = itemView.findViewById(R.id.removeReservation);
-
-
         }
     }
 
@@ -98,7 +96,7 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
 
          int idOfReservation = cursor.getInt(4); // Παίρνω το id του reservation
 
-        int pos = position;
+         int pos = position;
 
          holder.removeReservation.setOnClickListener(new View.OnClickListener() {
              /**
