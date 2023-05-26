@@ -2,6 +2,9 @@ package com.example.androidergasia;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+/*
+Κλάση που δίνει, στις άλλες κλάσεις,  πρόσβαση στην βάση δεδομένων και στον adapter
+ */
 public class Controller
 {
     private static DBhandler DBhandler ;

@@ -34,7 +34,11 @@ import java.util.Locale;
 
 
 
-
+/*
+Υλοποιούνται όλες οι λειτουργίες του fragment.Εδώ ο χρήστης μπορεί να προσθέσει το μαγαζί στα αγαπημένα του, να δει την τοποθεσία του
+και να δώσει τις απαραίτητες πληροφορίες για την κράτηση που θέλει να κάνει (Αριθμός ατόμων, ημερομηνία, ώρα).
+Αφου δώσει τις πληροφορίες αυτές, μπορεί να πατήσει το κουμπί της κράτησης και να καταχωρηθεί στη βάση δεδομένων.
+ */
 public class BlankFragment extends Fragment
 {
     private Button submit;
@@ -107,6 +111,7 @@ public class BlankFragment extends Fragment
 
         nameView.setPaintFlags(nameView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
+        //Τα 2 κουμπια "συν" και "πλην" για να ρυθμίζει ο χρήστης τον αριθμό των ατόμων
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -184,7 +189,7 @@ public class BlankFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(getContext(),MapsActivity.class);
+                Intent intent = new Intent(getContext(),MapsActivity.class);//intent για χάρτη που δείχνει την τοποθεσία του μαγαζιού
 
                 intent.putExtra("name", nameOfPlace);
 
@@ -210,6 +215,7 @@ public class BlankFragment extends Fragment
 
     private void submit(View view)
     {
+        //παράθυρο στο οποίο περιμένει ελάχτιστα ο χρήστης μέχρι να καταχωρηθεί η κρατησή του.
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Making a reservation");
         progressDialog.setMessage("please wait...");
@@ -217,7 +223,7 @@ public class BlankFragment extends Fragment
         progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
+                    dialogInterface.cancel();//για να σταματήεσι την καταχώρηση της κράτησης
             }
         });
         progressDialog.show();
@@ -233,18 +239,18 @@ public class BlankFragment extends Fragment
                         "Date of reservation: " + datePicked + "\n" + "Time of reservation: "
                         +timePicked;
 
-                alertDialog.setMessage(message);
+                alertDialog.setMessage(message);//Εμφανίζεται μήνυμα επιτυχίας καθώς και τα στοιχεία της κρατησής του χρήστη.
 
                 int placeID = Controller.getDBhandler().getPlaceID(nameOfPlace);
 
                 Reservation reservation = new Reservation(placeID, datePicked, timePicked, Integer.parseInt(numOfPersons.getText().toString()));
-
+                //Δημιουργήθηκε αντικείμενο Reservation και καταχωρείται στη βάση.
                 Controller.getDBhandler().addReservation(reservation);
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        getActivity().finish();
+                        getActivity().finish();//κλείνει το παράθυρο του progressDialog
                     }
                 });
 
@@ -271,7 +277,7 @@ public class BlankFragment extends Fragment
                     @SuppressLint("SimpleDateFormat")
                     SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
 
-                    timePicked = (format.format(selectedTime.getTime()));
+                    timePicked = (format.format(selectedTime.getTime()));//μεταβλητή που κρατάει την ώρα την οποία επέλεξε ο χρήστης.
 
                     validRequest[2] = true;
 
@@ -294,9 +300,9 @@ public class BlankFragment extends Fragment
                 validRequest[2] = result >= 0 ;
 
                 @SuppressLint("SimpleDateFormat")
-                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");//νεο format για την επιλεγμενη ωρα
 
-                timePicked = (format.format(selectedTime.getTime()));
+                timePicked = (format.format(selectedTime.getTime()));//εφαρμόζεται το format
 
                 checkValidness();
             }
@@ -313,7 +319,7 @@ public class BlankFragment extends Fragment
     public void addToFavorite(View view)
     {
         int value = Controller.getDBhandler().isInFavoriteTable(nameOfPlace);
-
+        //Ελέγχει στη βάση αν το μαγαζί είναι στα αγαπημένα και βάζει την αντίστοιχη εικόνα,
         if(value == 0)
         {
             favorite.setImageResource(R.mipmap.favorite_filled);
@@ -327,6 +333,12 @@ public class BlankFragment extends Fragment
        }
     }
 
+    /*
+    Με αυτή τη μέθοδο ο χρήστης πρέπει πρώτα να δηλώσει μια ημερομηνία για την κράτηση και έπειτα
+    θα μπορεί να επιλέξει την ωρα που θέλει. Αφού επιλεχθεί η ημερομηνία και η ώρα της κράτησης,
+    πρέπει να επιλέξει κάποιο αριθμό ατόμων για να ενεργοποιηθεί το κουμπί της κράτησης
+    και να μπορέσει να το πατήσει ο χρήστης.
+     */
     private void checkValidness() {
         boolean allValid = true;
 
@@ -337,11 +349,11 @@ public class BlankFragment extends Fragment
             }
         }
 
-        submit.setEnabled(allValid);
+        submit.setEnabled(allValid);//ενεργοποίηση της λειτουργίας του κουμπιού
 
         if (allValid)
         {
-            submit.setBackgroundColor(Color.parseColor("#9C27B0"));
+            submit.setBackgroundColor(Color.parseColor("#9C27B0"));//αλλάζει το χρώμα του για να ειδοποιήσει το χρήστη ότι μπορεί να κάνει κράτηση.
         }
         else
         {

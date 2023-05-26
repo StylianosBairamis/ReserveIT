@@ -1,6 +1,6 @@
 package com.example.androidergasia;
 
-
+//κλάση κράτησης.
 public class Reservation {
     private int placeId;
     private String date;

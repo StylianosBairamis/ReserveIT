@@ -123,7 +123,7 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
                         notifyItemRemoved(pos);
                     }
                 });
-
+                //Το παράθυρο alertDialog εμφανίζεται ώστε ο χρήστης να μπορεί να επιβεβαιώσει ή να ματαιώσει την επιλογή του να διαγράψει μια κράτηση
                 alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -137,9 +137,6 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
     }
 
     /**
-
-     Ενημερώνει τον δρομέα (cursor) αφαιρώντας ένα ειδικό στοιχείο στη δοθείσα θέση.
-
      @param indexForRemove Η θέση του στοιχείου που θα αφαιρεθεί από τον δρομέα.
      */
     private void changeCursor(int indexForRemove)

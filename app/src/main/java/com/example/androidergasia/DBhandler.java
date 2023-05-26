@@ -21,6 +21,7 @@ public class DBhandler extends SQLiteOpenHelper
     public static int DATABASE_VERSION = 1;
     private static int NEW_VERSION;
     public static final String DATABASE_NAME = "myAPP.db";
+    //Αρχικοποίηση πινάκων και στυλών.
     public static final String DATABASE_TABLE_PLACES = "places";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TYPE_OF_PLACE = "type_of_place";
@@ -130,7 +131,7 @@ public class DBhandler extends SQLiteOpenHelper
     }
 
     /**
-     * Βάση έχει δημιουργηθεί ήδη καλείται η onUpdate για να βάλω τα table reservations, favorite.
+     * Βάση έχει δημιουργηθεί ήδη καλείται η onUpgrade για να βάλω τα table reservations, favorite.
      * @param db
      * @param oldVersion
      * @param newVersion
@@ -165,7 +166,7 @@ public class DBhandler extends SQLiteOpenHelper
     }
 
     /**
-     * Το PRIMARY KEY EXΕΙ ΑUTOINCREMENT DEN BAZW ID!
+     * Το PRIMARY KEY EXΕΙ ΑUTOINCREMENT δεν βάζω ID!
      * @param placeToAdd
      */
 

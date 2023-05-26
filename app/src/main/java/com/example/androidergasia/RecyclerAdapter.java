@@ -49,7 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         this.context = context;
 
-        if(forSearch)
+        if(forSearch)//ελέγχει αν πρέπει να εμφανίσει αποτελέσματα αναζήτησης για τον χρήστη ή recyclerView με τα αγαπημένα μέρη του χρήστη
         {
             cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
 
@@ -91,7 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     cursor.moveToFirst();
 
                     cursor.move(position);
-
+                    //δημιουργείται intent για να ανοίξει fragment οπου μπορεί να κάνει κράτηση ο χρήστης στο μαγαζί που επέλεξε
                     Intent intent = new Intent(context, ActivityForFragment.class);
 
                     intent.putExtra("name", cursor.getString(0));//Στέλνω το name

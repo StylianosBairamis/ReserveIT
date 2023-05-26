@@ -1,11 +1,13 @@
 package com.example.androidergasia;
-
+//απαραίτητα imports
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+/*
+Σε αυτη την κλαση υλοποιείται του upButton το οποιο υπάρχει στο toolbar
+ */
 public class BaseActivity extends AppCompatActivity
 {
 

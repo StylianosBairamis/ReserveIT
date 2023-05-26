@@ -1,5 +1,6 @@
 package com.example.androidergasia;
 
+//Κλάση για τα μαγαζίά
 public class Place
 {
     private String name;

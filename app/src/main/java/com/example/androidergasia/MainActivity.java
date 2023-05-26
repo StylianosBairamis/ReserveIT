@@ -23,7 +23,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 import java.util.Locale;
-
+/*
+Αυτη ειναι η κλαση της αρχικης σελιδας, εδώ υλοποιούνται οι λειτουργίες της
+αναζήτης μαγαζιών ανάλογα με τον τύπο, υπάρχει μια σύντομη περιγραφή, και το
+toolbar με το optionsMenu για τις ρυθμίσεις και το navigationsMenu για τις
+κρατήσεις και τα αγαπημένα μαγαζιά
+ */
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private Button button;
@@ -48,6 +53,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         toolbar.setNavigationIcon(R.mipmap.burger_menu);
 
+        //Υλοποιείται η λογική για κάθε chip που επιλέγεται
         chipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
             @Override
             public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds)
@@ -63,6 +69,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     textOfChip = chipSelected.getText().toString();
 
+                    //Αυτό γίνεται για να μπορέσει να περαστεί ο τύπος του μαγαζιού στο intent.
                     switch (textOfChip) {
                         case "Μπάρ":
                             textOfChip = "Bar";
@@ -78,6 +85,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
+        //κουμπί αναζήτησης που φτιάχνει recyclerView με μαγαζιά του δωσμένου τύπου.
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -89,15 +97,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-
-//        TextView selectATypeEl = findViewById(R.id.textView);
-//        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        String selectedLanguage = sharedPrefs.getString("language", "english"); // Assuming "english" is the default language
-//        if (selectedLanguage.equals("greek")) {
-//            selectATypeEl.setText(getString(R.string.select_a_type_el));
-//        } else {
-//            selectATypeEl.setText(getString(R.string.select_a_type));
-//        }
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -200,16 +199,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-//
-//        if(id == R.id.action_settings){
-////            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-//            startActivity(intent);
-//            return true;
-//        }
 
-//        if(id == R.id.reservation){
-//            Intent intent = new Intent(MainActivity.this, ReservationsActivity.class);
-//        }
+        if(id == R.id.action_settings){
+          Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+
+        }
 
         return super.onOptionsItemSelected(item);
     }

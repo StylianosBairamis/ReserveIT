@@ -1,12 +1,17 @@
 package com.example.androidergasia;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
-public class RecyclerViewActivity extends BaseActivity
+/*
+recyclerViewActivity για το recycler που ενεργοποιείται από intent στο MainActivity
+Παίρνει τον τύπο των μαγαζιών που θα μπούν στον recycler από το bundle μέσω του recyclerAdapter
+ */
+public class RecyclerViewActivity extends AppCompatActivity
 {
     private RecyclerView recyclerView;
 
@@ -39,7 +44,9 @@ public class RecyclerViewActivity extends BaseActivity
         adapter = new RecyclerAdapter(this, searchType, true);
 
         recyclerView1.setAdapter(adapter);
+        //o adapter γεμίζει τον recycler με τα μαγαζία
 
+        //Toolbar με upButton
         Toolbar toolbar = findViewById(R.id.mytoolbar);
 
         setSupportActionBar(toolbar);
