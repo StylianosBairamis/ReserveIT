@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.example.androidergasia"
         minSdk 24
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -51,7 +51,7 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-maps:18.1.0' // Google Play Services Maps library for Android.
 
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    //implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
 
     implementation 'com.google.android.material:material:1.0.0-alpha1'
 

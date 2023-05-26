@@ -1,5 +1,5 @@
 package com.example.androidergasia;
-
+//απαραιτητα imports
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,12 +14,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+/**
+ * Σε αυτή την κλάση ορίζεται ο recyclerAdapter του reservationsActivity
+ * Εδώ υλοποιούντε λειτουργίες όπως
+ */
 public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservationsRecyclerAdapter.reservationsViewHolder> {
     private Context context;
     private DBhandler dBhandler;
     private Cursor cursor;
 
+    //recyclerAdapter constructor
     public reservationsRecyclerAdapter(Context context)
     {
         this.context = context;
@@ -29,6 +33,7 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
 
     }
 
+    //View holder οπου εντοπιζει ολα τα στοιχεια του view για να μπορεσουμε να τους αλλαξουμε τιμες
     static class reservationsViewHolder extends RecyclerView.ViewHolder {
         private TextView nameOfPlace;
 
@@ -48,10 +53,11 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
 
         private ImageButton removeReservation;
 
+        //viewHolder constructor
         public reservationsViewHolder(View itemView)
         {
             super(itemView);
-
+            //βρισκω ολα τα στοιχεια με το id
             nameOfPlace = itemView.findViewById(R.id.place);
             valueOfPlace = itemView.findViewById(R.id.valueOfPlace);
 
@@ -84,6 +90,7 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
 
          cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.
 
+        //Αλλάζω τιμή μέσω του holder
          holder.valueOfPlace.setText(cursor.getString(0));
          holder.valueOfTime.setText(cursor.getString(1));
          holder.valueOfDate.setText(cursor.getString(2));
@@ -94,6 +101,11 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
         int pos = position;
 
          holder.removeReservation.setOnClickListener(new View.OnClickListener() {
+             /**
+              *Λειτουργεία ώστε ο χρήστης να μπορεί να αφαιρέση μια κράτηση αν αλλάξει γνώμη
+              * και ζητάται επιβεβαίωση μέσω ενός alertDialog. Μεσω του dbhandler αφαιρείται
+              * η κράτηση από τη βάση δεδομένων
+              */
             @Override
             public void onClick(View view)
             {
@@ -126,6 +138,12 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
         });
     }
 
+    /**
+
+     Ενημερώνει τον δρομέα (cursor) αφαιρώντας ένα ειδικό στοιχείο στη δοθείσα θέση.
+
+     @param indexForRemove Η θέση του στοιχείου που θα αφαιρεθεί από τον δρομέα.
+     */
     private void changeCursor(int indexForRemove)
     {
         MatrixCursor matrixCursor = new MatrixCursor(cursor.getColumnNames());
