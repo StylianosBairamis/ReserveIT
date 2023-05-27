@@ -15,8 +15,6 @@ import android.os.Handler;
 import android.text.format.DateFormat;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,35 +24,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
-
-import java.text.ParseException;
-import java.util.Date;
 import java.util.Locale;
-
-
-
 
 public class BlankFragment extends Fragment
 {
     private Button submit;
-    private CalendarView calendarView;
-    private Button showLocation;
     private Button pickTime;
     private TextView numOfPersons;
-    private ImageButton incrementButton;
-    private ImageButton decrementButton;
     private ImageView favorite;
-    private TextView nameView;
     private static String nameOfPlace;
     private String timePicked;
     private String datePicked;
     private boolean[] validRequest ;
-
     private  boolean isSameDate = false;
-
-    int selectedHour;
-    int selectedMinute;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,19 +71,19 @@ public class BlankFragment extends Fragment
 
         numOfPersons = view.findViewById(R.id.numOfPersons);
 
-        incrementButton = view.findViewById(R.id.increment);
+        ImageButton incrementButton = view.findViewById(R.id.increment);
 
-        decrementButton = view.findViewById(R.id.decrement);
+        ImageButton decrementButton = view.findViewById(R.id.decrement);
 
-        showLocation = view.findViewById(R.id.locationShow);
+        Button showLocation = view.findViewById(R.id.locationShow);
 
         favorite = view.findViewById(R.id.favoriteIcon);
 
-        calendarView = view.findViewById(R.id.calendarView);
+        CalendarView calendarView = view.findViewById(R.id.calendarView);
 
         calendarView.setDate(System.currentTimeMillis(), false, true);
 
-        nameView = view.findViewById(R.id.placeName);
+        TextView nameView = view.findViewById(R.id.placeName);
 
         nameView.setText(nameOfPlace);
 
@@ -298,10 +280,6 @@ public class BlankFragment extends Fragment
         ,currentTime.get(Calendar.HOUR_OF_DAY),currentTime.get(Calendar.MINUTE), DateFormat.is24HourFormat(getActivity()));
 
         timePickerDialog.show();
-    }
-
-    public void setNameOfPlace(String nameOfPlace) {
-        this.nameOfPlace = nameOfPlace;
     }
 
     public void addToFavorite(View view)

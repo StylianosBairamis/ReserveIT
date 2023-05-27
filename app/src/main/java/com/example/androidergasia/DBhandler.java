@@ -2,7 +2,6 @@ package com.example.androidergasia;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -50,7 +49,6 @@ public class DBhandler extends SQLiteOpenHelper
     private final String DB_PATH = "/data/data/com.example.androidergasia/databases/";
 
     private final String DB_NAME = "myAPP.db";
-
 
     public DBhandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, 2);

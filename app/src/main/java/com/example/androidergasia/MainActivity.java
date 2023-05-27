@@ -1,25 +1,16 @@
 package com.example.androidergasia;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -38,10 +29,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
     private Button button;
-    private ChipGroup chipGroup;
-    private Toolbar toolbar;
     private String textOfChip;
-
     private static final int PERMISSION_REQUEST_CODE = 1;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -58,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        toolbar = findViewById(R.id.mytoolbar);
+        Toolbar toolbar = findViewById(R.id.mytoolbar);
 
-        chipGroup = findViewById(R.id.chipGroup);
+        ChipGroup chipGroup = findViewById(R.id.chipGroup);
 
         toolbar = findViewById(R.id.mytoolbar);
 

@@ -11,15 +11,12 @@ public class Controller
     public static double getLatitude() {
         return latitude;
     }
-
     public static double getLongitude() {
         return longitude;
     }
-
     public static void setLatitude(double latitudeSet) {
         latitude = latitudeSet;
     }
-
     public static void setLongitude(double longitudeSet) {
         longitude = longitudeSet;
     }
