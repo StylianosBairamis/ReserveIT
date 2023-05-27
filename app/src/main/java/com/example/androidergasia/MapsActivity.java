@@ -34,8 +34,8 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    private static double currentLatitude = 40.633052; // Συντεταγμένες απο Ημιώροφο βιολογίας
-    private static double currentLongitude = 22.957192;
+    private final double currentLatitude = Controller.getLatitude();
+    private final double currentLongitude = Controller.getLongitude();
 
     private Pair<Float ,Float> coordinates = null;
 

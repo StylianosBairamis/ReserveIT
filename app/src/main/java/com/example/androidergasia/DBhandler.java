@@ -2,6 +2,7 @@ package com.example.androidergasia;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -55,7 +56,7 @@ public class DBhandler extends SQLiteOpenHelper
         super(context, DATABASE_NAME, factory, 2);
         this.context = context;
         copyTable();
-        Controller.init(this);
+        Controller.setDBhandler(this);
         NEW_VERSION = 2 ;
     }
 
@@ -90,42 +91,6 @@ public class DBhandler extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-//        String CREATE_PLACE_TABLE = "CREATE TABLE " + DATABASE_TABLE_PLACES + "("
-//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-//                + COLUMN_NAME + " TEXT NOT NULL," +
-//                COLUMN_TYPE_OF_PLACE + " TEXT,"+
-//                COLUMN_DESCRIPTION  + " TEXT NOT NULL," +
-//                COLUMN_RATING + " REAL DEFAULT '0.0'," +
-//                COLUMN_CHAIRS_AVAILABLE + " INTEGER," +
-//                COLUMN_LATITUDE + " FLOAT NOT NULL," +
-//                COLUMN_LONGITUDE + " FLOAT NOT NULL," +
-//                COLUMN_IMAGE+ " TEXT," +
-//                "CHECK(type_of_place IN ('Restaurant', 'Bar', 'Cafe'))" + ")";
-//                //" UNIQUE(placeName)" + ")";
-
-//        String CREATE_RESERVATIONS_TABLE = "CREATE TABLE " + DATABASE_TABLE_RESERVATIONS + "("
-//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                COLUMN_TIMESTAMP + " TEXT NOT NULL," +
-//                COLUMN_NUMBER_OF_PEOPLE + " INTEGER NOT NULL," +
-//                COLUMN_TRACK_PLACE + " INTEGER," +
-//                " FOREIGN KEY(id_of_place) REFERENCES places(_id)" +
-//                ")";
-
-
-//        String CREATE_FAVORITE_TABLE = " CREATE TABLE " + DATABASE_TABLE_FAVORITE + "("
-//                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                COLUMN_FAVOURITE_PLACE_ID + " INTEGER NOT NULL, " +
-//                " FOREIGN KEY(" + COLUMN_FAVOURITE_PLACE_ID + ") REFERENCES places(_id)" +
-//                ")";
-
-//
-//
-//        //db.execSQL(CREATE_PLACE_TABLE);
-//        //db.execSQL(CREATE_RESERVATIONS_TABLE); // Δημιουργεία του reservation table
-//
-        //.execSQL(CREATE_FAVORITE_TABLE); // Δημιουργεία του favourite table
-//
-//        Controller controller = new Controller(this);
 
     }
 
@@ -158,6 +123,11 @@ public class DBhandler extends SQLiteOpenHelper
 
             db.execSQL(CREATE_RESERVATIONS_TABLE);
             db.execSQL(CREATE_FAVORITE_TABLE);
+
+            System.out.println("HEREEEEE");
+
+//            Controller.init(this);
+
         }
 
 //        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_PLACES);
@@ -371,6 +341,8 @@ public class DBhandler extends SQLiteOpenHelper
         String[] conditionArgs = {idToDelete+""}; // Replace "123" with the value of the ID to delete
 
         db.delete(DATABASE_TABLE_RESERVATIONS, condition, conditionArgs) ;
+
+        db.close();
     }
 
     public Cursor findReservations()

@@ -39,19 +39,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private static Cursor cursor = null;
     private static MatrixCursor matrixCursor = null;
     private static Context context = null;
-    private static double currentLatitude = 40.633052; // Συντεταγμένες απο Ημιώροφο βιολογίας
-    private static double currentLongitude = 22.957192;
+    private double currentLatitude;
+    private double currentLongitude;
 
     public RecyclerAdapter(Context context, String typeOfPlaceToSearch, Boolean forSearch)
     {
 
-        this.DBhandler = Controller.getDBhandler();
+        DBhandler = Controller.getDBhandler();
 
-        this.context = context;
+        RecyclerAdapter.context = context;
 
         if(forSearch)
         {
-            cursor = this.DBhandler.findPlaces(typeOfPlaceToSearch);
+            cursor = DBhandler.findPlaces(typeOfPlaceToSearch);
+
+            currentLatitude = Controller.getLatitude(); // Παίρνει ως συνταταγμένες την θέση του κινητού αν ο χρήστης δεχτεί το permission
+            currentLongitude = Controller.getLongitude(); // αλλιώς δίνω τις συντεταγμένες του ημιόροφου.
 
             GetDistanceTask getDistanceTask = new GetDistanceTask();
             getDistanceTask.execute();
@@ -60,10 +63,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         {
             cursor = this.DBhandler.getFavoritePlaces();
         }
-        Controller.setRecyclerAdapter(this);
 
-//        GetDistanceTask getDistanceTask = new GetDistanceTask();
-//        getDistanceTask.execute();
+        Controller.setRecyclerAdapter(this);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -314,7 +315,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         cursor = matrixCursor;
 
     }
-    public class GetDistanceTask extends AsyncTask<Void, Void, ArrayList<Integer>>
+    private class GetDistanceTask extends AsyncTask<Void, Void, ArrayList<Integer>>
     {
         @Override
         protected ArrayList<Integer> doInBackground(Void... voids)

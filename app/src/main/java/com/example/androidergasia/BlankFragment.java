@@ -166,12 +166,6 @@ public class BlankFragment extends Fragment
                 // δεν έχει επιλέξει εγκυρη ημερομηνια
                 validRequest[1] = !selectedDate.before(currentDate); // έχει επιλέξει εγκυρη ημερομηνία.
 
-                Toast toast = new Toast(getActivity());
-
-                toast.setText(datePicked);
-
-                toast.show();
-
                 pickTime.setEnabled(validRequest[1]); // αν μπορώ να διαλέξω ώρα
 
                 isSameDate  =  dateCurrent.equals(datePicked);

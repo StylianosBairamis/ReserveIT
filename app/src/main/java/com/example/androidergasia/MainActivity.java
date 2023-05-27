@@ -1,14 +1,23 @@
 package com.example.androidergasia;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 
 import androidx.annotation.NonNull;
@@ -16,24 +25,31 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 
 
 import java.util.List;
-import java.util.Locale;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
     private Button button;
     private ChipGroup chipGroup;
     private Toolbar toolbar;
     private String textOfChip;
 
+    private static final int PERMISSION_REQUEST_CODE = 1;
+    private FusedLocationProviderClient fusedLocationClient;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         button = findViewById(R.id.confirmSearch);
@@ -46,8 +62,31 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         chipGroup = findViewById(R.id.chipGroup);
 
+        toolbar = findViewById(R.id.mytoolbar);
+
+        setSupportActionBar(toolbar);
+
         toolbar.setNavigationIcon(R.mipmap.burger_menu);
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (checkLocationPermissions())
+        {
+            requestLocation();
+        }
+        else
+        {
+            requestLocationPermissions();
+        }
+
+        Controller.init();
+
+        DBhandler db = new DBhandler(this, null, null, 2);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && false == Environment.isExternalStorageManager()) {
+//            Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+//            startActivity(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri));
+//        }
         chipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
             @Override
             public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds)
@@ -89,18 +128,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-
-//        TextView selectATypeEl = findViewById(R.id.textView);
-//        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        String selectedLanguage = sharedPrefs.getString("language", "english"); // Assuming "english" is the default language
-//        if (selectedLanguage.equals("greek")) {
-//            selectATypeEl.setText(getString(R.string.select_a_type_el));
-//        } else {
-//            selectATypeEl.setText(getString(R.string.select_a_type));
-//        }
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -116,9 +145,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //button = findViewById(R.id.button);
         // button.setOnClickListener(this::addPlace);
 
-        DBhandler db = new DBhandler(this, null, null, 2);
-
     }
+
 
 //    public void addPlace(View view)
 //    {
@@ -213,7 +241,54 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         return super.onOptionsItemSelected(item);
     }
+    private boolean checkLocationPermissions()
+    {
+        int permissionCoarse = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        int permissionFine = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionCoarse == PackageManager.PERMISSION_GRANTED && permissionFine == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestLocationPermissions()
+    {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+    }
+
+    private void requestLocation() throws SecurityException
+    {
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>()
+        {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null)
+                {
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+
+                    Controller.setLatitude(latitude);
+                    Controller.setLongitude(longitude);
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Location not available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_REQUEST_CODE)
+        {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                requestLocation();
+            }
+            else
+            {
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 }
-
-

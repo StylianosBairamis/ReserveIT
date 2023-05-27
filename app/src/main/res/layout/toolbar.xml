@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mytoolbar"
     android:background="#e6daf2"
     android:minHeight="?attr/actionBarSize"
@@ -11,7 +11,6 @@
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
     app:title="ReserveIT">
-
 </androidx.appcompat.widget.Toolbar>
 
 <!--    android:theme="@style/ToolbarTheme"-->

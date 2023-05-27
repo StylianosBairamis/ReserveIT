@@ -1,6 +1,5 @@
 package com.example.androidergasia;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +13,7 @@ public class ReservationsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.reservations_activity);
 
         dBhandler = Controller.getDBhandler();

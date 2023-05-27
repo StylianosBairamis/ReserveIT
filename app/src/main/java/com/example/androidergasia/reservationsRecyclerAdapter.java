@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 
 public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservationsRecyclerAdapter.reservationsViewHolder> {
     private Context context;
     private DBhandler dBhandler;
     private Cursor cursor;
+    private ArrayList<Object[]> listOfObjects;
 
     public reservationsRecyclerAdapter(Context context)
     {
@@ -27,6 +28,8 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
         this.dBhandler = Controller.getDBhandler();
 
         cursor = dBhandler.findReservations();
+
+        fromCursorToArrayList();
     }
 
     static class reservationsViewHolder extends RecyclerView.ViewHolder {
@@ -78,16 +81,17 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
     @Override
     public void onBindViewHolder(@NonNull reservationsViewHolder holder, int position) {
 
-         cursor.moveToFirst();//Παω τον Cursor
+//         cursor.moveToFirst();//Παω τον Cursor
+//
+//         cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.
+         Object[] data = listOfObjects.get(position);
 
-         cursor.move(position);// Παω την θέση που θέλω είναι offset, δεν κάνει μεταπήδηση.
+         holder.valueOfPlace.setText((String) data[0]);
+         holder.valueOfTime.setText((String) data[1]);
+         holder.valueOfDate.setText((String) data[2]);
+         holder.valueOfPeople.setText(data[3]+"");
 
-         holder.valueOfPlace.setText(cursor.getString(0));
-         holder.valueOfTime.setText(cursor.getString(1));
-         holder.valueOfDate.setText(cursor.getString(2));
-         holder.valueOfPeople.setText(cursor.getInt(3)+"");
-
-         int idOfReservation = cursor.getInt(4); // Παίρνω το id του reservation
+         int idOfReservation = (int) data[4]; // Παίρνω το id του reservation
 
          int pos = position;
 
@@ -107,8 +111,9 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
                     {
                         dBhandler.removeReservation(idOfReservation);
 
-                        changeCursor(pos);
-                        notifyItemRemoved(pos);
+                        listOfObjects.remove(pos);
+
+                        notifyDataSetChanged();
                     }
                 });
 
@@ -124,34 +129,55 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
         });
     }
 
-    private void changeCursor(int indexForRemove)
+//    private void changeCursor(int indexForRemove)
+//    {
+//        MatrixCursor matrixCursor = new MatrixCursor(cursor.getColumnNames());
+//
+//        for(int i = 0 ; i < cursor.getCount(); i++)
+//        {
+//            if( i != indexForRemove)
+//            {
+//                cursor.moveToFirst();
+//
+//                cursor.move(i);
+//
+//                Object[] objectArray = new Object[5];
+//                objectArray[0] = cursor.getString(0);
+//                objectArray[1] = cursor.getString(1);
+//                objectArray[2] = cursor.getString(2);
+//                objectArray[3] = cursor.getInt(3);
+//                objectArray[4] = cursor.getInt(4);
+//
+//                matrixCursor.addRow(objectArray);
+//            }
+//        }
+//        cursor = matrixCursor;
+//    }
+
+    private void fromCursorToArrayList()
     {
-        MatrixCursor matrixCursor = new MatrixCursor(cursor.getColumnNames());
+        listOfObjects = new ArrayList<>();
 
         for(int i = 0 ; i < cursor.getCount(); i++)
         {
-            if( i != indexForRemove)
-            {
-                cursor.moveToFirst();
+            cursor.moveToFirst();
+            cursor.move(i);
 
-                cursor.move(i);
+            Object[] objectArray = new Object[5];
+            objectArray[0] = cursor.getString(0);
+            objectArray[1] = cursor.getString(1);
+            objectArray[2] = cursor.getString(2);
+            objectArray[3] = cursor.getInt(3);
+            objectArray[4] = cursor.getInt(4);
 
-                Object[] objectArray = new Object[5];
-                objectArray[0] = cursor.getString(0);
-                objectArray[1] = cursor.getString(1);
-                objectArray[2] = cursor.getString(2);
-                objectArray[3] = cursor.getInt(3);
-                objectArray[4] = cursor.getInt(4);
-
-                matrixCursor.addRow(objectArray);
-            }
+            listOfObjects.add(objectArray);
         }
-        cursor = matrixCursor;
     }
 
     @Override
-    public int getItemCount() {
-        return cursor.getCount();
+    public int getItemCount()
+    {
+        return listOfObjects.size();
     }
 
 }
