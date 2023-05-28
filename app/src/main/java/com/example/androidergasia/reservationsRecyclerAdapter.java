@@ -25,7 +25,7 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
     {
         this.context = context;
 
-       dBhandler = Controller.getDBhandler();
+        dBhandler = Controller.getDBhandler();
 
         cursor = dBhandler.findReservations();
 
@@ -71,18 +71,18 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
     @Override
     public void onBindViewHolder(@NonNull reservationsViewHolder holder, int position) {
 
-         Object[] data = listOfObjects.get(position);
+        Object[] data = listOfObjects.get(position);
 
-         holder.valueOfPlace.setText((String) data[0]);
-         holder.valueOfTime.setText((String) data[1]);
-         holder.valueOfDate.setText((String) data[2]);
-         holder.valueOfPeople.setText(data[3]+"");
+        holder.valueOfPlace.setText((String) data[0]);
+        holder.valueOfTime.setText((String) data[1]);
+        holder.valueOfDate.setText((String) data[2]);
+        holder.valueOfPeople.setText(data[3]+"");
 
-         int idOfReservation = (int) data[4]; // Παίρνω το id του reservation
+        int idOfReservation = (int) data[4]; // Παίρνω το id του reservation
 
-         int pos = position;
+        int pos = position;
 
-         holder.removeReservation.setOnClickListener(new View.OnClickListener() {
+        holder.removeReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
@@ -120,11 +120,11 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
     {
         listOfObjects = new ArrayList<>();
 
-        cursor.moveToFirst();
 
 
         for(int i = 0 ; i < cursor.getCount(); i++)
         {
+            cursor.moveToFirst();
             cursor.move(i);
 
             Object[] objectArray = new Object[5];
