@@ -26,7 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
     private Button button;
     private String textOfChip;
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id == R.id.action_settings){
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
-            return true;
+
         }
 
 //        if(id == R.id.reservation){

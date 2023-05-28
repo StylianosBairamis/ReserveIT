@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("language", language);
         editor.apply();
-       // restartApp();
+        restartApp();
     }
     //αλλάζει την γλώσσα της εφαρμογής
     private void setLocale(String language)
