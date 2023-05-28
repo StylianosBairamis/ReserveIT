@@ -5,15 +5,9 @@
     android:layout_height="wrap_content"
     android:id="@+id/mytoolbar"
     android:background="#e6daf2"
-    android:minHeight="?attr/actionBarSize"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:theme="@style/ToolbarTheme"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
-    app:title="ReserveIT">
+    app:title="ReserveIT"
+    app:titleTextColor="@color/white">
 </androidx.appcompat.widget.Toolbar>
-
-<!--    android:theme="@style/ToolbarTheme"-->
-<!--    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-
-<!--μαυρο background-->
