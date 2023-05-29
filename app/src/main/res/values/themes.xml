@@ -19,7 +19,6 @@
     </style>
 
     <style name="ToolbarTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
         <item name="actionMenuTextColor">@android:color/holo_green_light</item>
     </style>
 

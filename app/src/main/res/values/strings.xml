@@ -36,4 +36,8 @@
     <string name="my_reservations">My reservations</string>
     <string name="favoriteTextView">FavoritePlaces</string>
     <string name="general">General</string>
+    <string name="name_of_place">Name of place:</string>
+    <string name="reservation_time">Time of Reservation:</string>
+    <string name="date_of_reservation">Date of Reservation:</string>
+    <string name="people_number">Number of people:</string>
 </resources>

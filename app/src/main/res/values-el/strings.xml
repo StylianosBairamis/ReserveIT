@@ -36,4 +36,8 @@
     <string name="my_reservations">Οι κρατήσεις μου</string>
     <string name="favoriteTextView">Αγαπημένα Καταστήματα</string>
     <string name="general">Γενικά</string>
+    <string name="name_of_place">Όνομα μαγαζιού:</string>
+    <string name="reservation_time">Ώρα κράτησης:</string>
+    <string name="date_of_reservation">Ημερομηνία κράτησης:</string>
+    <string name="people_number">Αριθμός ατόμων κράτησης:</string>
 </resources>

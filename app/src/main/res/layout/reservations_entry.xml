@@ -50,7 +50,7 @@
                     android:id="@+id/place"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name of place: "
+                    android:text="@string/name_of_place"
                     android:textStyle="bold" />
 
                 <TextView
@@ -79,7 +79,7 @@
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Time of Reservation: "
+                    android:text="@string/reservation_time"
                     android:textStyle="bold" />
 
                 <TextView
@@ -105,7 +105,7 @@
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date of Reservation: "
+                    android:text="@string/date_of_reservation"
                     android:textStyle="bold" />
 
                 <TextView
@@ -131,7 +131,7 @@
                     android:id="@+id/numberOfPeople"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Number of people: "
+                    android:text="@string/people_number"
                     android:textStyle="bold" />
 
                 <TextView

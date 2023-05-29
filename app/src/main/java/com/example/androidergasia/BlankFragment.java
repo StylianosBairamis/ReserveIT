@@ -6,12 +6,15 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.LocaleList;
 import android.text.format.DateFormat;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -186,28 +189,60 @@ public class BlankFragment extends Fragment
 
     private void submit(View view)
     {
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+
+        LocaleList localeList = configuration.getLocales();
+        String currentLanguage = localeList.get(0).getLanguage();
+
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Making a reservation");
-        progressDialog.setMessage("please wait...");
+
+        if(currentLanguage == "el"){
+            progressDialog.setTitle("Καταχωρείται η κράτηση");
+            progressDialog.setMessage("Περιμένετε...");
+        } else {
+            progressDialog.setTitle("Making a reservation");
+            progressDialog.setMessage("please wait...");
+        }
+
+
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        if(currentLanguage == "el"){
+            progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "Ακύρωση", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.cancel();
-            }
-        });
+                }
+            });
+        } else {
+            progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+        }
         progressDialog.show();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run()
             {
+                String message;
                 progressDialog.dismiss();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                alertDialog.setTitle("Success");
-                String message = "Your reservation has been made!" + "\n" +
-                        "Date of reservation: " + datePicked + "\n" + "Time of reservation: "
-                        +timePicked;
+                if(currentLanguage == "el"){
+                    alertDialog.setTitle("Επιτυχία");
+                    message = "Η κράτηση σας καταχωρήθηκε!" + "\n" +
+                            "Ημερομηνία κράτησης: " + datePicked + "\n" + "Ώρα κράτησης: "
+                            +timePicked;
+                } else{
+                    alertDialog.setTitle("Success");
+                    message = "Your reservation has been made!" + "\n" +
+                            "Date of reservation: " + datePicked + "\n" + "Time of reservation: "
+                            +timePicked;
+                }
+
 
                 alertDialog.setMessage(message);
 

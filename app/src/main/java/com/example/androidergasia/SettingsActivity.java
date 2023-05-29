@@ -93,4 +93,5 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }
