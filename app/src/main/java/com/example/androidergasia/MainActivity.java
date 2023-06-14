@@ -255,7 +255,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     Controller.setUserLatitude(latitude);
                     Controller.setUserLongitude(longitude);
 
-                } else {
+                }
+                else
+                {
                     Toast.makeText(MainActivity.this, "Location not available", Toast.LENGTH_SHORT).show();
                 }
             }

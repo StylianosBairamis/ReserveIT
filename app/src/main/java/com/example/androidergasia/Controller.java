@@ -65,9 +65,6 @@ public class Controller
         return DBhandler;
     }
 
-
-
-
      //Παροχή πρόσβαση στις μεθόδους της DBhandler
     public static ArrayList<Reservation> findReservations()
     {

@@ -132,7 +132,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         //Δες τα υπόλοιπα που γυρνάει!
 
-        String pathToFile = cursor.getString(7);
+        String pathToFile = cursor.getString(6);
 
         try(InputStream inputStream = context.getAssets().open("images" + pathToFile))
         {
@@ -163,8 +163,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         for(int i = 0 ; i < cursor.getCount();i++)
         {
-            destinations += cursor.getDouble(5) + "%2C"; //%2C είναι το ',' στα URL Εδω προσθέτω latitude
-            destinations += cursor.getDouble(6); // εδώ προσθέτω longitude
+            destinations += cursor.getDouble(4) + "%2C"; //%2C είναι το ',' στα URL Εδω προσθέτω latitude
+            destinations += cursor.getDouble(5); // εδώ προσθέτω longitude
 
             if(i != cursor.getCount() - 1)//Στο τελευταίο value δεν βάζω τον ειδικό χαρακτήρα.
             {
@@ -265,10 +265,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             row[1] = cursor.getString(1); //type
             row[2] = cursor.getString(2); //description
             row[3] = cursor.getFloat(3); //rating
-            row[4] = cursor.getString(4); //chairs
-            row[5] = cursor.getDouble(5); //latitude
-            row[6] = cursor.getDouble(5); //longitude
-            row[7] = cursor.getString(7); //pathToImage
+            row[4] = cursor.getDouble(4); //latitude
+            row[5] = cursor.getDouble(5); //longitude
+            row[6] = cursor.getString(6); //pathToImage
 
             matrixCursor.addRow(row);
         }
