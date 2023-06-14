@@ -36,15 +36,16 @@ public class BlankFragment extends Fragment
     private TextView numOfPersons;
     private ImageView favorite;
     private static String nameOfPlace;
-    private String timePicked;
-    private String datePicked;
-    private boolean[] validRequest ;
-    private  boolean isSameDate = false;
+    private String timePicked; //ώρα της κράτησης
+    private String datePicked; //μέρα της κράτησης
+    private boolean[] validRequest; // πίνακας για boolean τιμές, χρησιμοποιείται για τον έλεγχο εγκυρότητας της κράτησης.
+    //στην πρώτη θέση είναι ο αριθμός των ατόμων, στην δεύτερη η ημερομηνία και στην τρίτη η ώρα.
+    private boolean isSameDate = false; // πεδίο που χρησιμοποιείται για τον έλεγχο της εγκυρότητας της κράτησης.
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-
     }
 
     public BlankFragment() {}
@@ -70,7 +71,7 @@ public class BlankFragment extends Fragment
 
         submit.setEnabled(false);
 
-        pickTime.setEnabled(false); //περιμένω πρώτα να βάλει ημερομηνια.
+//        pickTime.setEnabled(false); //περιμένω πρώτα να βάλει ημερομηνια.
 
         numOfPersons = view.findViewById(R.id.numOfPersons);
 
@@ -84,14 +85,19 @@ public class BlankFragment extends Fragment
 
         CalendarView calendarView = view.findViewById(R.id.calendarView);
 
+        calendarView.getDate();
+
         calendarView.setDate(System.currentTimeMillis(), false, true);
 
         TextView nameView = view.findViewById(R.id.placeName);
 
         nameView.setText(nameOfPlace);
 
-        nameView.setPaintFlags(nameView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        nameView.setPaintFlags(nameView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG); // underline του ονόματος.
 
+        validRequest[1] = true; // θέτω ως true για να αναγνωρίζει κατευθείαν την τρέχουσα μέρα.
+
+        //Listener για το button που αυξάνει τον αριθμό των ατόμων.
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -101,13 +107,16 @@ public class BlankFragment extends Fragment
                 numOfPersons.setText(num + "");
 
                 validRequest[0] = true; //έχει επιλέξει άτομα
-                checkValidness();
+                checkValidness(); //Ελέγχος εγκυρότητας.
             }
         });
 
-        decrementButton.setOnClickListener(new View.OnClickListener() {
+        //Listener για το button που μείωνει τον αριθμό των ατόμων.
+        decrementButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 int num = Integer.parseInt(numOfPersons.getText().toString());
                 if(num != 0)
                 {
@@ -118,7 +127,7 @@ public class BlankFragment extends Fragment
                         validRequest[0]  = false; //δεν έχει επιλέξει άτομα
                     }
                 }
-                checkValidness();
+                checkValidness(); //Ελέγχος εγκυρότητας.
             }
         });
 
@@ -129,10 +138,11 @@ public class BlankFragment extends Fragment
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth)
             {
-                Calendar selectedDate = Calendar.getInstance();
+                Calendar selectedDate = Calendar.getInstance(); //Δημιουργώ object τύπου Calendar
 
                 Calendar currentDate = Calendar.getInstance();
 
+                // μέθοδος .get της Calendar δέχεται int, επιστρέφει πληροφορία που αντιστοιχεί  η σταθερά
                 int currentYear = currentDate.get(Calendar.YEAR);
                 int currentMonth = currentDate.get(Calendar.MONTH);
                 int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
@@ -145,7 +155,7 @@ public class BlankFragment extends Fragment
 
                 datePicked = dateFormat.format(selectedDate.getTime());
 
-               String dateCurrent = dateFormat.format(currentDate.getTime());
+                String dateCurrent = dateFormat.format(currentDate.getTime());
 
                 //'Ελεγχος για το αν η ημερομηνια που επιλέχθηκε είναι πριν απο την τρέχουσα
                 // δεν έχει επιλέξει εγκυρη ημερομηνια
@@ -153,27 +163,43 @@ public class BlankFragment extends Fragment
 
                 pickTime.setEnabled(validRequest[1]); // αν μπορώ να διαλέξω ώρα
 
-                isSameDate  =  dateCurrent.equals(datePicked);
+                isSameDate  = dateCurrent.equals(datePicked);
 
                 checkValidness();
             }
         });
 
-        showLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(),MapsActivity.class);
+        showLocation.setOnClickListener(this::startMapActivity);
 
-                intent.putExtra("name", nameOfPlace);
+        setFavoriteIcon();
 
-                startActivity(intent);
-            }
-        });
+        setTempDate();
 
+        return view;
+    }
+
+    /**
+     * Μέθοδος που εκτελείται όταν ο user κάνει click το location button.
+     * @param view
+     */
+    private void startMapActivity(View view)
+    {
+        Intent intent = new Intent(getContext(), MapsActivity.class);
+
+        intent.putExtra("name", nameOfPlace);//Παιρνάω το όνομα του Place στο MapsActivity.
+
+        startActivity(intent); //Ξεκινάω το mapActivity
+    }
+
+    /**
+     * Μέθοδος για την αρχικοποίηση της εικόνας, ανάλογα με το αν η εικόνα βρίσκεται
+     * στα favorite του user.
+     */
+    private void setFavoriteIcon()
+    {
         int value = Controller.getDBhandler().isInFavoriteTable(nameOfPlace);
 
-        if(value == 0 )
+        if(value == 0)
         {
             favorite.setImageResource(R.mipmap.favorite_empty);
         }
@@ -183,45 +209,49 @@ public class BlankFragment extends Fragment
         }
 
         favorite.setOnClickListener(this::addToFavorite);
-
-        return view;
     }
 
+    /**
+     * Μέθοδος που εκτελείται όταν ο user κάνει click το submit button.
+     */
     private void submit(View view)
     {
         Resources resources = getResources();
+
+        //Configurations της συσκευής που μπορεί να επηρεάσουν τα resources του app
         Configuration configuration = resources.getConfiguration();
 
-        LocaleList localeList = configuration.getLocales();
-        String currentLanguage = localeList.get(0).getLanguage();
+        LocaleList localeList = configuration.getLocales(); //επιστρέφει λίστα με two-letter lowercase language codes
 
-        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        String currentLanguage = localeList.get(0).getLanguage(); //γλώσσα που χρησιμοποιείται απο το κινητό.
 
-        if(currentLanguage == "el"){
-            progressDialog.setTitle("Καταχωρείται η κράτηση");
-            progressDialog.setMessage("Περιμένετε...");
-        } else {
-            progressDialog.setTitle("Making a reservation");
-            progressDialog.setMessage("please wait...");
-        }
-
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());//Δημιουργεία του progressDialog.
 
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        if(currentLanguage == "el"){
-            progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "Ακύρωση", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
-        } else {
-            progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
+
+        String negativeButtonText;
+
+        if(currentLanguage.equals("el"))
+        {
+            progressDialog.setTitle("Καταχωρείται η κράτηση");
+            progressDialog.setMessage("Περιμένετε...");
+            negativeButtonText = "Ακύρωση";
         }
+        else
+        {
+            progressDialog.setTitle("Making a reservation");
+            progressDialog.setMessage("please wait...");
+            negativeButtonText = "Cancel";
+        }
+        progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, negativeButtonText, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                dialogInterface.cancel();
+            }
+        });
+
         progressDialog.show();
 
         new Handler().postDelayed(new Runnable() {
@@ -229,20 +259,24 @@ public class BlankFragment extends Fragment
             public void run()
             {
                 String message;
-                progressDialog.dismiss();
+                progressDialog.dismiss(); //Φεύγει το progressDialog απο το UI
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                if(currentLanguage == "el"){
+
+                if(currentLanguage.equals("el"))
+                {
                     alertDialog.setTitle("Επιτυχία");
                     message = "Η κράτηση σας καταχωρήθηκε!" + "\n" +
                             "Ημερομηνία κράτησης: " + datePicked + "\n" + "Ώρα κράτησης: "
                             +timePicked;
-                } else{
+                }
+                else
+                {
                     alertDialog.setTitle("Success");
                     message = "Your reservation has been made!" + "\n" +
                             "Date of reservation: " + datePicked + "\n" + "Time of reservation: "
                             +timePicked;
                 }
-
 
                 alertDialog.setMessage(message);
 
@@ -251,17 +285,19 @@ public class BlankFragment extends Fragment
                 Reservation reservation = new Reservation(placeID, datePicked, timePicked, Integer.parseInt(numOfPersons.getText().toString()));
 
                 Controller.getDBhandler().addReservation(reservation);
-                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener()
+                {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        getActivity().finish();
+                        getActivity().finish();//Κλείνω το activity
                     }
                 });
 
                 alertDialog.show();
             }
         }, 2000);
+        // Βάζω καθυστέρηση 2 second για να φαίνεται αληθοφανές το progressDialog και να έχει χρόνο ο user να ακυρώσει την κράτηση.
     }
 
     private void pickTime(View view)
@@ -317,7 +353,7 @@ public class BlankFragment extends Fragment
         timePickerDialog.show();
     }
 
-    public void addToFavorite(View view)
+    private void addToFavorite(View view)
     {
         int value = Controller.getDBhandler().isInFavoriteTable(nameOfPlace);
 
@@ -334,11 +370,37 @@ public class BlankFragment extends Fragment
        }
     }
 
-    private void checkValidness() {
+    /**
+     * Μέθοδος που θέτει την ημερομηνία, εκτελείται όταν ξεκινάει το activity.
+     */
+    private void setTempDate()
+    {
+        Calendar currentDate = Calendar.getInstance();
+
+        // μέθοδος .get της Calendar δέχεται int, επιστρέφει πληροφορία που αντιστοιχεί  η σταθερά
+        int currentYear = currentDate.get(Calendar.YEAR);
+        int currentMonth = currentDate.get(Calendar.MONTH);
+        int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
+
+        currentDate.set(currentYear,currentMonth,currentDay); // Τρέχουσα ημερομηνια.
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        datePicked = dateFormat.format(currentDate.getTime());
+    }
+
+    /**
+     * Μέθοδος που ελέγχει αν η πληροφορίες που έχει καταχωρήσει ο user είναι έγκυρες
+     * Δήλαδη η ώρα, αριθμός των ατόμων και η ημερομηνία.
+     */
+    private void checkValidness()
+    {
         boolean allValid = true;
 
-        for (boolean isValid : validRequest) {
-            if (!isValid) {
+        for (boolean isValid : validRequest)
+        {
+            if (!isValid) // Αν έστω και ένα απο τα απαιτόυμενα είναι false δεν είναι εγκυρή η κράτηση
+            {
                 allValid = false;
                 break;
             }
@@ -346,7 +408,7 @@ public class BlankFragment extends Fragment
 
         submit.setEnabled(allValid);
 
-        if (allValid)
+        if (allValid) // Ανάλογα με την κατάσταση αλλάζω και το χρώμα του button
         {
             submit.setBackgroundColor(Color.parseColor("#9C27B0"));
         }
