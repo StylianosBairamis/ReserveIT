@@ -74,10 +74,14 @@ public class Controller
     {
         DBhandler.removeReservation(idOfResertvation);
     }
-
     public static void addReservation(Reservation reservation)
     {
         DBhandler.addReservation(reservation);
+    }
+
+    public static int isInFavoriteTable(String nameOfPlace)
+    {
+        return DBhandler.isInFavoriteTable(nameOfPlace);
     }
 
 }

@@ -31,9 +31,7 @@ public class DBhandler extends SQLiteOpenHelper
     public static final String COLUMN_NAME = "placeName";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_RATING = "rating";
-    public static final String COLUMN_CHAIRS_AVAILABLE = "num_of_chairs";
     public static final String COLUMN_IMAGE ="image"; //Εδω αποθηκέυω path της αντίστοιχης εικόνας!
-
     public static final String COLUMN_LONGITUDE = "longitude";
     public static final String COLUMN_LATITUDE = "latitude";
 
@@ -240,21 +238,25 @@ public class DBhandler extends SQLiteOpenHelper
     }
 
     /**
-     * @param nameForSearch Όνομα του Place που θα προσθέσω στην λίστα των favorite plaec
-
+     * @param nameForSearch Όνομα του Place που θα προσθέσω στο table favorite
      */
 
     public void addPlaceToFavorite(String nameForSearch)
     {
-//        SQLiteDatabase db = getWritableDatabase();
-
         int id = getPlaceID(nameForSearch); // Παίρνω το id απο την μέθοδο getPlaceID
 
         ContentValues contentValues = new ContentValues();// key,value δομή
+
         contentValues.put(COLUMN_FAVOURITE_PLACE_ID, id);
 
         db.insert(DATABASE_TABLE_FAVORITE,null, contentValues);//Προσθήκη στον πίνακα.
     }
+
+    /**
+     * Μέθοδος για την αφαίρεση place απο το table favorite, ενημερώνω τον adapter αν βρίσκομαι στο
+     * FavoritesActivity.
+     * @param nameForDelete όνομα του place προς αφαίρεση.
+     */
 
     public void removePlaceFromFavorite(String nameForDelete)
     {
@@ -268,29 +270,37 @@ public class DBhandler extends SQLiteOpenHelper
 
         if(Controller.isTypeOfAdapter())//Αν είναι το recyclerAdapter του FavoritesActivity.
         {
-            Controller.getAdapter().removeItem(nameForDelete);//Ενημέρωση του adapter ώστε να αφαιρέσει
-            //το αντίστοιχο Place απο το recyclerViewer.
+            Controller.getAdapter().removeItem(nameForDelete);
+            //Ενημέρωση του adapter ώστε να αφαιρέσει το αντίστοιχο Place απο το recyclerViewer.
         }
 
     }
 
+    /**
+     * Μέθοδος που επιστρέφει όλα τα places που έχει επιλέξει ο χρήστης ως favorite
+     * Πραγματοποιείται inner join μεταξύ του πίνακα favorite table και του places table.
+     * Τable favorite έχει ως foreign key το primary key των places.
+     * @return
+     */
+
     public Cursor getFavoritePlaces()
     {
         String query ="SELECT "+ COLUMN_NAME + "," +COLUMN_TYPE_OF_PLACE + ","+
-        COLUMN_DESCRIPTION + "," + COLUMN_RATING + ","+COLUMN_CHAIRS_AVAILABLE + "," + COLUMN_LATITUDE + "," + COLUMN_LONGITUDE + ","
+        COLUMN_DESCRIPTION + "," + COLUMN_RATING +  "," + COLUMN_LATITUDE + "," + COLUMN_LONGITUDE + ","
                 + COLUMN_IMAGE +
                 " FROM " + DATABASE_TABLE_PLACES + " INNER JOIN " + DATABASE_TABLE_FAVORITE +
                 " ON "+ DATABASE_TABLE_PLACES+"._id" + "=" + DATABASE_TABLE_FAVORITE + ".id_of_place";
 
-//        SQLiteDatabase db = getReadableDatabase();
-
         return db.rawQuery(query,null);
     }
 
-    public int isInFavoriteTable (String nameOfPlace)
+    /**
+     * Μέθοδος που ελέγχει αν place υπάρχει ως record στον πίνακα των favorite.
+     * @param nameOfPlace όνομα του place
+     * @return 0 αν δεν βρίσκεται αλλιώς επιστρέφει 1
+     */
+    public int isInFavoriteTable(String nameOfPlace)
     {
-
-//        SQLiteDatabase db = getReadableDatabase();
 
         String query = "SELECT " + "_id" +
                 " FROM " + "places " +
@@ -316,8 +326,8 @@ public class DBhandler extends SQLiteOpenHelper
     }
 
     /**
-     *
-     * @param reservation
+     * Μέθοδος για προσθήκη Reservation στο table reservations
+     * @param reservation προς εισαγωγή
      */
 
     public void addReservation(Reservation reservation)

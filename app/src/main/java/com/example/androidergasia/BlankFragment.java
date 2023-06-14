@@ -196,7 +196,7 @@ public class BlankFragment extends Fragment
      */
     private void setFavoriteIcon()
     {
-        int value = Controller.getDBhandler().isInFavoriteTable(nameOfPlace);
+        int value = Controller.isInFavoriteTable(nameOfPlace);
 
         if(value == 0)
         {
@@ -354,7 +354,7 @@ public class BlankFragment extends Fragment
 
     private void addToFavorite(View view)
     {
-        int value = Controller.getDBhandler().isInFavoriteTable(nameOfPlace);
+        int value = Controller.isInFavoriteTable(nameOfPlace);
 
         if(value == 0)
         {
