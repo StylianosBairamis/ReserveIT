@@ -285,8 +285,18 @@ public class DBhandler extends SQLiteOpenHelper
 
     public Cursor getFavoritePlaces()
     {
+        Resources resources = context.getResources();
+        //Configurations της συσκευής που μπορεί να επηρεάσουν τα resources του app
+        Configuration configuration = resources.getConfiguration();
+
+        LocaleList localeList = configuration.getLocales(); //επιστρέφει λίστα με two-letter lowercase language codes
+
+        String currentLanguage = localeList.get(0).getLanguage(); //γλώσσα που χρησιμοποιείται απο το κινητό.
+
+        String description = currentLanguage.equals("el")?"description_gr" : COLUMN_DESCRIPTION; //Ποία απο τις δυο στήλες θα επιστραφεί.
+
         String query ="SELECT "+ COLUMN_NAME + "," +COLUMN_TYPE_OF_PLACE + ","+
-        COLUMN_DESCRIPTION + "," + COLUMN_RATING +  "," + COLUMN_LATITUDE + "," + COLUMN_LONGITUDE + ","
+        description + "," + COLUMN_RATING +  "," + COLUMN_LATITUDE + "," + COLUMN_LONGITUDE + ","
                 + COLUMN_IMAGE +
                 " FROM " + DATABASE_TABLE_PLACES + " INNER JOIN " + DATABASE_TABLE_FAVORITE +
                 " ON "+ DATABASE_TABLE_PLACES+"._id" + "=" + DATABASE_TABLE_FAVORITE + ".id_of_place";
