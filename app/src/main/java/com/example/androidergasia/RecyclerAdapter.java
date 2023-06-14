@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -53,18 +52,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         {
             cursor = DBhandler.findPlaces(typeOfPlaceToSearch);
 
-            currentLatitude = Controller.getLatitude(); // Παίρνει ως συνταταγμένες την θέση του κινητού αν ο χρήστης δεχτεί το permission
-            currentLongitude = Controller.getLongitude(); // αλλιώς δίνω τις συντεταγμένες του ημιόροφου.
+            currentLatitude = Controller.getUserLatitude(); // Παίρνει ως συνταταγμένες την θέση του κινητού αν ο χρήστης δεχτεί το permission
+            currentLongitude = Controller.getUserLongitude(); // αλλιώς δίνω τις συντεταγμένες του ημιόροφου.
 
             GetDistanceTask getDistanceTask = new GetDistanceTask();
             getDistanceTask.execute();
+
+            Controller.setRecyclerAdapter(this,false);
         }
         else
         {
             cursor = this.DBhandler.getFavoritePlaces();
-        }
 
-        Controller.setRecyclerAdapter(this);
+            Controller.setRecyclerAdapter(this,true);
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

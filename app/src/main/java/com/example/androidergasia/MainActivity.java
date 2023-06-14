@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.app.ActivityCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -252,8 +252,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
 
-                    Controller.setLatitude(latitude);
-                    Controller.setLongitude(longitude);
+                    Controller.setUserLatitude(latitude);
+                    Controller.setUserLongitude(longitude);
 
                 } else {
                     Toast.makeText(MainActivity.this, "Location not available", Toast.LENGTH_SHORT).show();

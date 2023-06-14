@@ -17,19 +17,13 @@ import java.util.ArrayList;
 
 public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservationsRecyclerAdapter.reservationsViewHolder> {
     private Context context;
-    private DBhandler dBhandler;
-    private Cursor cursor;
-    private ArrayList<Object[]> listOfObjects;
+    ArrayList<Reservation> listOfReservation;
 
     public reservationsRecyclerAdapter(Context context)
     {
         this.context = context;
 
-        dBhandler = Controller.getDBhandler();
-
-        cursor = dBhandler.findReservations();
-
-        fromCursorToArrayList();
+        listOfReservation = Controller.findReservations();
     }
 
     static class reservationsViewHolder extends RecyclerView.ViewHolder {
@@ -69,16 +63,17 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
     }
 
     @Override
-    public void onBindViewHolder(@NonNull reservationsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull reservationsViewHolder holder, int position)
+    {
 
-        Object[] data = listOfObjects.get(position);
+        Reservation reservation = listOfReservation.get(position);//Παίρνω το Reservation
 
-        holder.valueOfPlace.setText((String) data[0]);
-        holder.valueOfTime.setText((String) data[1]);
-        holder.valueOfDate.setText((String) data[2]);
-        holder.valueOfPeople.setText(data[3]+"");
+        holder.valueOfPlace.setText(reservation.getNameOfPlace()); //Ανάθεση στοιχείων
+        holder.valueOfTime.setText(reservation.getDateTime());
+        holder.valueOfDate.setText(reservation.getDate());
+        holder.valueOfPeople.setText(reservation.getNumberOfPeople()+"");
 
-        int idOfReservation = (int) data[4]; // Παίρνω το id του reservation
+        int idOfReservation = reservation.getReservationID(); // Παίρνω το id του reservation
 
         int pos = position;
 
@@ -96,9 +91,9 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
                     {
-                        dBhandler.removeReservation(idOfReservation);
+                        Controller.removeReservation(idOfReservation);
 
-                        listOfObjects.remove(pos);
+                        listOfReservation.remove(pos);
 
                         notifyDataSetChanged();
                     }
@@ -116,34 +111,10 @@ public class reservationsRecyclerAdapter extends RecyclerView.Adapter<reservatio
         });
     }
 
-    private void fromCursorToArrayList()
-    {
-        listOfObjects = new ArrayList<>();
-
-
-
-        for(int i = 0 ; i < cursor.getCount(); i++)
-        {
-            cursor.moveToFirst();
-            cursor.move(i);
-
-            Object[] objectArray = new Object[5];
-            objectArray[0] = cursor.getString(0);
-            objectArray[1] = cursor.getString(1);
-            objectArray[2] = cursor.getString(2);
-            objectArray[3] = cursor.getInt(3);
-            objectArray[4] = cursor.getInt(4);
-
-            listOfObjects.add(objectArray);
-        }
-
-    }
-
-
     @Override
     public int getItemCount()
     {
-        return listOfObjects.size();
+        return listOfReservation.size();
     }
 
 }

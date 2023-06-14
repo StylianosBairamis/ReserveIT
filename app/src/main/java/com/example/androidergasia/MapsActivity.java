@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -34,16 +33,16 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    private final double currentLatitude = Controller.getLatitude();
-    private final double currentLongitude = Controller.getLongitude();
-
-    private Pair<Float ,Float> coordinates = null;
+    private final double currentLatitude = Controller.getUserLatitude(); //Είναι συντεταγμένες του user.
+    private final double currentLongitude = Controller.getUserLongitude();
+    private Pair<Float ,Float> coordinates = null; // Είναι συντεταγμένες του place.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -61,6 +60,7 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     @Override
     public void onMapReady(GoogleMap googleMap)
     {
@@ -68,47 +68,45 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
 
         Bundle bundle = getIntent().getExtras();
 
-        String nameOfPlace = bundle.getString("name");
+        String nameOfPlace = bundle.getString("name"); //Παίρνω το όνομα του Place απο το Bundle
 
         coordinates = Controller.getDBhandler().getCoordinates(nameOfPlace);
 
         LatLng coordinatesOfPlace = new LatLng(coordinates.first, coordinates.second);
 
+        //Βάζω point στον χάρτη με τα coordinates του place, βάζω και title στο point
         mMap.addMarker(new MarkerOptions().position(coordinatesOfPlace).title(nameOfPlace));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinatesOfPlace));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinatesOfPlace));
 
-        LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);
+        LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);//Location του user
 
         mMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+        //zoom την κάμερα στην θέση του user.
 
-
-        MyTask myTask = new MyTask(coordinatesOfPlace,currentLocation);
+        MyTask myTask = new MyTask();
         myTask.execute();
-
     }
+
+    /**
+     * Δημιουργώ ενα asyncTask για να στείλω ενα GET request στο directions API,
+     * ουσιαστικά παίρνω το μονοπάτι απο την τοποθεσία του χρήστη προς την τοποθεσία του place
+     * και σχεδιάζω ενα polyline στο map.
+     */
 
     private class MyTask extends AsyncTask<Void,Void, ArrayList<LatLng>>
     {
-        LatLng placeCoordinates;
-        LatLng currentCoordinates;
-
-        public MyTask(LatLng placeCoordinates, LatLng currentCoordinates)
-        {
-            this.placeCoordinates = placeCoordinates;
-            this.currentCoordinates = currentCoordinates;
-        }
         @Override
         protected ArrayList<LatLng> doInBackground(Void... voids)
         {
 
             OkHttpClient client = new OkHttpClient().newBuilder().build();
 
-            String origins = currentLatitude + "," + currentLongitude;
+            String origins = currentLatitude + "," + currentLongitude; //coordinates του user
 
-            String destinations = coordinates.first + "," + coordinates.second; // Έιναι του place
+            String destinations = coordinates.first + "," + coordinates.second; // coordinates του place
 
-            try
+            try//Συμφώνα με τα docs της google
             {
                 Request request = new Request.Builder()
                         .url("https://maps.googleapis.com/maps/api/directions/json?origin=" + origins + "&destination=" + destinations + "+&key=AIzaSyDCh6JAZ2QP1_SAfKB_ch-ag5flQC5eZT4")
@@ -127,7 +125,6 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
                 String points = overview_polyline.getString("points"); // τιμή του overview_polyline
 
                 List<com.google.maps.model.LatLng> decodedCoordinates = PolylineEncoding.decode(points);
-
 
                 ArrayList<LatLng> typeCasted = new ArrayList<>();
 
@@ -153,9 +150,9 @@ public class  MapsActivity extends FragmentActivity implements OnMapReadyCallbac
         {
             super.onPostExecute(points);
 
-            PolylineOptions polylineOptions = new PolylineOptions().addAll(points);
+            PolylineOptions polylineOptions = new PolylineOptions().addAll(points); //Δημιουργώ το polyline
 
-            mMap.addPolyline(polylineOptions);
+            mMap.addPolyline(polylineOptions); // Το προσθέτω στο map.
         }
     }
 }

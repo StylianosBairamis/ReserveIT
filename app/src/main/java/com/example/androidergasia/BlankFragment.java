@@ -1,5 +1,4 @@
 package com.example.androidergasia;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -284,7 +283,7 @@ public class BlankFragment extends Fragment
 
                 Reservation reservation = new Reservation(placeID, datePicked, timePicked, Integer.parseInt(numOfPersons.getText().toString()));
 
-                Controller.getDBhandler().addReservation(reservation);
+                Controller.addReservation(reservation);
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener()
                 {
                     @Override

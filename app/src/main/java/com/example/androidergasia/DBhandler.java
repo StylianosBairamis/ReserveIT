@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 
 public class DBhandler extends SQLiteOpenHelper
@@ -45,38 +46,48 @@ public class DBhandler extends SQLiteOpenHelper
     //Για table που κρατάει τα favourite places
     private static final String COLUMN_FAVOURITE_PLACE_ID="id_of_place";
     private static final String DATABASE_TABLE_FAVORITE = "favorite";
-
     private final String DB_PATH = "/data/data/com.example.androidergasia/databases/";
-
     private final String DB_NAME = "myAPP.db";
 
+    private  SQLiteDatabase db = null;
+
+
     public DBhandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, 2);
+        super(context, DATABASE_NAME, factory, version);
         this.context = context;
         copyTable();
-        Controller.setDBhandler(this);
-        NEW_VERSION = 2 ;
+        Controller.setDBhandler(this);//Θέτω τον DBhandler στον Controller.
+        NEW_VERSION = version ;
+        db = getWritableDatabase();
     }
 
+    /**
+     * Μέθοδος που αντιγράφει την ΒΔ που υπάρχει στο φάκελο assets, αν δεν υπάρχει το αντίστοιχο αρχείο.
+     * Το table places περιέχει πληροφορίες για τα μαγαζία του app.
+     */
     private void copyTable()
     {
         try {
 
-            String myPath = DB_PATH + DB_NAME;
+            String myPath = DB_PATH + DB_NAME; //Path που αποθηκέυεται η ΒΔ της εφαρμογής.
+
             File file = new File(myPath);
-            if(file.exists())
+
+            if(file.exists())//Αν υπάρχει ήδη ο φάκελος επιστρέφω
             {
                 return;
             }
+            //Αλλίως γράφω στο παραπάνω path την ΒΔ που υπάρχει στο φάκελο assets.
             InputStream inputStream = context.getAssets().open("myAPP.db");
             File outputFile = context.getDatabasePath("myAPP.db");
             OutputStream outputStream = new FileOutputStream(outputFile);
             byte[] buffer = new byte[1024];
             int length;
-            while ((length = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
+            while ((length = inputStream.read(buffer)) > 0)
+            {
+                outputStream.write(buffer, 0, length); //Γράφω σταδιακά το αρχείο.
             }
-            outputStream.flush();
+            outputStream.flush();//Κλείσιμο πόρων
             outputStream.close();
             inputStream.close();
         }
@@ -93,16 +104,14 @@ public class DBhandler extends SQLiteOpenHelper
     }
 
     /**
-     * Βάση έχει δημιουργηθεί ήδη καλείται η onUpdate για να βάλω τα table reservations, favorite.
-     * @param db
-     * @param oldVersion
-     * @param newVersion
+     * Δημιουργώ ακόμα 2 tables, 1 για που θα αποθηκεύω τις κρατήσεις και 1
+     * για την αποθήκευση των αγαπημένων μαγαζιών.
+     * Καλείται η onUpgrade καθώς η ΒΔ προυπαρχεί καθώς περιέχει το table places
      */
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-        if(oldVersion < NEW_VERSION)
+        if(oldVersion < newVersion)
         {
             String CREATE_FAVORITE_TABLE = " CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE_FAVORITE + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -122,14 +131,8 @@ public class DBhandler extends SQLiteOpenHelper
             db.execSQL(CREATE_RESERVATIONS_TABLE);
             db.execSQL(CREATE_FAVORITE_TABLE);
 
-            System.out.println("HEREEEEE");
-
-//            Controller.init(this);
-
+            this.db = db;
         }
-
-//        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_PLACES);
-//        onCreate(db);
     }
 
     /**
@@ -172,34 +175,39 @@ public class DBhandler extends SQLiteOpenHelper
                 " FROM " + DATABASE_TABLE_PLACES +
                 " WHERE " + COLUMN_TYPE_OF_PLACE + " = '" + typeOfPlaceToSearch + "' ";
 
-        SQLiteDatabase db = getReadableDatabase();
+//        SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursorForReturn = db.rawQuery(query, null);
 
         return cursorForReturn;
     }
 
-    /**
-     * Αφαιρώ τα κένα απο το String, δεν μπορώ να εχώ κενά στο fileSystem
-     * Επίσης το androidFileSystem δεν δέχεται UpperCase γράμματα, επιστρέφω lowerCase String
-     * @param toFree
-     * @return
-     */
-    private String freeFromSpaces(String toFree)
-    {
-        if(!toFree.contains(" "))
-        {
-            return toFree;
-        }
+//    /**
+//     * Αφαιρώ τα κένα απο το String, δεν μπορώ να εχώ κενά στο fileSystem
+//     * Επίσης το androidFileSystem δεν δέχεται UpperCase γράμματα, επιστρέφω lowerCase String
+//     * @param toFree
+//     * @return
+//     */
+//    private String freeFromSpaces(String toFree)
+//    {
+//        if(!toFree.contains(" "))
+//        {
+//            return toFree;
+//        }
+//
+//        String[] arrayOfWords = toFree.split(" ");
+//        String spaceFree = "";
+//        for(int i = 0 ;i < arrayOfWords.length;i++)
+//        {
+//            spaceFree += arrayOfWords[i];
+//        }
+//        return spaceFree.toLowerCase();
+//    }
 
-        String[] arrayOfWords = toFree.split(" ");
-        String spaceFree = "";
-        for(int i = 0 ;i < arrayOfWords.length;i++)
-        {
-            spaceFree += arrayOfWords[i];
-        }
-        return spaceFree.toLowerCase();
-    }
+    /**
+     * @param nameForSearch Όνομα του Place που θα επιστρέψω τα coordinates
+     * @return ενα αντικείμενο τύπου Pair με το latitude, longitude
+     */
 
     public Pair<Float,Float> getCoordinates(String nameForSearch)
     {
@@ -207,71 +215,51 @@ public class DBhandler extends SQLiteOpenHelper
             " FROM " + DATABASE_TABLE_PLACES +
             " WHERE " + COLUMN_NAME + " = '" + nameForSearch + "' ";
 
-        SQLiteDatabase db = getReadableDatabase();
+//        SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
 
-        cursor.moveToFirst();
+        cursor.moveToFirst(); //Ενα μόνο αντικείμενο επιστρέφεται
 
         Pair<Float, Float> tempPair = new Pair<>(cursor.getFloat(0),cursor.getFloat(1));
 
-        cursor.close();
+        cursor.close(); //απελευθερωση πόρων
 
         return tempPair;
     }
 
+    /**
+     * @param nameForSearch Όνομα του Place που θα προσθέσω στην λίστα των favorite plaec
+
+     */
+
     public void addPlaceToFavorite(String nameForSearch)
     {
-        SQLiteDatabase db = getReadableDatabase();
+//        SQLiteDatabase db = getWritableDatabase();
 
-        String query = "SELECT " + COLUMN_ID +
-                " FROM "  + DATABASE_TABLE_PLACES +
-                " WHERE " + COLUMN_NAME + " = '" + nameForSearch + "' ";
+        int id = getPlaceID(nameForSearch); // Παίρνω το id απο την μέθοδο getPlaceID
 
-        Cursor cursor = db.rawQuery(query,null);
+        ContentValues contentValues = new ContentValues();// key,value δομή
+        contentValues.put(COLUMN_FAVOURITE_PLACE_ID, id);
 
-        db = getWritableDatabase();
-
-        cursor.moveToFirst();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_FAVOURITE_PLACE_ID, cursor.getInt(0));
-
-        db.insert(DATABASE_TABLE_FAVORITE,null, contentValues);
-
-        db.close();
-
-        cursor.close();
-
+        db.insert(DATABASE_TABLE_FAVORITE,null, contentValues);//Προσθήκη στον πίνακα.
     }
 
     public void removePlaceFromFavorite(String nameForDelete)
     {
-        SQLiteDatabase db = getReadableDatabase();
-
-        String query = "SELECT " + COLUMN_ID +
-                " FROM "  + DATABASE_TABLE_PLACES +
-                " WHERE " + COLUMN_NAME + " = '" + nameForDelete + "' ";
-
-        Cursor cursor = db.rawQuery(query,null);
-
-        db = getWritableDatabase();
-
-        cursor.moveToFirst();
-
-        int idOfPlace = cursor.getInt(0);
+        int idOfPlace = getPlaceID(nameForDelete); // Παίρνω το id απο την μέθοδο getPlaceID
 
         String condition = COLUMN_FAVOURITE_PLACE_ID + " = " + "?";
 
-        String[] conditionArgs = {idOfPlace+""}; // Replace "123" with the value of the ID to delete
+        String[] conditionArgs = {idOfPlace+""};
 
         db.delete(DATABASE_TABLE_FAVORITE,condition,conditionArgs);
 
-        Controller.getAdapter().removeItem(nameForDelete);
-
-        db.close();
-
-        cursor.close();
+        if(Controller.isTypeOfAdapter())//Αν είναι το recyclerAdapter του FavoritesActivity.
+        {
+            Controller.getAdapter().removeItem(nameForDelete);//Ενημέρωση του adapter ώστε να αφαιρέσει
+            //το αντίστοιχο Place απο το recyclerViewer.
+        }
 
     }
 
@@ -283,7 +271,7 @@ public class DBhandler extends SQLiteOpenHelper
                 " FROM " + DATABASE_TABLE_PLACES + " INNER JOIN " + DATABASE_TABLE_FAVORITE +
                 " ON "+ DATABASE_TABLE_PLACES+"._id" + "=" + DATABASE_TABLE_FAVORITE + ".id_of_place";
 
-        SQLiteDatabase db = getReadableDatabase();
+//        SQLiteDatabase db = getReadableDatabase();
 
         return db.rawQuery(query,null);
     }
@@ -291,7 +279,7 @@ public class DBhandler extends SQLiteOpenHelper
     public int isInFavoriteTable (String nameOfPlace)
     {
 
-        SQLiteDatabase db = getReadableDatabase();
+//        SQLiteDatabase db = getReadableDatabase();
 
         String query = "SELECT " + "_id" +
                 " FROM " + "places " +
@@ -316,10 +304,14 @@ public class DBhandler extends SQLiteOpenHelper
         return toReturnCount;
     }
 
+    /**
+     *
+     * @param reservation
+     */
+
     public void addReservation(Reservation reservation)
     {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
+        ContentValues values = new ContentValues(); //key,value δομή.
 
         values.put(COLUMN_TRACK_PLACE, reservation.getPlaceId());
         values.put(COLUMN_RESERVATION_DATE, reservation.getDate());
@@ -327,25 +319,29 @@ public class DBhandler extends SQLiteOpenHelper
         values.put(COLUMN_NUMBER_OF_PEOPLE, reservation.getNumberOfPeople());
 
         db.insert(DATABASE_TABLE_RESERVATIONS, null, values);
-        db.close();
     }
+
+    /**
+     * Μέθοδος για την αφαίρεση reservation απο το table
+     * @param idToDelete id του reservation
+     */
 
     public  void removeReservation(int idToDelete)
     {
-        SQLiteDatabase db = getReadableDatabase();
-
         String condition = COLUMN_ID + " = " + "?";
 
-        String[] conditionArgs = {idToDelete+""}; // Replace "123" with the value of the ID to delete
+        String[] conditionArgs = {idToDelete+""};
 
         db.delete(DATABASE_TABLE_RESERVATIONS, condition, conditionArgs) ;
-
-        db.close();
     }
 
-    public Cursor findReservations()
+    /**
+     * Μεθοδος που επιστρέφει όλα τα Reservations που υπάρχουν στο table
+     * @return ArrayList με Reservations.
+     */
+    public ArrayList<Reservation> findReservations()
     {
-        SQLiteDatabase db = this.getReadableDatabase();
+//        SQLiteDatabase db = this.getReadableDatabase();
 
         String query ="SELECT "+ "places."+COLUMN_NAME + "," +"reservations." + COLUMN_RESERVATION_TIME  + "," +
                 "reservations." + COLUMN_RESERVATION_DATE + "," + "reservations." + COLUMN_NUMBER_OF_PEOPLE
@@ -353,24 +349,54 @@ public class DBhandler extends SQLiteOpenHelper
                 " FROM " + DATABASE_TABLE_PLACES + " INNER JOIN " + DATABASE_TABLE_RESERVATIONS +
                 " ON "+ DATABASE_TABLE_PLACES+"._id" + "=" + DATABASE_TABLE_RESERVATIONS + ".id_of_place";
 
-        return db.rawQuery(query, null);
+        return fromCursorToArrayList(db.rawQuery(query, null));
     }
 
+    /**
+     * @param cursor απο το query της μέθοδου findReservations.
+     * @return ArrayList με Reservations.
+     */
+    private ArrayList<Reservation> fromCursorToArrayList(Cursor cursor)
+    {
+
+        ArrayList<Reservation> toReturn = new ArrayList<>();
+        Reservation tempReservation;
+
+        for(int i = 0 ; i < cursor.getCount(); i++)
+        {
+            cursor.moveToFirst();
+            cursor.move(i);
+
+            String nameOfPlace = cursor.getString(0);
+            String time = cursor.getString(1);
+            String date = cursor.getString(2);
+            int numberOfPeople = cursor.getInt(3);
+            int reservationID = cursor.getInt(4);
+
+            //Δημιουργεία reservation με τα στοιχεία του query.
+
+            tempReservation = new Reservation(date, time, nameOfPlace, numberOfPeople, reservationID);
+
+            toReturn.add((tempReservation));//προσθήκη στο arrayList.
+        }
+        return toReturn;
+    }
+
+    /**
+     * Μέθοδος που δέχεται ώς όρισμα το όνομα ενος Place, επιστρέφει το id του
+     */
     public int getPlaceID(String nameForSearch)
     {
-        SQLiteDatabase db = getReadableDatabase();
-
         String query = "SELECT " + COLUMN_ID +
                 " FROM " + DATABASE_TABLE_PLACES +
                 " WHERE " + COLUMN_NAME + " = '" + nameForSearch + "' ";
 
-        Cursor cursor = db.rawQuery(query,null);
-
+        Cursor cursor = db.rawQuery(query,null); //Εκτέλεση του query.
 
         cursor.moveToFirst();
+
         int toReturn = cursor.getInt(0);
-        cursor.close();
-        db.close();
+
         return toReturn;
     }
 
