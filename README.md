@@ -4,4 +4,4 @@ This repository is intended for an Android app developed using Java. The purpose
 
 The app uses dummy data for the stores, is currently not functional due to the expiration of the free trial for the above mentioned services.
 
-See report.pdf for more details :)
+See report.pdf for more details.
